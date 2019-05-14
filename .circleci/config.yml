@@ -70,11 +70,11 @@ jobs:
 
     - run:
         name: Link Sequence (Major)
-        command: wsk action update --sequence /helix/helix-services/static@v`console.log(require('./package.json').version.match(/^[0-9]+/)[0])` helix-services/static@`node -e "console.log(require('./package.json').version)"` --web=true --web-secure=false
+        command: wsk action update --sequence /helix/helix-services/static@v`node -e "console.log(require('./package.json').version.match(/^[0-9]+/)[0])"` helix-services/static@`node -e "console.log(require('./package.json').version)"` --web=true --web-secure=false
 
     - run:
         name: Link Sequence (Minor)
-        command: wsk action update --sequence /helix/helix-services/static@v`console.log(require('./package.json').version.match(/^[0-9]+.[0-9]+/)[0])` helix-services/static@`node -e "console.log(require('./package.json').version)"` --web=true --web-secure=false
+        command: wsk action update --sequence /helix/helix-services/static@v`node -e "console.log(require('./package.json').version.match(/^[0-9]+.[0-9]+/)[0])"` helix-services/static@`node -e "console.log(require('./package.json').version)"` --web=true --web-secure=false
 
   branch-deploy:
     executor: node10
