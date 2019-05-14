@@ -30,7 +30,7 @@ module.exports = {
     'strict': 0,
 
     // allow dev dependencies in build
-    "import/no-extraneous-dependencies": ["error", {"devDependencies": ["build/*.js"]}],
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": ["build/*.js", "test/*.js"]}],
 
     // allow dangling underscores for 'fields'
     'no-underscore-dangle': ['error', {'allowAfterThis': true}],
