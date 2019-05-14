@@ -17,7 +17,6 @@
   "wsk": {
     "name": "helix-services/static@1.0.2",
     "static": [
-      ".env"
     ]
   },
   "repository": {
