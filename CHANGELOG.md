@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/adobe/helix-static/compare/v1.0.1...v1.0.2) (2019-05-14)
+
+
+### Bug Fixes
+
+* **docs:** trigger re-release due to invalid config ([20743cb](https://github.com/adobe/helix-static/commit/20743cb))
+
 ## [1.0.1](https://github.com/adobe/helix-static/compare/v1.0.0...v1.0.1) (2019-05-14)
 
 
