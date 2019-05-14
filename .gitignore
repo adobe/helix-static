@@ -1,0 +1,15 @@
+coverage
+coverage.lcov
+.nyc_output/
+.env
+node_modules/
+junit
+tmp
+logs
+dist
+.DS_Store
+test-results.xml
+/.blackbox/pubring.gpg~
+/.blackbox/pubring.kbx~
+/.blackbox/secring.gpg
+/secrets/secrets.env
