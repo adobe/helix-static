@@ -96,6 +96,10 @@ jobs:
         name: Branch Deployment
         command: npx wsk-builder -v --deploy --test --name helix-services/static@ci$CIRCLE_BUILD_NUM
 
+    - run:
+        name: Link Sequence (CI)
+        command: wsk action update --sequence /helix/helix-services/static@ci helix-services/static@$CIRCLE_BUILD_NUM --web=true --web-secure=false
+
 workflows:
   version: 2
   build:
