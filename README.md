@@ -22,13 +22,13 @@ Helix Static is a shared microservice for [Project Helix](https://www.project-he
 - replacement of URLs in JS and CSS assets with references to long-cacheable URLs (through ESI)
 
 
-## Developing Helix Publish
+## Developing Helix Static
 
 You need `node>=8.0.0` and `npm>=5.4.0`. Follow the typical `npm install`, `npm test` workflow.
 
 Contributions are highly welcome.
 
-## Deploying Helix Publish
+## Deploying Helix Static
 
 Deploying Helix Logging requires the `wsk` command line client, authenticated to a namespace of your choice. For Project Helix, we use the `helix` namespace.
 
