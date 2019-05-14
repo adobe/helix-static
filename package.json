@@ -1,6 +1,6 @@
 {
   "name": "helix-static",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": "Helix micro service for serving static files from GitHub",
   "main": "src/index.js",
@@ -15,7 +15,7 @@
     "deploy": "wsk-builder -v --deploy --test"
   },
   "wsk": {
-    "name": "helix-services/static@1.0.0",
+    "name": "helix-services/static@1.0.1",
     "static": [
       ".env"
     ]
