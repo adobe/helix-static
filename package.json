@@ -15,7 +15,7 @@
     "deploy": "wsk-builder -v --deploy --test"
   },
   "wsk": {
-    "name": "bot/login@1.0.0",
+    "name": "helix-services/static@1.0.0",
     "static": [
       ".env"
     ]

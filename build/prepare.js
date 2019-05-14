@@ -24,7 +24,7 @@ console.log('OpenWhisk: Prepare version %s', nextVersion);
 const pkgJson = fs.readFileSync('package.json', 'utf-8');
 const pkg = JSON.parse(pkgJson);
 pkg.version = nextVersion;
-pkg.wsk.name = `bot/login@${nextVersion}`;
+pkg.wsk.name = `helix-services/static@${nextVersion}`;
 
 fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2), 'utf-8');
 
