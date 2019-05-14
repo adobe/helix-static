@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/adobe/helix-static/compare/v1.0.0...v1.0.1) (2019-05-14)
+
+
+### Bug Fixes
+
+* **deploy:** use correct package name when deploying ([287ffad](https://github.com/adobe/helix-static/commit/287ffad))
+
 # 1.0.0 (2019-05-14)
 
 
