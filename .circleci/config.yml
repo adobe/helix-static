@@ -94,7 +94,7 @@ jobs:
 
     - run:
         name: Branch Deployment
-        command: npx wsk-builder -v --deploy --test --name /helix/helix-services/static@ci$CIRCLE_BUILD_NUM
+        command: npx wsk-builder -v --deploy --test --name helix-services/static@ci$CIRCLE_BUILD_NUM
 
 workflows:
   version: 2
