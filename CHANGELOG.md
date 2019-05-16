@@ -1,3 +1,16 @@
+# [1.1.0](https://github.com/adobe/helix-static/compare/v1.0.2...v1.1.0) (2019-05-16)
+
+
+### Bug Fixes
+
+* **monitoring:** ping this repository instead of helix-publish ([69b7af1](https://github.com/adobe/helix-static/commit/69b7af1)), closes [/github.com/adobe/helix-static/pull/5#discussion_r284569556](https://github.com//github.com/adobe/helix-static/pull/5/issues/discussion_r284569556)
+
+
+### Features
+
+* **monitoring:** make monitoring response uncacheable ([f139c87](https://github.com/adobe/helix-static/commit/f139c87)), closes [/github.com/adobe/helix-static/pull/5#discussion_r284570089](https://github.com//github.com/adobe/helix-static/pull/5/issues/discussion_r284570089)
+* **monitoring:** report status, reponse time and version to Pingdom ([66ffb60](https://github.com/adobe/helix-static/commit/66ffb60)), closes [#4](https://github.com/adobe/helix-static/issues/4)
+
 ## [1.0.2](https://github.com/adobe/helix-static/compare/v1.0.1...v1.0.2) (2019-05-14)
 
 
