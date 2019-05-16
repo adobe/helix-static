@@ -357,6 +357,7 @@ async function main({
         headers: {
           'Content-Type': 'application/xml',
           'X-Version': version,
+          'Cache-Control': 'no-store, private, must-revalidate',
         },
         body: `<pingdom_http_custom_check>
         <status>OK</status>
