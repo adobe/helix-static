@@ -283,6 +283,13 @@ describe('Static Delivery Action #unittest', () => {
     assert.ok(res.body.indexOf('Arial') > 0, true);
   });
 
+  it('main() without parameters reports status', async () => {
+    const res = await index.main();
+    assert.equal(res.statusCode, 200);
+    assert.equal(res.body.split('\n')[0], '<pingdom_http_custom_check>');
+    assert.ok(res.headers['X-Version']);
+  });
+
   it('main() normalizes URLs in rewritten Javascript', async () => {
     const res = await index.main({
       owner: 'trieloff',
