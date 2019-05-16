@@ -22,6 +22,7 @@ const sanitizer = require('sanitizer');
 
 const { space } = postcss.list;
 const uri = require('uri-js');
+const { version } = require('../package.json');
 /* eslint-disable no-console */
 
 // one megabyte openwhisk limit + 20% Base64 inflation + safety padding
@@ -344,7 +345,28 @@ async function main({
   deny,
   root = '',
   esi = false,
-}) {
+} = {}) {
+  if (!owner) {
+    console.log('status…');
+    // report status
+    const start = Date.now();
+    return request.get('https://raw.githubusercontent.com/adobe/helix-static/master/src/index.js').then(() => {
+      console.log('github is up');
+      return {
+        statusCode: 200,
+        headers: {
+          'Content-Type': 'application/xml',
+          'X-Version': version,
+          'Cache-Control': 'no-store, private, must-revalidate',
+        },
+        body: `<pingdom_http_custom_check>
+        <status>OK</status>
+        <version>${version}</version>
+        <response_time>${Math.abs(Date.now() - start)}</response_time>
+    </pingdom_http_custom_check>`,
+      };
+    });
+  }
   console.log('main()', owner, repo, ref, path, entry, strain, plain, allow, deny, root);
 
   const file = uri.normalize(entry);
