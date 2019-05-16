@@ -350,7 +350,7 @@ async function main({
     console.log('status…');
     // report status
     const start = Date.now();
-    return request.get('https://raw.githubusercontent.com/adobe/helix-publish/master/index.js').then(() => {
+    return request.get('https://raw.githubusercontent.com/adobe/helix-static/master/src/index.js').then(() => {
       console.log('github is up');
       return {
         statusCode: 200,
