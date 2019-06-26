@@ -284,10 +284,9 @@ describe('Static Delivery Action #unittest', () => {
   });
 
   it('main() without parameters reports status', async () => {
-    const res = await index.main();
+    const res = await index.main({ __ow_method: 'get' });
     assert.equal(res.statusCode, 200);
     assert.equal(res.body.split('\n')[0], '<pingdom_http_custom_check>');
-    assert.ok(res.headers['X-Version']);
   });
 
   it('main() normalizes URLs in rewritten Javascript', async () => {
