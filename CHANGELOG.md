@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/adobe/helix-static/compare/v1.2.0...v1.2.1) (2019-06-26)
+
+
+### Bug Fixes
+
+* **package:** update postcss-value-parser to version 4.0.0 ([7290499](https://github.com/adobe/helix-static/commit/7290499))
+
 # [1.2.0](https://github.com/adobe/helix-static/compare/v1.1.0...v1.2.0) (2019-06-26)
 
 
