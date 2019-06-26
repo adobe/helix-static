@@ -19,10 +19,11 @@ const parser = require('postcss-value-parser');
 const babel = require('@babel/core');
 const ohash = require('object-hash');
 const sanitizer = require('sanitizer');
+const { wrap } = require('@adobe/helix-pingdom-status');
+const { openWhiskWrapper } = require('epsagon');
 
 const { space } = postcss.list;
 const uri = require('uri-js');
-const { version } = require('../package.json');
 /* eslint-disable no-console */
 
 // one megabyte openwhisk limit + 20% Base64 inflation + safety padding
@@ -346,27 +347,6 @@ async function main({
   root = '',
   esi = false,
 } = {}) {
-  if (!owner) {
-    console.log('status…');
-    // report status
-    const start = Date.now();
-    return request.get('https://raw.githubusercontent.com/adobe/helix-static/master/src/index.js').then(() => {
-      console.log('github is up');
-      return {
-        statusCode: 200,
-        headers: {
-          'Content-Type': 'application/xml',
-          'X-Version': version,
-          'Cache-Control': 'no-store, private, must-revalidate',
-        },
-        body: `<pingdom_http_custom_check>
-        <status>OK</status>
-        <version>${version}</version>
-        <response_time>${Math.abs(Date.now() - start)}</response_time>
-    </pingdom_http_custom_check>`,
-      };
-    });
-  }
   console.log('main()', owner, repo, ref, path, entry, strain, plain, allow, deny, root);
 
   const file = uri.normalize(entry);
@@ -383,5 +363,13 @@ async function main({
 }
 
 module.exports = {
-  main, error, addHeaders, isBinary, staticBase, blacklisted, getBody,
+  error, addHeaders, isBinary, staticBase, blacklisted, getBody,
 };
+
+module.exports.main = wrap(openWhiskWrapper(main, {
+  token_param: 'EPSAGON_TOKEN',
+  appName: 'Helix Services',
+  metadataOnly: false, // Optional, send more trace data
+}), {
+  github: 'https://raw.githubusercontent.com/adobe/helix-static/master/src/index.js',
+});
