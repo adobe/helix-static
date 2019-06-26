@@ -1,3 +1,15 @@
+# [1.2.0](https://github.com/adobe/helix-static/compare/v1.1.0...v1.2.0) (2019-06-26)
+
+
+### Bug Fixes
+
+* **package:** add [@adobe](https://github.com/adobe) scope to package name ([7c37743](https://github.com/adobe/helix-static/commit/7c37743))
+
+
+### Features
+
+* **monitoring:** establish consistent monitoring with helix-pingdom-status and epsagon ([aca4c24](https://github.com/adobe/helix-static/commit/aca4c24))
+
 # [1.1.0](https://github.com/adobe/helix-static/compare/v1.0.2...v1.1.0) (2019-05-16)
 
 
