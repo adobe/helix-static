@@ -20,7 +20,7 @@ const babel = require('@babel/core');
 const ohash = require('object-hash');
 const sanitizer = require('sanitizer');
 const { wrap } = require('@adobe/helix-pingdom-status');
-const { openWhiskWrapper } = require('epsagon');
+const { logger } = require('@adobe/openwhisk-action-builder/src/logging');
 
 const { space } = postcss.list;
 const uri = require('uri-js');
@@ -29,19 +29,18 @@ const uri = require('uri-js');
 // one megabyte openwhisk limit + 20% Base64 inflation + safety padding
 const REDIRECT_LIMIT = 750000;
 
-function errorCode(code) {
-  switch (code) {
-    case 400:
-      return 404;
-    default:
-      return code;
-  }
-}
+// global logger
+let log;
 
+/**
+ * Generates an error response
+ * @param {string} message - error message
+ * @param {number} code - error code.
+ * @returns response
+ */
 function error(message, code = 500) {
-  // treat
-  const statusCode = errorCode(code);
-  console.error('delivering error', message, code);
+  const statusCode = code === 400 ? 404 : code;
+  log.error('delivering error', message, code);
   return {
     statusCode,
     headers: {
@@ -53,18 +52,79 @@ function error(message, code = 500) {
   };
 }
 
+/**
+ * Generate a `forbidden` response.
+ * @returns {object} a response object.
+ */
+function forbidden() {
+  return {
+    statusCode: 403,
+    headers: {
+      'Content-Type': 'text/plain',
+      'Cache-Control': 'max-age=300', // don't bother us for the next five minutes
+    },
+    body: 'forbidden.',
+  };
+}
 
+/**
+ * Checks if the content type is css.
+ * @param {string} type - content type
+ * @returns {boolean} {@code true} if content type is css.
+ */
 function isCSS(type) {
   return type === 'text/css';
 }
 
+/**
+ * Checks if the content type is javascript.
+ * @param {string} type - content type
+ * @returns {boolean} {@code true} if content type is javascript.
+ */
 function isJavaScript(type) {
-  return type.match(/(text|application)\/(x-)?(javascript|ecmascript)/);
+  return /(text|application)\/(x-)?(javascript|ecmascript)/.test(type);
 }
 
+/**
+ * Checks if the content type is binary.
+ * @param {string} type - content type
+ * @returns {boolean} {@code true} if content type is binary.
+ */
+function isBinary(type) {
+  if (/text\/.*/.test(type)) {
+    return false;
+  }
+  if (/.*\/javascript/.test(type)) {
+    return false;
+  }
+  if (/.*\/.*json/.test(type)) {
+    return false;
+  }
+  if (/.*\/.*xml/.test(type)) {
+    return /svg/.test(type); // openwshisk treats svg as binary
+  }
+  return true;
+}
+
+/**
+ * Checks if the content type is json.
+ * @param {string} type - content type
+ * @returns {boolean} {@code true} if content type is json.
+ */
+function isJSON(type) {
+  return /json/.test(type);
+}
+
+/**
+ * Adds general headers to the response.
+ * @param {object} headers - The headers object.
+ * @param {string} ref - Content ref (branch, tag, or sha)
+ * @param {string} content - The response content.
+ * @returns {object} the new headers.
+ */
 function addHeaders(headers, ref, content) {
   let cacheheaders = {};
-  if (ref.match(/[a-f0-9]{40}/)) {
+  if (/[a-f0-9]{40}/i.test(ref)) {
     cacheheaders = {
       'Cache-Control': 'max-age=131400',
     };
@@ -84,23 +144,14 @@ function addHeaders(headers, ref, content) {
   return Object.assign(headers, cacheheaders);
 }
 
-
-function isBinary(type) {
-  if (type.match(/text\/.*/)) {
-    return false;
-  }
-  if (type.match(/.*\/javascript/)) {
-    return false;
-  }
-  if (type.match(/.*\/.*json/)) {
-    return false;
-  }
-  if (type.match(/.*\/.*xml/)) {
-    return !!type.match(/svg/); // openwshisk treats svg as binary
-  }
-  return true;
-}
-
+/**
+ * Rewrites the content by replacing all `@import` statements and `url` rules with `<esi:include/>`
+ * tags, so that they can be resolved to a stable url by the esi processor.
+ *
+ * @param {string} css - the css content
+ * @param {string} base - the base href
+ * @returns {Function | any}
+ */
 function rewriteCSS(css, base = '') {
   function rewriteImports(tree) {
     tree.walkAtRules('import', (rule) => {
@@ -141,7 +192,7 @@ function rewriteCSS(css, base = '') {
     return tree;
   }
 
-
+  log.info('rewriting css...');
   const processor = postcss()
     .use(rewriteImports)
     .use(postcssurl({
@@ -153,9 +204,23 @@ function rewriteCSS(css, base = '') {
         return asset.url;
       },
     }));
-  return processor.process(css, { from: undefined }).then(result => result.css);
+  return processor
+    .process(css, { from: undefined })
+    .then(result => result.css)
+    .catch((err) => {
+      log.error('error while processing css', err);
+      return css;
+    });
 }
 
+/**
+ * Rewrites the content by replacing all `import` statements rules with `<esi:include/>`
+ * tags, so that they can be resolved to a stable url by the esi processor.
+ *
+ * @param {string} javascript - the javascript content
+ * @param {string} base - the base href
+ * @returns {Function | any}
+ */
 function rewriteJavaScript(javascript, base = '') {
   const importmap = {};
 
@@ -185,21 +250,27 @@ function rewriteJavaScript(javascript, base = '') {
   }
 
   try {
+    log.info('rewriting javascript...');
     const transformed = babel.transformSync(javascript,
       { plugins: [rewriteJSImports], retainLines: true });
 
     return Object.keys(importmap)
       .reduce((src, key) => src.replace(key, importmap[key]), transformed.code);
   } catch (e) {
+    log.error('error while processing javascript', e);
     return javascript;
   }
 }
 
-function isJSON(type) {
-  return !!type.match(/json/);
-}
-
-function getBody(type, responsebody, esi = false, entry) {
+/**
+ * Processes the body according to the content type.
+ * @param {string} type - the content type
+ * @param {string} responsebody - the response body
+ * @param {boolean} esi - esi flag
+ * @param {string} entry - the base href
+ * @returns {Function|any|string|any} the response body
+ */
+function processBody(type, responsebody, esi = false, entry) {
   if (isBinary(type)) {
     return Buffer.from(responsebody).toString('base64');
   }
@@ -215,26 +286,29 @@ function getBody(type, responsebody, esi = false, entry) {
   return responsebody.toString();
 }
 
-function forbidden() {
-  return {
-    statusCode: 403,
-    headers: {
-      'Content-Type': 'text/plain',
-      'Cache-Control': 'max-age=300', // don't bother us for the next five minutes
-    },
-    body: 'forbidden.',
-  };
-}
-
+/**
+ * Calculates the static base marker.
+ * @returns {string}
+ */
 function staticBase(owner, repo, entry, ref, strain = 'default') {
+  // todo: is this still needed?
   return `__HLX/${owner}/${repo}/${strain}/${ref}/${entry}/DIST__`;
 }
 
+/**
+ * Delivers a plain file from the given github repository.
+ *
+ * @param owner
+ * @param repo
+ * @param ref
+ * @param entry
+ * @param root
+ * @param esi
+ */
 function deliverPlain(owner, repo, ref, entry, root, esi = false) {
   const cleanentry = (`${root}/${entry}`).replace(/^\//, '').replace(/[/]+/g, '/');
-  console.log('deliverPlain()', owner, repo, ref, cleanentry);
   const url = `https://raw.githubusercontent.com/${owner}/${repo}/${ref}/${cleanentry}`;
-  console.log(url);
+  log.info(`deliverPlain: url=${url}`);
   const rawopts = {
     url,
     headers: {
@@ -247,10 +321,10 @@ function deliverPlain(owner, repo, ref, entry, root, esi = false) {
   return request.get(rawopts).then(async (response) => {
     const type = mime.lookup(cleanentry) || 'application/octet-stream';
     const size = parseInt(response.headers['content-length'], 10);
-    console.log('size', size);
+    log.info(`got response. size=${size}, type=${type}`);
     if (size < REDIRECT_LIMIT) {
-      const body = await getBody(type, response.body, esi, entry);
-      console.log(`delivering file ${cleanentry} type ${type} binary: ${isBinary(type)}`);
+      const body = await processBody(type, response.body, esi, entry);
+      log.info(`delivering file ${cleanentry} type ${type} binary: ${isBinary(type)}`);
       return {
         statusCode: 200,
         headers: addHeaders({
@@ -261,7 +335,7 @@ function deliverPlain(owner, repo, ref, entry, root, esi = false) {
         body,
       };
     }
-    console.log('Redirecting to GitHub');
+    log.info(`size exceeds limit ${REDIRECT_LIMIT}. sending redirect.`);
     return {
       statusCode: 307,
       headers: {
@@ -276,7 +350,7 @@ function deliverPlain(owner, repo, ref, entry, root, esi = false) {
       // the browser will fetch it again, so let's cache the 404
       // for five minutes, in order to prevent the static function
       // from being called too often
-      console.error('error, but esi', rqerror.statusCode);
+      log.error(`error while fetching content. override status ${rqerror.statusCode} due to esi flag.`);
       return {
         statusCode: 404,
         headers: {
@@ -335,7 +409,7 @@ function blacklisted(path, allow, deny) {
  * @param {string} params.root document root for all static files in the repository
  * @param {boolean} params.esi replace relative URL references in JS and CSS with ESI references
  */
-async function main({
+async function deliverStatic({
   owner,
   repo,
   ref = 'master',
@@ -348,11 +422,10 @@ async function main({
   root = '',
   esi = false,
 } = {}) {
-  console.log('main()', owner, repo, ref, path, entry, strain, plain, allow, deny, root);
-
   const file = uri.normalize(entry);
-  console.log(file);
+  log.info(`deliverStatic with ${owner}/${repo}/${ref} path=${path} entry=${entry} file=${file} plain=${plain} allow=${allow} deny=${deny} root=${root} esi=${esi} strain=${strain}`);
   if (blacklisted(file, allow, deny)) {
+    log.info('blacklisted!');
     return forbidden();
   }
 
@@ -360,17 +433,63 @@ async function main({
     return deliverPlain(owner, repo, ref, file, root, esi);
   }
 
+  log.info('non-plain is not supported.'); // todo: remove plain parameter?
   return forbidden();
 }
 
-module.exports = {
-  error, addHeaders, isBinary, staticBase, blacklisted, getBody,
-};
+/**
+ * Runs the action by wrapping the `deliverStatic` function with the pingdom-status utility.
+ * Additionally, if a EPSAGON_TOKEN is configured, the epsagon tracers are instrumented.
+ * @param params Action params
+ * @returns {Promise<*>} The response
+ */
+async function run(params) {
+  let action = deliverStatic;
+  if (params && params.EPSAGON_TOKEN) {
+    // ensure that epsagon is only required, if a token is present. this is to avoid invoking their
+    // patchers otherwise.
+    // eslint-disable-next-line global-require
+    const { openWhiskWrapper } = require('epsagon');
+    log.info('instrumenting epsagon.');
+    action = openWhiskWrapper(action, {
+      token_param: 'EPSAGON_TOKEN',
+      appName: 'Helix Services',
+      metadataOnly: false, // Optional, send more trace data
+    });
+  }
+  return wrap(action, {
+    github: 'https://raw.githubusercontent.com/adobe/helix-static/master/src/index.js',
+  })(params);
+}
 
-module.exports.main = wrap(openWhiskWrapper(main, {
-  token_param: 'EPSAGON_TOKEN',
-  appName: 'Helix Services',
-  metadataOnly: false, // Optional, send more trace data
-}), {
-  github: 'https://raw.githubusercontent.com/adobe/helix-static/master/src/index.js',
-});
+/**
+ * Main function called by the openwhisk invoker.
+ * @param params Action params
+ * @returns {Promise<*>} The response
+ */
+async function main(params) {
+  try {
+    log = logger(params, log);
+    const result = await run(params);
+    if (log.flush) {
+      log.flush(); // don't wait
+    }
+    return result;
+  } catch (e) {
+    console.error(e);
+    return {
+      statusCode: e.statusCode || 500,
+    };
+  }
+}
+
+// todo: do we still need those exports?
+module.exports = {
+  error,
+  addHeaders,
+  isBinary,
+  staticBase,
+  blacklisted,
+  getBody: processBody,
+  main,
+};
