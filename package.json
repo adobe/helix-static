@@ -12,7 +12,7 @@
     "test": "nyc mocha && npm run lint",
     "test-ci": "npm run lint && nyc mocha --reporter mocha-junit-reporter && nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "build": "wsk-builder -v",
-    "deploy": "wsk-builder -v --deploy --test"
+    "deploy": "wsk-builder -v --deploy --test -p EPSAGON_TOKEN=$EPSAGON_TOKEN"
   },
   "wsk": {
     "name": "helix-services/static@1.2.1",

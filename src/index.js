@@ -276,6 +276,7 @@ function deliverPlain(owner, repo, ref, entry, root, esi = false) {
       // the browser will fetch it again, so let's cache the 404
       // for five minutes, in order to prevent the static function
       // from being called too often
+      console.error('error, but esi', rqerror.statusCode);
       return {
         statusCode: 404,
         headers: {
