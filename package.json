@@ -1,6 +1,6 @@
 {
   "name": "@adobe/helix-static",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "private": true,
   "description": "Helix micro service for serving static files from GitHub",
   "main": "src/index.js",
@@ -15,7 +15,7 @@
     "deploy": "wsk-builder -v --deploy --test -p EPSAGON_TOKEN=$EPSAGON_TOKEN"
   },
   "wsk": {
-    "name": "helix-services/static@1.2.2",
+    "name": "helix-services/static@1.2.3",
     "static": []
   },
   "repository": {

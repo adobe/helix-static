@@ -1,3 +1,10 @@
+## [1.2.3](https://github.com/adobe/helix-static/compare/v1.2.2...v1.2.3) (2019-07-10)
+
+
+### Bug Fixes
+
+* **static:** wrong cache-control value ([#15](https://github.com/adobe/helix-static/issues/15)) ([#16](https://github.com/adobe/helix-static/issues/16)) ([985e51c](https://github.com/adobe/helix-static/commit/985e51c))
+
 ## [1.2.2](https://github.com/adobe/helix-static/compare/v1.2.1...v1.2.2) (2019-07-05)
 
 
