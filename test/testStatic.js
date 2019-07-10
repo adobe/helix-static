@@ -43,7 +43,7 @@ describe('Static Delivery Action #integrationtest', () => {
     assert.equal(res.statusCode, 200);
     assert.equal(res.headers['Content-Type'], 'text/css');
     assert.equal(res.headers['X-Static'], 'Raw/Static');
-    assert.equal(res.headers['Cache-Control'], 's-max-age=300');
+    assert.equal(res.headers['Cache-Control'], 's-maxage=300');
     assert.equal(res.headers.ETag, '"xSOcRd5oxR4XWFrm4Zmxew=="');
   });
 
@@ -59,7 +59,7 @@ describe('Static Delivery Action #integrationtest', () => {
     assert.equal(res.statusCode, 200);
     assert.equal(res.headers['Content-Type'], 'image/png');
     assert.equal(res.headers['X-Static'], 'Raw/Static');
-    assert.equal(res.headers['Cache-Control'], 's-max-age=300');
+    assert.equal(res.headers['Cache-Control'], 's-maxage=300');
     assert.equal(res.headers.ETag, '"hQQa9WA2n198wTAbYXlO4A=="');
   });
 
@@ -75,7 +75,7 @@ describe('Static Delivery Action #integrationtest', () => {
     assert.equal(res.statusCode, 200);
     assert.equal(res.headers['Content-Type'], 'application/json');
     assert.equal(res.headers['X-Static'], 'Raw/Static');
-    assert.equal(res.headers['Cache-Control'], 's-max-age=300');
+    assert.equal(res.headers['Cache-Control'], 's-maxage=300');
     assert.equal(res.headers.ETag, '"oJWmHG4De8PUYQZFhlujXg=="');
   });
 

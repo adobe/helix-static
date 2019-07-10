@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/adobe/helix-static/compare/v1.2.1...v1.2.2) (2019-07-05)
+
+
+### Bug Fixes
+
+* **package:** use latest pingdom-status 1.4.1 ([9513ce1](https://github.com/adobe/helix-static/commit/9513ce1))
+
 ## [1.2.1](https://github.com/adobe/helix-static/compare/v1.2.0...v1.2.1) (2019-06-26)
 
 

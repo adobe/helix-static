@@ -132,7 +132,7 @@ function addHeaders(headers, ref, content) {
     const hash = crypto.createHash('md5').update(content);
     cacheheaders = {
       ETag: `"${hash.digest('base64')}"`,
-      'Cache-Control': 's-max-age=300',
+      'Cache-Control': 's-maxage=300',
     };
     if (headers['Content-Type'] && (
       isCSS(headers['Content-Type'])
@@ -355,7 +355,7 @@ function deliverPlain(owner, repo, ref, entry, root, esi = false) {
         statusCode: 404,
         headers: {
           'Content-Type': 'text/plain',
-          'Cache-Control': 's-max-age=300',
+          'Cache-Control': 's-maxage=300',
         },
         body: entry,
       };
