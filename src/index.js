@@ -21,6 +21,7 @@ const ohash = require('object-hash');
 const sanitizer = require('sanitizer');
 const { wrap } = require('@adobe/helix-pingdom-status');
 const { logger } = require('@adobe/openwhisk-action-builder/src/logging');
+const { computeSurrogateKey } = require('@adobe/helix-shared').utils;
 
 const { space } = postcss.list;
 const uri = require('uri-js');
@@ -331,6 +332,7 @@ function deliverPlain(owner, repo, ref, entry, root, esi = false) {
           'Content-Type': type,
           'X-Static': 'Raw/Static',
           'X-ESI': esi ? 'enabled' : undefined,
+          'Surrogate-Key': computeSurrogateKey(url),
         }, ref, response.body),
         body,
       };
@@ -342,6 +344,8 @@ function deliverPlain(owner, repo, ref, entry, root, esi = false) {
         Location: url,
         'X-Content-Type': type,
         'X-Static': 'Raw/Static',
+        'Cache-Control': 's-maxage=300',
+        'Surrogate-Key': computeSurrogateKey(url),
       },
     };
   }).catch((rqerror) => {
