@@ -1,3 +1,10 @@
+## [1.2.5](https://github.com/adobe/helix-static/compare/v1.2.4...v1.2.5) (2019-07-18)
+
+
+### Bug Fixes
+
+* **package:** update dependencies ([#22](https://github.com/adobe/helix-static/issues/22)) ([413bd80](https://github.com/adobe/helix-static/commit/413bd80)), closes [#12](https://github.com/adobe/helix-static/issues/12)
+
 ## [1.2.4](https://github.com/adobe/helix-static/compare/v1.2.3...v1.2.4) (2019-07-18)
 
 
