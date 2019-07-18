@@ -1,3 +1,10 @@
+## [1.2.4](https://github.com/adobe/helix-static/compare/v1.2.3...v1.2.4) (2019-07-18)
+
+
+### Bug Fixes
+
+* **caching:** add surrogate key ([#20](https://github.com/adobe/helix-static/issues/20)) ([97212a1](https://github.com/adobe/helix-static/commit/97212a1)), closes [#8](https://github.com/adobe/helix-static/issues/8)
+
 ## [1.2.3](https://github.com/adobe/helix-static/compare/v1.2.2...v1.2.3) (2019-07-10)
 
 
