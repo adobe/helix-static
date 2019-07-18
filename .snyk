@@ -42,3 +42,27 @@ patch:
         patched: '2019-07-10T04:49:02.328Z'
     - snyk > snyk-php-plugin > @snyk/composer-lockfile-parser > lodash:
         patched: '2019-07-10T04:49:02.328Z'
+    - '@adobe/helix-shared > winston > async > lodash':
+        patched: '2019-07-18T02:36:28.826Z'
+    - '@adobe/helix-shared > snyk > lodash':
+        patched: '2019-07-18T02:36:28.826Z'
+    - '@adobe/helix-shared > snyk > snyk-mvn-plugin > lodash':
+        patched: '2019-07-18T02:36:28.826Z'
+    - '@adobe/helix-shared > snyk > snyk-nodejs-lockfile-parser > lodash':
+        patched: '2019-07-18T02:36:28.826Z'
+    - '@adobe/helix-shared > snyk > snyk-nuget-plugin > lodash':
+        patched: '2019-07-18T02:36:28.826Z'
+    - '@adobe/helix-shared > snyk > @snyk/dep-graph > lodash':
+        patched: '2019-07-18T02:36:28.826Z'
+    - '@adobe/helix-shared > snyk > snyk-config > lodash':
+        patched: '2019-07-18T02:36:28.826Z'
+    - '@adobe/helix-shared > snyk > inquirer > lodash':
+        patched: '2019-07-18T02:36:28.826Z'
+    - '@adobe/helix-shared > snyk > @snyk/dep-graph > graphlib > lodash':
+        patched: '2019-07-18T02:36:28.826Z'
+    - '@adobe/helix-shared > snyk > snyk-go-plugin > graphlib > lodash':
+        patched: '2019-07-18T02:36:28.826Z'
+    - '@adobe/helix-shared > snyk > snyk-nodejs-lockfile-parser > graphlib > lodash':
+        patched: '2019-07-18T02:36:28.826Z'
+    - '@adobe/helix-shared > snyk > snyk-php-plugin > @snyk/composer-lockfile-parser > lodash':
+        patched: '2019-07-18T02:36:28.826Z'
