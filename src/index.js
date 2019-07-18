@@ -471,7 +471,7 @@ async function run(params) {
  * @param params Action params
  * @returns {Promise<*>} The response
  */
-async function main(params) {
+async function main(params, logger = log) {
   try {
     log = setupLogger(params, logger);
     const result = await run(params);
