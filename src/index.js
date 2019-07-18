@@ -20,7 +20,7 @@ const babel = require('@babel/core');
 const ohash = require('object-hash');
 const sanitizer = require('sanitizer');
 const { wrap } = require('@adobe/helix-pingdom-status');
-const { logger } = require('@adobe/openwhisk-action-builder/src/logging');
+const { logger: setupLogger } = require('@adobe/openwhisk-action-builder/src/logging');
 const { computeSurrogateKey } = require('@adobe/helix-shared').utils;
 
 const { space } = postcss.list;
@@ -473,7 +473,7 @@ async function run(params) {
  */
 async function main(params) {
   try {
-    log = logger(params, log);
+    log = setupLogger(params, logger);
     const result = await run(params);
     if (log.flush) {
       log.flush(); // don't wait
