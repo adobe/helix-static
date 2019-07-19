@@ -1,3 +1,10 @@
+## [1.2.6](https://github.com/adobe/helix-static/compare/v1.2.5...v1.2.6) (2019-07-19)
+
+
+### Bug Fixes
+
+* **log:** fix logger ([#23](https://github.com/adobe/helix-static/issues/23)) ([c6b0450](https://github.com/adobe/helix-static/commit/c6b0450)), closes [#24](https://github.com/adobe/helix-static/issues/24)
+
 ## [1.2.5](https://github.com/adobe/helix-static/compare/v1.2.4...v1.2.5) (2019-07-18)
 
 
