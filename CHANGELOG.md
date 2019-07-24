@@ -1,3 +1,10 @@
+## [1.2.7](https://github.com/adobe/helix-static/compare/v1.2.6...v1.2.7) (2019-07-24)
+
+
+### Bug Fixes
+
+* **package:** update @adobe/helix-pingdom-status to version 2.0.0 ([b729b8d](https://github.com/adobe/helix-static/commit/b729b8d))
+
 ## [1.2.6](https://github.com/adobe/helix-static/compare/v1.2.5...v1.2.6) (2019-07-19)
 
 
