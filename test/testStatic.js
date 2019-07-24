@@ -184,7 +184,7 @@ describe('CSS and JS Rewriting', () => {
 describe('Static Delivery Action #unittest', () => {
   setupPolly({
     recordFailedRequests: true,
-    recordIfMissing: true,
+    recordIfMissing: false,
     logging: false,
     adapters: [NodeHttpAdapter],
     persister: FSPersister,
@@ -287,8 +287,8 @@ describe('Static Delivery Action #unittest', () => {
     assert.ok(res.body.indexOf('Arial') > 0, true);
   });
 
-  it('main() without parameters reports status', async () => {
-    const res = await index.main({ __ow_method: 'get' });
+  it('main() request to pingdom status delivers report', async () => {
+    const res = await index.main({ __ow_method: 'get', __ow_path: '/_status_check/pingdom.xml' });
     assert.equal(res.statusCode, 200);
     assert.equal(res.body.split('\n')[0], '<pingdom_http_custom_check>');
   });
