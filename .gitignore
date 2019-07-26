@@ -9,6 +9,7 @@ logs
 dist
 .DS_Store
 test-results.xml
+.vscode
 /.blackbox/pubring.gpg~
 /.blackbox/pubring.kbx~
 /.blackbox/secring.gpg
