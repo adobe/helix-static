@@ -34,7 +34,7 @@
   },
   "homepage": "https://github.com/adobe/helix-static#readme",
   "dependencies": {
-    "@adobe/helix-pingdom-status": "2.0.2",
+    "@adobe/helix-pingdom-status": "3.0.0",
     "@adobe/helix-shared": "2.1.1",
     "@adobe/openwhisk-action-builder": "^1.1.1",
     "@babel/core": "^7.5.5",
