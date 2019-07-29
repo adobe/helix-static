@@ -1,3 +1,10 @@
+## [1.2.9](https://github.com/adobe/helix-static/compare/v1.2.8...v1.2.9) (2019-07-29)
+
+
+### Bug Fixes
+
+* **index:** report version on GET / ([3cd231a](https://github.com/adobe/helix-static/commit/3cd231a)), closes [#36](https://github.com/adobe/helix-static/issues/36)
+
 ## [1.2.8](https://github.com/adobe/helix-static/compare/v1.2.7...v1.2.8) (2019-07-26)
 
 
