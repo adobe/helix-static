@@ -25,6 +25,8 @@ const { computeSurrogateKey } = require('@adobe/helix-shared').utils;
 
 const { space } = postcss.list;
 const uri = require('uri-js');
+const pkgJson = require('../package.json');
+
 /* eslint-disable no-console */
 
 // one megabyte openwhisk limit + 20% Base64 inflation + safety padding
@@ -426,6 +428,16 @@ async function deliverStatic({
   root = '',
   esi = false,
 } = {}) {
+  if (!owner && !repo && !path && !entry) {
+    return {
+      statusCode: 204,
+      body: '',
+      headers: {
+        'x-version': pkgJson.version,
+      },
+    };
+  }
+
   const file = uri.normalize(entry);
   log.info(`deliverStatic with ${owner}/${repo}/${ref} path=${path} entry=${entry} file=${file} plain=${plain} allow=${allow} deny=${deny} root=${root} esi=${esi} strain=${strain}`);
   if (blacklisted(file, allow, deny)) {

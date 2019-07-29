@@ -15,6 +15,7 @@ const NodeHttpAdapter = require('@pollyjs/adapter-node-http');
 const FSPersister = require('@pollyjs/persister-fs');
 const { setupMocha: setupPolly } = require('@pollyjs/core');
 const index = require('../src/index');
+const pkgJson = require('../package.json');
 
 /* eslint-env mocha */
 describe('Static Delivery Action #integrationtest', () => {
@@ -291,6 +292,14 @@ describe('Static Delivery Action #unittest', () => {
     const res = await index.main({ __ow_method: 'get', __ow_path: '/_status_check/pingdom.xml' });
     assert.equal(res.statusCode, 200);
     assert.equal(res.body.split('\n')[0], '<pingdom_http_custom_check>');
+  });
+
+  it('main() reports version for get request to /', async () => {
+    const res = await index.main({ __ow_method: 'get' });
+    assert.equal(res.statusCode, 204);
+    assert.deepEqual(res.headers, {
+      'x-version': pkgJson.version,
+    });
   });
 
   it('main() normalizes URLs in rewritten Javascript', async () => {
