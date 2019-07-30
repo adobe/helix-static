@@ -49,6 +49,23 @@ describe('Static Delivery Action #integrationtest', () => {
     assert.equal(res.headers.ETag, '"xSOcRd5oxR4XWFrm4Zmxew=="');
   });
 
+  it('deliver CSS file from ref', async () => {
+    const res = await index.main({
+      owner: 'trieloff',
+      repo: 'helix-demo',
+      ref: '3e8dec3886cb75bcea6970b4b00783f69cbf487a',
+      branch: 'master',
+      entry: '/dist/style.css',
+      plain: true,
+    });
+
+    assert.equal(res.statusCode, 200);
+    assert.equal(res.headers['Content-Type'], 'text/css');
+    assert.equal(res.headers['X-Static'], 'Raw/Static');
+    assert.equal(res.headers['Cache-Control'], 'max-age=131400');
+    assert.equal(res.headers['Surrogate-Key'], 'AYnQlbzbj4dsnOxH');
+  });
+
   it('deliver PNG file', async () => {
     const res = await index.main({
       owner: 'trieloff',
