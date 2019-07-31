@@ -307,8 +307,9 @@ function staticBase(owner, repo, entry, ref, strain = 'default') {
  * @param entry
  * @param root
  * @param esi
+ * @param branch
  */
-function deliverPlain(owner, repo, ref, entry, root, esi = false) {
+function deliverPlain(owner, repo, ref, entry, root, esi = false, branch) {
   const cleanentry = (`${root}/${entry}`).replace(/^\//, '').replace(/[/]+/g, '/');
   const url = `https://raw.githubusercontent.com/${owner}/${repo}/${ref}/${cleanentry}`;
   log.info(`deliverPlain: url=${url}`);
@@ -320,6 +321,14 @@ function deliverPlain(owner, repo, ref, entry, root, esi = false) {
     resolveWithFullResponse: true,
     encoding: null,
   };
+
+  //  url (for surrogate control) always uses branch name
+  let surrogateKey;
+  if (branch && branch !== ref) {
+    surrogateKey = computeSurrogateKey(`https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${cleanentry}`);
+  } else {
+    surrogateKey = computeSurrogateKey(url);
+  }
 
   return request.get(rawopts).then(async (response) => {
     const type = mime.lookup(cleanentry) || 'application/octet-stream';
@@ -334,7 +343,7 @@ function deliverPlain(owner, repo, ref, entry, root, esi = false) {
           'Content-Type': type,
           'X-Static': 'Raw/Static',
           'X-ESI': esi ? 'enabled' : undefined,
-          'Surrogate-Key': computeSurrogateKey(url),
+          'Surrogate-Key': surrogateKey,
         }, ref, response.body),
         body,
       };
@@ -347,7 +356,7 @@ function deliverPlain(owner, repo, ref, entry, root, esi = false) {
         'X-Content-Type': type,
         'X-Static': 'Raw/Static',
         'Cache-Control': 's-maxage=300',
-        'Surrogate-Key': computeSurrogateKey(url),
+        'Surrogate-Key': surrogateKey,
       },
     };
   }).catch((rqerror) => {
@@ -407,6 +416,7 @@ function blacklisted(path, allow, deny) {
  * @param {string} params.owner Repository owner on GitHub
  * @param {string} params.repo Repository name on GitHub
  * @param {string} params.ref SHA of a commit or name of a branch or tag on GitHub
+ * @param {string} params.branch the name of a branch or tag on GitHub (defaults to ref)
  * @param {string} params.path path to the requested file (if used with `entry`)
  * @param {string} params.entry path to the file requested by the browser
  * @param {boolean} params.plain disable asset pre-processing with Parcel
@@ -419,6 +429,7 @@ async function deliverStatic({
   owner,
   repo,
   ref = 'master',
+  branch,
   path,
   entry,
   strain = 'default',
@@ -446,7 +457,7 @@ async function deliverStatic({
   }
 
   if (plain) {
-    return deliverPlain(owner, repo, ref, file, root, esi);
+    return deliverPlain(owner, repo, ref, file, root, esi, branch);
   }
 
   log.info('non-plain is not supported.'); // todo: remove plain parameter?
