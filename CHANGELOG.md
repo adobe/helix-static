@@ -1,3 +1,10 @@
+## [1.2.10](https://github.com/adobe/helix-static/compare/v1.2.9...v1.2.10) (2019-07-31)
+
+
+### Bug Fixes
+
+* **cache:** compute surrogate-key based on branch if present ([#39](https://github.com/adobe/helix-static/issues/39)) ([496ad48](https://github.com/adobe/helix-static/commit/496ad48)), closes [#38](https://github.com/adobe/helix-static/issues/38)
+
 ## [1.2.9](https://github.com/adobe/helix-static/compare/v1.2.8...v1.2.9) (2019-07-29)
 
 
