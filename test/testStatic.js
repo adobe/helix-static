@@ -308,7 +308,7 @@ describe('Static Delivery Action #unittest', () => {
   it('main() request to pingdom status delivers report', async () => {
     const res = await index.main({ __ow_method: 'get', __ow_path: '/_status_check/pingdom.xml' });
     assert.equal(res.statusCode, 200);
-    assert.equal(res.body.split('\n')[0], '<pingdom_http_custom_check>');
+    assert.equal(res.body.split('\n')[0], '<pingdom_http_custom_check><status>OK</status>');
   });
 
   it('main() reports version for get request to /', async () => {
