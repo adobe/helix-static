@@ -209,7 +209,7 @@ function rewriteCSS(css, base = '') {
     }));
   return processor
     .process(css, { from: undefined })
-    .then(result => result.css)
+    .then((result) => result.css)
     .catch((err) => {
       log.error('error while processing css', err);
       return css;
