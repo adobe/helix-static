@@ -20,7 +20,7 @@ const babel = require('@babel/core');
 const ohash = require('object-hash');
 const sanitizer = require('sanitizer');
 const { wrap } = require('@adobe/helix-pingdom-status');
-const { logger: setupLogger } = require('@adobe/openwhisk-action-builder/src/logging');
+const { logger: setupLogger } = require('@adobe/openwhisk-action-utils');
 const { computeSurrogateKey } = require('@adobe/helix-shared').utils;
 
 const { space } = postcss.list;
