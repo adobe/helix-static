@@ -1,3 +1,10 @@
+## [1.2.12](https://github.com/adobe/helix-static/compare/v1.2.11...v1.2.12) (2019-08-26)
+
+
+### Bug Fixes
+
+* **monitoring:** upgrade epsagon and hide more params ([6a39229](https://github.com/adobe/helix-static/commit/6a39229))
+
 ## [1.2.11](https://github.com/adobe/helix-static/compare/v1.2.10...v1.2.11) (2019-08-19)
 
 
