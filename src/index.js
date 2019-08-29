@@ -308,9 +308,9 @@ function staticBase(owner, repo, entry, ref, strain = 'default') {
  * @param root
  * @param esi
  * @param branch
- * @param __ow_headers
+ * @param githubToken
  */
-function deliverPlain(owner, repo, ref, entry, root, esi = false, branch, __ow_headers = {}) {
+function deliverPlain(owner, repo, ref, entry, root, esi = false, branch, githubToken = undefined) {
   const cleanentry = (`${root}/${entry}`).replace(/^\//, '').replace(/[/]+/g, '/');
   const url = `https://raw.githubusercontent.com/${owner}/${repo}/${ref}/${cleanentry}`;
   log.info(`deliverPlain: url=${url}`);
@@ -322,9 +322,9 @@ function deliverPlain(owner, repo, ref, entry, root, esi = false, branch, __ow_h
     resolveWithFullResponse: true,
     encoding: null,
   };
-  if (__ow_headers['x-github-token']) {
+  if (githubToken) {
     // eslint-disable-next-line dot-notation
-    rawopts.headers['Authorization'] = `token ${__ow_headers['x-github-token']}`;
+    rawopts.headers['Authorization'] = `token ${githubToken}`;
   }
 
   //  url (for surrogate control) always uses branch name
@@ -431,21 +431,23 @@ function blacklisted(path, allow, deny) {
  * @param {boolean} params.esi replace relative URL references in JS and CSS with ESI references
  * @param {Object} params.__ow_headers The request headers of this web action invokation
  */
-async function deliverStatic({
-  owner,
-  repo,
-  ref = 'master',
-  branch,
-  path,
-  entry,
-  strain = 'default',
-  plain = false,
-  allow,
-  deny,
-  root = '',
-  esi = false,
-  __ow_headers = {},
-} = {}) {
+async function deliverStatic(params = {}) {
+  const {
+    owner,
+    repo,
+    ref = 'master',
+    branch,
+    path,
+    entry,
+    strain = 'default',
+    plain = false,
+    allow,
+    deny,
+    root = '',
+    esi = false,
+    __ow_headers = {},
+  } = params;
+
   if (!owner && !repo && !path && !entry) {
     return {
       statusCode: 204,
@@ -463,8 +465,9 @@ async function deliverStatic({
     return forbidden();
   }
 
+  const githubToken = params.GITHUB_TOKEN || __ow_headers['x-github-token'];
   if (plain) {
-    return deliverPlain(owner, repo, ref, file, root, esi, branch, __ow_headers);
+    return deliverPlain(owner, repo, ref, file, root, esi, branch, githubToken);
   }
 
   log.info('non-plain is not supported.'); // todo: remove plain parameter?
