@@ -21,7 +21,7 @@ const pkgJson = require('../package.json');
 describe('Static Delivery Action #integrationtest', () => {
   setupPolly({
     recordFailedRequests: true,
-    recordIfMissing: false,
+    recordIfMissing: true,
     logging: false,
     adapters: [NodeHttpAdapter],
     persister: FSPersister,
@@ -201,9 +201,14 @@ describe('CSS and JS Rewriting', () => {
 
 describe('Static Delivery Action #unittest', () => {
   setupPolly({
-    recordFailedRequests: true,
+    recordFailedRequests: false,
     recordIfMissing: false,
     logging: false,
+    matchRequestsBy: {
+      headers: {
+        exclude: ['authorization'],
+      },
+    },
     adapters: [NodeHttpAdapter],
     persister: FSPersister,
     persisterOptions: {
@@ -365,5 +370,16 @@ barba.init({
       plain: true,
     });
     assert.equal(res.statusCode, 403);
+  });
+
+  it('main() returns static file from private GitHub repo', async () => {
+    const res = await index.main({
+      owner: 'adobe',
+      repo: 'project-helix', // private repository
+      entry: 'helix_logo.ico',
+      plain: true,
+      __ow_headers: { 'x-github-token': 'undisclosed-token' },
+    });
+    assert.equal(res.statusCode, 200);
   });
 });
