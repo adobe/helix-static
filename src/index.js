@@ -310,7 +310,7 @@ function staticBase(owner, repo, entry, ref, strain = 'default') {
  * @param branch
  * @param githubToken
  */
-function deliverPlain(owner, repo, ref, entry, root, esi = false, branch, githubToken = undefined) {
+function deliverPlain(owner, repo, ref, entry, root, esi = false, branch, githubToken) {
   const cleanentry = (`${root}/${entry}`).replace(/^\//, '').replace(/[/]+/g, '/');
   const url = `https://raw.githubusercontent.com/${owner}/${repo}/${ref}/${cleanentry}`;
   log.info(`deliverPlain: url=${url}`);
@@ -323,8 +323,7 @@ function deliverPlain(owner, repo, ref, entry, root, esi = false, branch, github
     encoding: null,
   };
   if (githubToken) {
-    // eslint-disable-next-line dot-notation
-    rawopts.headers['Authorization'] = `token ${githubToken}`;
+    rawopts.headers.Authorization = `token ${githubToken}`;
   }
 
   //  url (for surrogate control) always uses branch name
