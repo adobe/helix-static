@@ -378,6 +378,7 @@ function deliverPlain(owner, repo, ref, entry, root, esi = false, branch) {
     if (rqerror.statusCode === 404 || rqerror.statusCode === '404') {
       return error(entry, rqerror.statusCode);
     }
+    log.error('error while fetching content', rqerror);
     return error(
       (rqerror.response && rqerror.response.body && rqerror.response.body.toString())
       || rqerror.message,
