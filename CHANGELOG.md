@@ -1,3 +1,11 @@
+# [1.3.0](https://github.com/adobe/helix-static/compare/v1.2.13...v1.3.0) (2019-09-02)
+
+
+### Features
+
+* **static:** support authenticated Github access ([19c7ddd](https://github.com/adobe/helix-static/commit/19c7ddd)), closes [#46](https://github.com/adobe/helix-static/issues/46)
+* **static:** support github token via header and param ([a9b837d](https://github.com/adobe/helix-static/commit/a9b837d)), closes [#46](https://github.com/adobe/helix-static/issues/46)
+
 ## [1.2.13](https://github.com/adobe/helix-static/compare/v1.2.12...v1.2.13) (2019-09-02)
 
 
