@@ -1,3 +1,10 @@
+## [1.2.13](https://github.com/adobe/helix-static/compare/v1.2.12...v1.2.13) (2019-09-02)
+
+
+### Bug Fixes
+
+* **index:** typeError - Cannot read property 'body' of undefined ([#48](https://github.com/adobe/helix-static/issues/48)) ([3942e4c](https://github.com/adobe/helix-static/commit/3942e4c))
+
 ## [1.2.12](https://github.com/adobe/helix-static/compare/v1.2.11...v1.2.12) (2019-08-26)
 
 
