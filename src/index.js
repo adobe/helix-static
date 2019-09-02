@@ -308,8 +308,9 @@ function staticBase(owner, repo, entry, ref, strain = 'default') {
  * @param root
  * @param esi
  * @param branch
+ * @param githubToken
  */
-function deliverPlain(owner, repo, ref, entry, root, esi = false, branch) {
+function deliverPlain(owner, repo, ref, entry, root, esi = false, branch, githubToken) {
   const cleanentry = (`${root}/${entry}`).replace(/^\//, '').replace(/[/]+/g, '/');
   const url = `https://raw.githubusercontent.com/${owner}/${repo}/${ref}/${cleanentry}`;
   log.info(`deliverPlain: url=${url}`);
@@ -321,6 +322,9 @@ function deliverPlain(owner, repo, ref, entry, root, esi = false, branch) {
     resolveWithFullResponse: true,
     encoding: null,
   };
+  if (githubToken) {
+    rawopts.headers.Authorization = `token ${githubToken}`;
+  }
 
   //  url (for surrogate control) always uses branch name
   let surrogateKey;
@@ -429,21 +433,25 @@ function blacklisted(path, allow, deny) {
  * @param {string} params.deny regular expression pattern that all delivered files may not follow
  * @param {string} params.root document root for all static files in the repository
  * @param {boolean} params.esi replace relative URL references in JS and CSS with ESI references
+ * @param {Object} params.__ow_headers The request headers of this web action invokation
  */
-async function deliverStatic({
-  owner,
-  repo,
-  ref = 'master',
-  branch,
-  path,
-  entry,
-  strain = 'default',
-  plain = false,
-  allow,
-  deny,
-  root = '',
-  esi = false,
-} = {}) {
+async function deliverStatic(params = {}) {
+  const {
+    owner,
+    repo,
+    ref = 'master',
+    branch,
+    path,
+    entry,
+    strain = 'default',
+    plain = false,
+    allow,
+    deny,
+    root = '',
+    esi = false,
+    __ow_headers = {},
+  } = params;
+
   if (!owner && !repo && !path && !entry) {
     return {
       statusCode: 204,
@@ -461,8 +469,9 @@ async function deliverStatic({
     return forbidden();
   }
 
+  const githubToken = params.GITHUB_TOKEN || __ow_headers['x-github-token'];
   if (plain) {
-    return deliverPlain(owner, repo, ref, file, root, esi, branch);
+    return deliverPlain(owner, repo, ref, file, root, esi, branch, githubToken);
   }
 
   log.info('non-plain is not supported.'); // todo: remove plain parameter?

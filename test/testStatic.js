@@ -201,9 +201,14 @@ describe('CSS and JS Rewriting', () => {
 
 describe('Static Delivery Action #unittest', () => {
   setupPolly({
-    recordFailedRequests: true,
+    recordFailedRequests: false,
     recordIfMissing: false,
     logging: false,
+    matchRequestsBy: {
+      headers: {
+        exclude: ['authorization'],
+      },
+    },
     adapters: [NodeHttpAdapter],
     persister: FSPersister,
     persisterOptions: {
@@ -365,5 +370,27 @@ barba.init({
       plain: true,
     });
     assert.equal(res.statusCode, 403);
+  });
+
+  it('main() returns static file from private GitHub repo (gh token via header)', async () => {
+    const res = await index.main({
+      owner: 'adobe',
+      repo: 'project-helix', // private repository
+      entry: 'helix_logo.ico',
+      plain: true,
+      __ow_headers: { 'x-github-token': 'undisclosed-token' },
+    });
+    assert.equal(res.statusCode, 200);
+  });
+
+  it('main() returns static file from private GitHub repo (gh token via param)', async () => {
+    const res = await index.main({
+      owner: 'adobe',
+      repo: 'project-helix', // private repository
+      entry: 'helix_logo.ico',
+      plain: true,
+      GITHUB_TOKEN: 'undisclosed-token',
+    });
+    assert.equal(res.statusCode, 200);
   });
 });
