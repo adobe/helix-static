@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/adobe/helix-static/compare/v1.3.0...v1.3.1) (2019-09-03)
+
+
+### Bug Fixes
+
+* **package:** update @adobe/helix-shared to version 2.2.1 ([7129f4a](https://github.com/adobe/helix-static/commit/7129f4a))
+
 # [1.3.0](https://github.com/adobe/helix-static/compare/v1.2.13...v1.3.0) (2019-09-02)
 
 
