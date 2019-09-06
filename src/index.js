@@ -129,13 +129,15 @@ function addHeaders(headers, ref, content) {
   let cacheheaders = {};
   if (/[a-f0-9]{40}/i.test(ref)) {
     cacheheaders = {
-      'Cache-Control': 'max-age=131400',
+      // cache for 24 hours days, stale-while-revalidate: 30 days
+      'Cache-Control': 'max-age=86400, stale-while-revalidate=2592000',
     };
   } else if (content) {
     const hash = crypto.createHash('md5').update(content);
     cacheheaders = {
       ETag: `"${hash.digest('base64')}"`,
-      'Cache-Control': 's-maxage=300',
+      // stale-while-revalidate: 30 days
+      'Cache-Control': 's-maxage=300, stale-while-revalidate=2592000',
     };
     if (headers['Content-Type'] && (
       isCSS(headers['Content-Type'])
