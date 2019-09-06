@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/adobe/helix-static/compare/v1.3.2...v1.4.0) (2019-09-06)
+
+
+### Features
+
+* **cache:** use stale-while-revalidate for regular responses ([eb02502](https://github.com/adobe/helix-static/commit/eb02502))
+
 ## [1.3.2](https://github.com/adobe/helix-static/compare/v1.3.1...v1.3.2) (2019-09-06)
 
 
