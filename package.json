@@ -35,7 +35,7 @@
   "homepage": "https://github.com/adobe/helix-static#readme",
   "dependencies": {
     "@adobe/helix-log": "^2.2.2",
-    "@adobe/helix-pingdom-status": "3.1.0",
+    "@adobe/helix-status": "^5.0.1",
     "@adobe/helix-shared": "3.0.0",
     "@adobe/openwhisk-action-utils": "^2.3.2",
     "@babel/core": "^7.6.2",
@@ -88,6 +88,13 @@
     "ghooks": {
       "pre-commit": "npx lint-staged"
     }
+  },
+  "statuspage": {
+    "name": "Helix Static",
+    "group": "Delivery"
+  },
+  "newrelic": {
+    "group_policy": "Delivery Repeated Failure"
   },
   "snyk": true
 }

@@ -19,7 +19,7 @@ const parser = require('postcss-value-parser');
 const babel = require('@babel/core');
 const ohash = require('object-hash');
 const sanitizer = require('sanitizer');
-const { wrap } = require('@adobe/helix-pingdom-status');
+const { wrap } = require('@adobe/helix-status');
 const { logger } = require('@adobe/openwhisk-action-utils');
 const log = require('@adobe/helix-log');
 const { computeSurrogateKey } = require('@adobe/helix-shared').utils;
@@ -479,7 +479,7 @@ async function deliverStatic(params = {}) {
 }
 
 /**
- * Runs the action by wrapping the `deliverStatic` function with the pingdom-status utility.
+ * Runs the action by wrapping the `deliverStatic` function with the helix-status utility.
  * Additionally, if a EPSAGON_TOKEN is configured, the epsagon tracers are instrumented.
  * @param params Action params
  * @returns {Promise<*>} The response
