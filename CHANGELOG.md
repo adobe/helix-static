@@ -1,3 +1,10 @@
+## [1.4.2](https://github.com/adobe/helix-static/compare/v1.4.1...v1.4.2) (2019-09-30)
+
+
+### Bug Fixes
+
+* **monitoring:** replace helix-pingdom-status with helix-status ([71cc23d](https://github.com/adobe/helix-static/commit/71cc23d))
+
 ## [1.4.1](https://github.com/adobe/helix-static/compare/v1.4.0...v1.4.1) (2019-09-30)
 
 
