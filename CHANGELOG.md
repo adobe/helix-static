@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/adobe/helix-static/compare/v1.4.0...v1.4.1) (2019-09-30)
+
+
+### Bug Fixes
+
+* **deps:** update deps and use helix-log ([09b4c52](https://github.com/adobe/helix-static/commit/09b4c52))
+
 # [1.4.0](https://github.com/adobe/helix-static/compare/v1.3.2...v1.4.0) (2019-09-06)
 
 
