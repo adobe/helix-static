@@ -20,7 +20,8 @@ const babel = require('@babel/core');
 const ohash = require('object-hash');
 const sanitizer = require('sanitizer');
 const { wrap } = require('@adobe/helix-pingdom-status');
-const { logger: setupLogger } = require('@adobe/openwhisk-action-utils');
+const { logger } = require('@adobe/openwhisk-action-utils');
+const log = require('@adobe/helix-log');
 const { computeSurrogateKey } = require('@adobe/helix-shared').utils;
 
 const { space } = postcss.list;
@@ -31,9 +32,6 @@ const pkgJson = require('../package.json');
 
 // one megabyte openwhisk limit + 20% Base64 inflation + safety padding
 const REDIRECT_LIMIT = 750000;
-
-// global logger
-let log;
 
 /**
  * Generates an error response
@@ -511,20 +509,8 @@ async function run(params) {
  * @param params Action params
  * @returns {Promise<*>} The response
  */
-async function main(params, logger = log) {
-  try {
-    log = setupLogger(params, logger);
-    const result = await run(params);
-    if (log.flush) {
-      log.flush(); // don't wait
-    }
-    return result;
-  } catch (e) {
-    console.error(e);
-    return {
-      statusCode: e.statusCode || 500,
-    };
-  }
+async function main(params) {
+  return logger.wrap(run, params);
 }
 
 // todo: do we still need those exports?
