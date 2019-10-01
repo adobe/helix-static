@@ -1,3 +1,10 @@
+## [1.4.3](https://github.com/adobe/helix-static/compare/v1.4.2...v1.4.3) (2019-10-01)
+
+
+### Bug Fixes
+
+* **deps:** update any ([#60](https://github.com/adobe/helix-static/issues/60)) ([1c6cb2f](https://github.com/adobe/helix-static/commit/1c6cb2f))
+
 ## [1.4.2](https://github.com/adobe/helix-static/compare/v1.4.1...v1.4.2) (2019-09-30)
 
 

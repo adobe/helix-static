@@ -1,6 +1,6 @@
 {
   "name": "@adobe/helix-static",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "private": true,
   "description": "Helix micro service for serving static files from GitHub",
   "main": "src/index.js",
@@ -17,7 +17,7 @@
     "prepare": "npm run snyk-protect"
   },
   "wsk": {
-    "name": "helix-services/static@1.4.2",
+    "name": "helix-services/static@1.4.3",
     "static": []
   },
   "repository": {
