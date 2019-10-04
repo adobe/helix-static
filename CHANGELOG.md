@@ -1,3 +1,10 @@
+## [1.4.5](https://github.com/adobe/helix-static/compare/v1.4.4...v1.4.5) (2019-10-04)
+
+
+### Bug Fixes
+
+* **logging:** reduce log level for error response ([#66](https://github.com/adobe/helix-static/issues/66)) ([ab585d6](https://github.com/adobe/helix-static/commit/ab585d6))
+
 ## [1.4.4](https://github.com/adobe/helix-static/compare/v1.4.3...v1.4.4) (2019-10-02)
 
 
