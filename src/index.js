@@ -41,7 +41,7 @@ const REDIRECT_LIMIT = 750000;
  */
 function error(message, code = 500) {
   const statusCode = code === 400 ? 404 : code;
-  log.error('delivering error', message, code);
+  log.info('delivering error', message, code);
   return {
     statusCode,
     headers: {
