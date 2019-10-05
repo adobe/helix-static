@@ -12,13 +12,15 @@
     "test": "nyc mocha && npm run lint",
     "test-ci": "npm run lint && nyc mocha --reporter mocha-junit-reporter && nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "build": "wsk-builder -v",
-    "deploy": "wsk-builder -v --deploy --test -p EPSAGON_TOKEN=$EPSAGON_TOKEN",
+    "deploy": "wsk-builder -v --deploy --test=/_status_check/healthcheck.json",
+    "deploy-sequences": "wsk-builder --no-build -no-hints -l latest -l major -l minor",
+    "deploy-ci": "wsk-builder -v --deploy --test=/_status_check/healthcheck.json --pkgVersion=ci$CIRCLE_BUILD_NUM -l ci",
     "snyk-protect": "snyk protect",
     "prepare": "npm run snyk-protect"
   },
   "wsk": {
-    "name": "helix-services/static@1.4.5",
-    "static": []
+    "name": "helix-services-private/static@1.4.5",
+    "linksPackage": "helix-services"
   },
   "repository": {
     "type": "git",
@@ -51,7 +53,7 @@
   },
   "devDependencies": {
     "@adobe/eslint-config-helix": "1.1.0",
-    "@adobe/openwhisk-action-builder": "2.1.0",
+    "@adobe/openwhisk-action-builder": "2.1.1",
     "@pollyjs/adapter-node-http": "2.6.3",
     "@pollyjs/core": "2.6.3",
     "@pollyjs/persister-fs": "2.6.3",

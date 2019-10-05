@@ -69,20 +69,8 @@ jobs:
         command: npm run semantic-release
 
     - run:
-        name: Set Epsagon Token
-        command: wsk action update helix-services/`node -e "console.log(require('./package.json').name.replace('@adobe/helix-', ''))"`@`node -e "console.log(require('./package.json').version)"` -p EPSAGON_TOKEN $EPSAGON_TOKEN
-
-    - run:
-        name: Link Sequence (Latest)
-        command: wsk action update --sequence /helix/helix-services/static@latest helix-services/static@`node -e "console.log(require('./package.json').version)"` --web=true --web-secure=false
-
-    - run:
-        name: Link Sequence (Major)
-        command: wsk action update --sequence /helix/helix-services/static@v`node -e "console.log(require('./package.json').version.match(/^[0-9]+/)[0])"` helix-services/static@`node -e "console.log(require('./package.json').version)"` --web=true --web-secure=false
-
-    - run:
-        name: Link Sequence (Minor)
-        command: wsk action update --sequence /helix/helix-services/static@v`node -e "console.log(require('./package.json').version.match(/^[0-9]+.[0-9]+/)[0])"` helix-services/static@`node -e "console.log(require('./package.json').version)"` --web=true --web-secure=false
+        name: Link Sequences
+        command: npm run deploy-sequences
 
     - run:
         name: Set Up Monitoring
@@ -103,15 +91,7 @@ jobs:
 
     - run:
         name: Branch Deployment
-        command: npx wsk-builder -v --deploy --test --name helix-services/static@ci$CIRCLE_BUILD_NUM
-
-    - run:
-        name: Set Epsagon Token
-        command: wsk action update helix-services/`node -e "console.log(require('./package.json').name.replace('@adobe/helix-', ''))"`@ci$CIRCLE_BUILD_NUM -p EPSAGON_TOKEN $EPSAGON_TOKEN
-
-    - run:
-        name: Link Sequence (CI)
-        command: wsk action update --sequence /helix/helix-services/static@ci helix-services/static@ci$CIRCLE_BUILD_NUM --web=true --web-secure=false
+        command: npm run deploy-ci
 
 workflows:
   version: 2
