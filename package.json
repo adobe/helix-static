@@ -19,7 +19,7 @@
     "prepare": "npm run snyk-protect"
   },
   "wsk": {
-    "name": "helix-services-private/static@1.4.5",
+    "name": "helix-services-private/static@${version}",
     "linksPackage": "helix-services"
   },
   "repository": {
