@@ -1,3 +1,10 @@
+## [1.4.6](https://github.com/adobe/helix-static/compare/v1.4.5...v1.4.6) (2019-10-05)
+
+
+### Bug Fixes
+
+* **deploy:** use helix-services-private for deployment ([3ebe6bf](https://github.com/adobe/helix-static/commit/3ebe6bf))
+
 ## [1.4.5](https://github.com/adobe/helix-static/compare/v1.4.4...v1.4.5) (2019-10-04)
 
 
