@@ -369,7 +369,7 @@ function deliverPlain(owner, repo, ref, entry, root, esi = false, branch, github
       // the browser will fetch it again, so let's cache the 404
       // for five minutes, in order to prevent the static function
       // from being called too often
-      log.error(`error while fetching content. override status ${rqerror.statusCode} due to esi flag.`);
+      log.info(`error while fetching content. override status ${rqerror.statusCode} due to esi flag.`);
       return {
         statusCode: 404,
         headers: {
