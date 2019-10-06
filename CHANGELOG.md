@@ -1,3 +1,10 @@
+## [1.4.9](https://github.com/adobe/helix-static/compare/v1.4.8...v1.4.9) (2019-10-06)
+
+
+### Bug Fixes
+
+* **index:** reduce log level of 404 response ([8546872](https://github.com/adobe/helix-static/commit/8546872))
+
 ## [1.4.8](https://github.com/adobe/helix-static/compare/v1.4.7...v1.4.8) (2019-10-05)
 
 
