@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/adobe/helix-static/compare/v1.4.9...v1.5.0) (2019-10-07)
+
+
+### Features
+
+* **index:** cleanup code ([#74](https://github.com/adobe/helix-static/issues/74)) ([d2fc996](https://github.com/adobe/helix-static/commit/d2fc996)), closes [#19](https://github.com/adobe/helix-static/issues/19)
+
 ## [1.4.9](https://github.com/adobe/helix-static/compare/v1.4.8...v1.4.9) (2019-10-06)
 
 
