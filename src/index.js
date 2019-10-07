@@ -290,15 +290,6 @@ function processBody(type, responsebody, esi = false, entry) {
 }
 
 /**
- * Calculates the static base marker.
- * @returns {string}
- */
-function staticBase(owner, repo, entry, ref, strain = 'default') {
-  // todo: is this still needed?
-  return `__HLX/${owner}/${repo}/${strain}/${ref}/${entry}/DIST__`;
-}
-
-/**
  * Delivers a plain file from the given github repository.
  *
  * @param owner
@@ -427,8 +418,6 @@ function blacklisted(path, allow, deny) {
  * @param {string} params.ref SHA of a commit or name of a branch or tag on GitHub
  * @param {string} params.branch the name of a branch or tag on GitHub (defaults to ref)
  * @param {string} params.path path to the requested file (if used with `entry`)
- * @param {string} params.entry path to the file requested by the browser
- * @param {boolean} params.plain disable asset pre-processing with Parcel
  * @param {string} params.allow regular expression pattern that all delivered files must follow
  * @param {string} params.deny regular expression pattern that all delivered files may not follow
  * @param {string} params.root document root for all static files in the repository
@@ -442,9 +431,6 @@ async function deliverStatic(params = {}) {
     ref = 'master',
     branch,
     path,
-    entry,
-    strain = 'default',
-    plain = false,
     allow,
     deny,
     root = '',
@@ -452,7 +438,7 @@ async function deliverStatic(params = {}) {
     __ow_headers = {},
   } = params;
 
-  if (!owner && !repo && !path && !entry) {
+  if (!owner && !repo && !path) {
     return {
       statusCode: 204,
       body: '',
@@ -462,20 +448,15 @@ async function deliverStatic(params = {}) {
     };
   }
 
-  const file = uri.normalize(entry);
-  log.info(`deliverStatic with ${owner}/${repo}/${ref} path=${path} entry=${entry} file=${file} plain=${plain} allow=${allow} deny=${deny} root=${root} esi=${esi} strain=${strain}`);
+  const file = uri.normalize(path);
+  log.info(`deliverStatic with ${owner}/${repo}/${ref} path=${path} file=${file} allow=${allow} deny=${deny} root=${root} esi=${esi}`);
   if (blacklisted(file, allow, deny)) {
     log.info('blacklisted!');
     return forbidden();
   }
 
   const githubToken = params.GITHUB_TOKEN || __ow_headers['x-github-token'];
-  if (plain) {
-    return deliverPlain(owner, repo, ref, file, root, esi, branch, githubToken);
-  }
-
-  log.info('non-plain is not supported.'); // todo: remove plain parameter?
-  return forbidden();
+  return deliverPlain(owner, repo, ref, file, root, esi, branch, githubToken);
 }
 
 /**
@@ -518,7 +499,6 @@ module.exports = {
   error,
   addHeaders,
   isBinary,
-  staticBase,
   blacklisted,
   getBody: processBody,
   main,

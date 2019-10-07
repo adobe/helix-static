@@ -37,7 +37,7 @@ describe('Static Delivery Action #integrationtest', () => {
       owner: 'trieloff',
       repo: 'helix-demo',
       ref: 'master',
-      entry: '/dist/style.css',
+      path: '/dist/style.css',
       plain: true,
     });
 
@@ -55,7 +55,7 @@ describe('Static Delivery Action #integrationtest', () => {
       repo: 'helix-demo',
       ref: '3e8dec3886cb75bcea6970b4b00783f69cbf487a',
       branch: 'master',
-      entry: '/dist/style.css',
+      path: '/dist/style.css',
       plain: true,
     });
 
@@ -71,7 +71,7 @@ describe('Static Delivery Action #integrationtest', () => {
       owner: 'trieloff',
       repo: 'helix-demo',
       ref: 'master',
-      entry: 'helix_logo.png',
+      path: 'helix_logo.png',
       plain: true,
     });
 
@@ -88,7 +88,7 @@ describe('Static Delivery Action #integrationtest', () => {
       owner: 'trieloff',
       repo: 'helix-demo',
       ref: 'master',
-      entry: 'htdocs/test.json',
+      path: 'htdocs/test.json',
       plain: true,
     });
 
@@ -105,7 +105,7 @@ describe('Static Delivery Action #integrationtest', () => {
       owner: 'trieloff',
       repo: 'helix-demo',
       ref: 'master',
-      entry: 'not-here.png',
+      path: 'not-here.png',
       plain: true,
     });
 
@@ -117,7 +117,7 @@ describe('Static Delivery Action #integrationtest', () => {
       owner: 'trieloff',
       repo: 'helix-demo',
       ref: 'master',
-      entry: 'not-here.png',
+      path: 'not-here.png',
       plain: true,
       esi: true,
     });
@@ -131,7 +131,7 @@ describe('Static Delivery Action #integrationtest', () => {
       owner: 'trieloff',
       repo: 'helix-demo',
       ref: 'master',
-      entry: '',
+      path: '',
       plain: true,
     });
 
@@ -144,7 +144,7 @@ describe('Static Delivery Action #integrationtest', () => {
       owner: 'trieloff',
       repo: 'helix-demo',
       ref: 'master',
-      entry: 'big-image.jpg',
+      path: 'big-image.jpg',
       plain: true,
     });
 
@@ -246,10 +246,6 @@ describe('Static Delivery Action #unittest', () => {
     assert.equal(index.isBinary('application/javascript'), false);
   });
 
-  it('staticBase() #unittest', () => {
-    assert.ok(index.staticBase('foo', 'bar', 'index.html', 'index.css', 'master').match(/__HLX.*DIST__/));
-  });
-
   it('blacklisted() #unittest', () => {
     assert.equal(index.blacklisted('index.html'), false);
     assert.equal(index.blacklisted('/index.html'), false);
@@ -284,7 +280,7 @@ describe('Static Delivery Action #unittest', () => {
     const res = await index.main({
       owner: 'adobe',
       repo: 'helix-cli',
-      entry: '/demos/simple/htdocs/style.css',
+      path: '/demos/simple/htdocs/style.css',
       plain: true,
     });
     assert.ok(res.body.indexOf('Arial') > 0, true);
@@ -294,7 +290,7 @@ describe('Static Delivery Action #unittest', () => {
     const res = await index.main({
       owner: 'adobe',
       repo: 'helix-cli',
-      entry: './demos/simple/htdocs/style.css',
+      path: './demos/simple/htdocs/style.css',
       plain: true,
     });
     assert.ok(res.body.indexOf('Arial') > 0, true);
@@ -304,7 +300,7 @@ describe('Static Delivery Action #unittest', () => {
     const res = await index.main({
       owner: 'adobe',
       repo: 'helix-cli',
-      entry: './demos/simple/test/../htdocs/style.css',
+      path: './demos/simple/test/../htdocs/style.css',
       plain: true,
     });
     assert.ok(res.body.indexOf('Arial') > 0, true);
@@ -322,7 +318,7 @@ describe('Static Delivery Action #unittest', () => {
     const res = await index.main({
       owner: 'trieloff',
       repo: 'helix-demo',
-      entry: '/index.js',
+      path: '/index.js',
       root: '/htdocs',
       plain: true,
       esi: true,
@@ -346,22 +342,11 @@ barba.init({
     } }] });`);
   });
 
-  it('main() returns 403 if plain is false', async () => {
-    const res = await index.main({
-      owner: 'adobe',
-      repo: 'helix-cli',
-      entry: '/demos/simple/htdocs/style.css',
-      plain: false,
-    });
-    assert.equal(res.statusCode, 403);
-  });
-
   it('main() returns 403 in case of backlisted file', async () => {
     const res = await index.main({
       owner: 'adobe',
       repo: 'helix-cli',
-      entry: '/package.json',
-      plain: true,
+      path: '/package.json',
     });
     assert.equal(res.statusCode, 403);
   });
@@ -370,8 +355,7 @@ barba.init({
     const res = await index.main({
       owner: 'adobe',
       repo: 'project-helix', // private repository
-      entry: 'helix_logo.ico',
-      plain: true,
+      path: 'helix_logo.ico',
       __ow_headers: { 'x-github-token': 'undisclosed-token' },
     });
     assert.equal(res.statusCode, 200);
@@ -381,8 +365,7 @@ barba.init({
     const res = await index.main({
       owner: 'adobe',
       repo: 'project-helix', // private repository
-      entry: 'helix_logo.ico',
-      plain: true,
+      path: 'helix_logo.ico',
       GITHUB_TOKEN: 'undisclosed-token',
     });
     assert.equal(res.statusCode, 200);
