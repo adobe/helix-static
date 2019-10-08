@@ -1,3 +1,10 @@
+## [1.5.2](https://github.com/adobe/helix-static/compare/v1.5.1...v1.5.2) (2019-10-08)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-shared to v3.0.3 ([#81](https://github.com/adobe/helix-static/issues/81)) ([04da4ae](https://github.com/adobe/helix-static/commit/04da4ae))
+
 ## [1.5.1](https://github.com/adobe/helix-static/compare/v1.5.0...v1.5.1) (2019-10-08)
 
 
