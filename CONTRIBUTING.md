@@ -32,14 +32,14 @@ In your pull request, outline:
 
 * What the changes intend
 * How they change the existing code
-* If (and what) they breaks
+* If (and what) they break
 * Start the pull request with the GitHub issue ID, e.g. #123
 
 Lastly, please follow the [pull request template](https://github.com/adobe/helix-cli/blob/master/.github/pull_request_template.md) when submitting a pull request!
 
 ## Coding Styleguides
 
-We enforce a coding styleguide using `eslint`. As part of your build, run `npm run lint` to check if your code is conforming to the style guide. We do the same for every PR in our CI, so PRs will get rejected if they don't follow the style guide.
+We enforce a coding style guide using `eslint`. As part of your build, run `npm run lint` to check if your code is conforming to the style guide. We do the same for every PR in our CI, so PRs will get rejected if they don't follow the style guide.
 
 You can fix some of the issues automatically by running `npx eslint . --fix`.
 
@@ -61,4 +61,4 @@ Feedback on the pull request will be given in writing, in GitHub.
 
 # Release Management
 
-Releasing is done using [semantic-release](https://github.com/semantic-release/semantic-release), and every (relevant) commit to the `master` branch gets released automatically. The release will update the version number and add the recent changes to the [CHANGELOG.md](./CHANGELOG.md). It will also create a [release](https://github.com/adobe/helix-cli/releases) in github and finally publish the package to the [Adobe organization on npmjs.org](https://www.npmjs.com/org/adobe).
+Releasing is done using [semantic-release](https://github.com/semantic-release/semantic-release), and every (relevant) commit to the `master` branch gets released automatically. The release will update the version number and add the recent changes to the [CHANGELOG.md](./CHANGELOG.md). It will also create a [release](https://github.com/adobe/helix-cli/releases) in GitHub and finally publish the package to the [Adobe organization on npmjs.org](https://www.npmjs.com/org/adobe).
