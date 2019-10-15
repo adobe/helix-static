@@ -1,3 +1,11 @@
+## [1.5.3](https://github.com/adobe/helix-static/compare/v1.5.2...v1.5.3) (2019-10-15)
+
+
+### Bug Fixes
+
+* **deps:** update any ([#86](https://github.com/adobe/helix-static/issues/86)) ([ea5a76b](https://github.com/adobe/helix-static/commit/ea5a76b))
+* **deps:** update dependency object-hash to v2 ([#87](https://github.com/adobe/helix-static/issues/87)) ([c3cd005](https://github.com/adobe/helix-static/commit/c3cd005))
+
 ## [1.5.2](https://github.com/adobe/helix-static/compare/v1.5.1...v1.5.2) (2019-10-08)
 
 
