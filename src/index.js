@@ -301,7 +301,7 @@ function processBody(type, responsebody, esi = false, entry) {
  * @param branch
  * @param githubToken
  */
-function deliverPlain(owner, repo, ref, entry, root, esi = false, branch, githubToken) {
+async function deliverPlain(owner, repo, ref, entry, root, esi = false, branch, githubToken) {
   const cleanentry = (`${root}/${entry}`).replace(/^\//, '').replace(/[/]+/g, '/');
   const url = `https://raw.githubusercontent.com/${owner}/${repo}/${ref}/${cleanentry}`;
   log.info(`deliverPlain: url=${url}`);
@@ -325,7 +325,8 @@ function deliverPlain(owner, repo, ref, entry, root, esi = false, branch, github
     surrogateKey = computeSurrogateKey(url);
   }
 
-  return request.get(rawopts).then(async (response) => {
+  try {
+    const response = await request.get(rawopts);
     const type = mime.lookup(cleanentry) || 'application/octet-stream';
     const size = parseInt(response.headers['content-length'], 10);
     log.info(`got response. size=${size}, type=${type}`);
@@ -354,7 +355,7 @@ function deliverPlain(owner, repo, ref, entry, root, esi = false, branch, github
         'Surrogate-Key': surrogateKey,
       },
     };
-  }).catch((rqerror) => {
+  } catch (rqerror) {
     if (esi) {
       // the ESI failed, so we simply fall back to the original URL
       // the browser will fetch it again, so let's cache the 404
@@ -379,7 +380,7 @@ function deliverPlain(owner, repo, ref, entry, root, esi = false, branch, github
       || rqerror.message,
       rqerror.statusCode,
     );
-  });
+  }
 }
 
 /**
@@ -494,7 +495,6 @@ async function main(params) {
   return logger.wrap(run, params);
 }
 
-// todo: do we still need those exports?
 module.exports = {
   error,
   addHeaders,
