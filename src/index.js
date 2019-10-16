@@ -9,7 +9,7 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-// eslint-disable-next-line import/no-extraneous-dependencies
+
 const request = require('request-promise-native');
 const crypto = require('crypto');
 const mime = require('mime-types');
@@ -23,9 +23,11 @@ const { wrap } = require('@adobe/helix-status');
 const { logger } = require('@adobe/openwhisk-action-utils');
 const log = require('@adobe/helix-log');
 const { computeSurrogateKey } = require('@adobe/helix-shared').utils;
+const uri = require('uri-js');
+
+const ExternalImageHandler = require('./ExternalImageHandler.js');
 
 const { space } = postcss.list;
-const uri = require('uri-js');
 const pkgJson = require('../package.json');
 
 /* eslint-disable no-console */
@@ -438,6 +440,12 @@ async function deliverStatic(params = {}) {
     esi = false,
     __ow_headers = {},
   } = params;
+
+  // check if external image request
+  const externalImageHandler = ExternalImageHandler.create(params);
+  if (externalImageHandler) {
+    return externalImageHandler.handle();
+  }
 
   if (!owner && !repo && !path) {
     return {
