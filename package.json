@@ -36,7 +36,7 @@
   },
   "homepage": "https://github.com/adobe/helix-static#readme",
   "dependencies": {
-    "@adobe/helix-log": "2.2.2",
+    "@adobe/helix-log": "3.0.0",
     "@adobe/helix-status": "5.1.0",
     "@adobe/helix-shared": "3.0.4",
     "@adobe/openwhisk-action-utils": "2.3.4",
