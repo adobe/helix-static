@@ -1,3 +1,10 @@
+## [1.5.7](https://github.com/adobe/helix-static/compare/v1.5.6...v1.5.7) (2019-10-17)
+
+
+### Bug Fixes
+
+* **config:** correct action name ([9643e3e](https://github.com/adobe/helix-static/commit/9643e3e))
+
 ## [1.5.6](https://github.com/adobe/helix-static/compare/v1.5.5...v1.5.6) (2019-10-17)
 
 
