@@ -1,3 +1,10 @@
+## [1.5.6](https://github.com/adobe/helix-static/compare/v1.5.5...v1.5.6) (2019-10-17)
+
+
+### Bug Fixes
+
+* **deps:** update dependency snyk to v1.235.1 ([#93](https://github.com/adobe/helix-static/issues/93)) ([7b63f17](https://github.com/adobe/helix-static/commit/7b63f17))
+
 ## [1.5.5](https://github.com/adobe/helix-static/compare/v1.5.4...v1.5.5) (2019-10-17)
 
 
