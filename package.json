@@ -48,7 +48,7 @@
     "postcss-url": "8.0.0",
     "postcss-value-parser": "4.0.2",
     "sanitizer": "0.1.3",
-    "snyk": "1.235.0",
+    "snyk": "1.235.1",
     "uri-js": "4.2.2"
   },
   "devDependencies": {
