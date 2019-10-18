@@ -14,9 +14,9 @@
 
 ## About
 
-Helix Static is a shared microservice for [Project Helix](https://www.project-helix.io) that serves static files from GitHub. It includes following features:
+Helix Static is a shared microservice for [Project Helix](https://www.project-helix.io) that serves static files from GitHub. It includes the following features:
 
-- mime type detection
+- MIME type detection
 - large file dection (large files get redirected and served from the CDN)
 - generation of long-cachable URLs for JS and CSS assets
 - replacement of URLs in JS and CSS assets with references to long-cacheable URLs (through ESI)
