@@ -102,15 +102,15 @@ function isBinary(type) {
     return false;
   }
   if (/.*\/.*xml/.test(type)) {
-    return /svg/.test(type); // openwshisk treats svg as binary
+    return /svg/.test(type); // openwshisk treats SVG as binary
   }
   return true;
 }
 
 /**
- * Checks if the content type is json.
+ * Checks if the content type is JSON.
  * @param {string} type - content type
- * @returns {boolean} {@code true} if content type is json.
+ * @returns {boolean} {@code true} if content type is JSON.
  */
 function isJSON(type) {
   return /json/.test(type);
@@ -149,9 +149,9 @@ function addHeaders(headers, ref, content) {
 
 /**
  * Rewrites the content by replacing all `@import` statements and `url` rules with `<esi:include/>`
- * tags, so that they can be resolved to a stable url by the esi processor.
+ * tags, so that they can be resolved to a stable URL by the ESI processor.
  *
- * @param {string} css - the css content
+ * @param {string} css - the CSS content
  * @param {string} base - the base href
  * @returns {Function | any}
  */
@@ -220,7 +220,7 @@ function rewriteCSS(css, base = '') {
  * Rewrites the content by replacing all `import` statements rules with `<esi:include/>`
  * tags, so that they can be resolved to a stable url by the esi processor.
  *
- * @param {string} javascript - the javascript content
+ * @param {string} javascript - the Javascript content
  * @param {string} base - the base href
  * @returns {Function | any}
  */
@@ -468,7 +468,7 @@ async function deliverStatic(params = {}) {
 async function run(params) {
   let action = deliverStatic;
   if (params && params.EPSAGON_TOKEN) {
-    // ensure that epsagon is only required, if a token is present. this is to avoid invoking their
+    // ensure that epsagon is only required, if a token is present. This is to avoid invoking their
     // patchers otherwise.
     // eslint-disable-next-line global-require
     const { openWhiskWrapper } = require('epsagon');
