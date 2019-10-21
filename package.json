@@ -35,7 +35,7 @@
   "homepage": "https://github.com/adobe/helix-static#readme",
   "dependencies": {
     "@adobe/helix-log": "3.0.0",
-    "@adobe/helix-shared": "3.0.4",
+    "@adobe/helix-shared": "3.1.0",
     "@adobe/helix-status": "5.1.1",
     "@adobe/openwhisk-action-utils": "2.3.5",
     "@babel/core": "7.6.4",
@@ -57,7 +57,7 @@
     "@semantic-release/changelog": "3.0.4",
     "@semantic-release/exec": "3.3.7",
     "@semantic-release/git": "7.0.16",
-    "@semantic-release/github": "5.5.3",
+    "@semantic-release/github": "5.5.4",
     "ajv": "6.10.2",
     "archiver": "3.1.1",
     "chalk": "2.4.2",
@@ -71,11 +71,11 @@
     "ghooks": "2.0.4",
     "lint-staged": "9.4.2",
     "lodash": "4.17.15",
-    "mocha": "6.2.1",
+    "mocha": "6.2.2",
     "mocha-junit-reporter": "1.23.1",
     "nock": "11.4.0",
     "nyc": "14.1.1",
-    "semantic-release": "15.13.24"
+    "semantic-release": "15.13.27"
   },
   "lint-staged": {
     "*.js": "eslint"
