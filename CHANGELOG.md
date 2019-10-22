@@ -1,3 +1,10 @@
+## [1.5.9](https://github.com/adobe/helix-static/compare/v1.5.8...v1.5.9) (2019-10-22)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-status to v5.2.0 ([#98](https://github.com/adobe/helix-static/issues/98)) ([c939c2d](https://github.com/adobe/helix-static/commit/c939c2d652362237af5a15e3bbbb06769b98c16d))
+
 ## [1.5.8](https://github.com/adobe/helix-static/compare/v1.5.7...v1.5.8) (2019-10-21)
 
 
