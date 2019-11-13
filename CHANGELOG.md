@@ -1,3 +1,10 @@
+## [1.5.16](https://github.com/adobe/helix-static/compare/v1.5.15...v1.5.16) (2019-11-13)
+
+
+### Bug Fixes
+
+* **deps:** update any ([#110](https://github.com/adobe/helix-static/issues/110)) ([5a6d8b7](https://github.com/adobe/helix-static/commit/5a6d8b727033cb84c165df6d1385293877dd3f06))
+
 ## [1.5.15](https://github.com/adobe/helix-static/compare/v1.5.14...v1.5.15) (2019-11-12)
 
 
