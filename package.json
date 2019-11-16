@@ -86,12 +86,5 @@
     "ghooks": {
       "pre-commit": "npx lint-staged"
     }
-  },
-  "statuspage": {
-    "name": "Helix Static",
-    "group": "Delivery"
-  },
-  "newrelic": {
-    "group_policy": "Delivery Repeated Failure"
   }
 }
