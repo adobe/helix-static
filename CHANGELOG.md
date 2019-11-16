@@ -1,3 +1,10 @@
+## [1.5.18](https://github.com/adobe/helix-static/compare/v1.5.17...v1.5.18) (2019-11-16)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-status to v6 ([0dffc86](https://github.com/adobe/helix-static/commit/0dffc86f96163cb56ac64d76bea124da4a234148))
+
 ## [1.5.17](https://github.com/adobe/helix-static/compare/v1.5.16...v1.5.17) (2019-11-14)
 
 
