@@ -1,3 +1,10 @@
+## [1.5.20](https://github.com/adobe/helix-static/compare/v1.5.19...v1.5.20) (2019-11-22)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-log to v4.1.0 ([42f732d](https://github.com/adobe/helix-static/commit/42f732d2efa41de73baf8f752461bf39ffa71a9a))
+
 ## [1.5.19](https://github.com/adobe/helix-static/compare/v1.5.18...v1.5.19) (2019-11-20)
 
 
