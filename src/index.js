@@ -19,8 +19,9 @@ const parser = require('postcss-value-parser');
 const babel = require('@babel/core');
 const ohash = require('object-hash');
 const sanitizer = require('sanitizer');
-const { wrap } = require('@adobe/helix-status');
-const { logger } = require('@adobe/openwhisk-action-utils');
+const { wrap: status } = require('@adobe/helix-status');
+const { wrap } = require('@adobe/openwhisk-action-utils');
+const { logger } = require('@adobe/openwhisk-action-logger');
 const log = require('@adobe/helix-log');
 const { computeSurrogateKey } = require('@adobe/helix-shared').utils;
 
@@ -373,7 +374,7 @@ function deliverPlain(owner, repo, ref, entry, root, esi = false, branch, github
     if (rqerror.statusCode === 404 || rqerror.statusCode === '404') {
       return error(entry, rqerror.statusCode);
     }
-    log.error('error while fetching content', rqerror);
+    log.error('error while fetching content', rqerror.message);
     return error(
       (rqerror.response && rqerror.response.body && rqerror.response.body.toString())
       || rqerror.message,
@@ -460,29 +461,26 @@ async function deliverStatic(params = {}) {
 }
 
 /**
- * Runs the action by wrapping the `deliverStatic` function with the helix-status utility.
- * Additionally, if a EPSAGON_TOKEN is configured, the epsagon tracers are instrumented.
- * @param params Action params
- * @returns {Promise<*>} The response
+ * Instruments the action with epsagon, if a EPSAGON_TOKEN is configured.
  */
-async function run(params) {
-  let action = deliverStatic;
-  if (params && params.EPSAGON_TOKEN) {
-    // ensure that epsagon is only required, if a token is present. This is to avoid invoking their
-    // patchers otherwise.
-    // eslint-disable-next-line global-require
-    const { openWhiskWrapper } = require('epsagon');
-    log.info('instrumenting epsagon.');
-    action = openWhiskWrapper(action, {
-      token_param: 'EPSAGON_TOKEN',
-      appName: 'Helix Services',
-      metadataOnly: false, // Optional, send more trace data
-      ignoredKeys: [/[A-Z0-9_]+/],
-    });
-  }
-  return wrap(action, {
-    github: 'https://raw.githubusercontent.com/adobe/helix-static/master/src/index.js',
-  })(params);
+function epsagon(action) {
+  return async (params) => {
+    if (params && params.EPSAGON_TOKEN) {
+      // ensure that epsagon is only required, if a token is present.
+      // This is to avoid invoking their patchers otherwise.
+      // eslint-disable-next-line global-require
+      const { openWhiskWrapper } = require('epsagon');
+      log.info('instrumenting epsagon.');
+      // eslint-disable-next-line no-param-reassign
+      action = openWhiskWrapper(action, {
+        token_param: 'EPSAGON_TOKEN',
+        appName: 'Helix Services',
+        metadataOnly: false, // Optional, send more trace data
+        ignoredKeys: [/[A-Z0-9_]+/],
+      });
+    }
+    return action(params);
+  };
 }
 
 /**
@@ -490,9 +488,11 @@ async function run(params) {
  * @param params Action params
  * @returns {Promise<*>} The response
  */
-async function main(params) {
-  return logger.wrap(run, params);
-}
+const main = wrap(deliverStatic)
+  .with(epsagon)
+  .with(status, { github: 'https://raw.githubusercontent.com/adobe/helix-static/master/src/index.js' })
+  .with(logger.trace)
+  .with(logger);
 
 // todo: do we still need those exports?
 module.exports = {
