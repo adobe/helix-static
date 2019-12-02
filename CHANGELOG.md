@@ -1,3 +1,10 @@
+## [1.5.24](https://github.com/adobe/helix-static/compare/v1.5.23...v1.5.24) (2019-12-02)
+
+
+### Bug Fixes
+
+* **release:** triggering release ([7801c3d](https://github.com/adobe/helix-static/commit/7801c3d5b165b9d7c93860ae292a4065f5e8a056))
+
 ## [1.5.23](https://github.com/adobe/helix-static/compare/v1.5.22...v1.5.23) (2019-11-25)
 
 
