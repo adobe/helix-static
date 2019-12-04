@@ -1,6 +1,6 @@
 {
   "name": "@adobe/helix-static",
-  "version": "1.5.25",
+  "version": "1.5.26",
   "private": true,
   "description": "Helix micro service for serving static files from GitHub",
   "main": "src/index.js",
