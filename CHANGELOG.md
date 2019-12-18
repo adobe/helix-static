@@ -1,3 +1,10 @@
+## [1.5.31](https://github.com/adobe/helix-static/compare/v1.5.30...v1.5.31) (2019-12-18)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/openwhisk-action-logger to v2.0.2 ([aa433cf](https://github.com/adobe/helix-static/commit/aa433cf45dc2295925260ef18425fb2d614bd4bf))
+
 ## [1.5.30](https://github.com/adobe/helix-static/compare/v1.5.29...v1.5.30) (2019-12-18)
 
 
