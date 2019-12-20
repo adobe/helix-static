@@ -1,3 +1,10 @@
+## [1.5.32](https://github.com/adobe/helix-static/compare/v1.5.31...v1.5.32) (2019-12-20)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-shared to v3.2.0 ([f911503](https://github.com/adobe/helix-static/commit/f91150392aa825689022e10b99b3ab179f9d35cb))
+
 ## [1.5.31](https://github.com/adobe/helix-static/compare/v1.5.30...v1.5.31) (2019-12-18)
 
 
