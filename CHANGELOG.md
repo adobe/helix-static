@@ -1,3 +1,10 @@
+## [1.5.37](https://github.com/adobe/helix-static/compare/v1.5.36...v1.5.37) (2020-01-09)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-status to v7.0.3 ([#148](https://github.com/adobe/helix-static/issues/148)) ([05cb978](https://github.com/adobe/helix-static/commit/05cb978b4054e7bf98faecbab0e2851223dbeac2))
+
 ## [1.5.36](https://github.com/adobe/helix-static/compare/v1.5.35...v1.5.36) (2020-01-09)
 
 
