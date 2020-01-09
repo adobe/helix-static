@@ -37,7 +37,7 @@
     "@adobe/helix-log": "4.4.2",
     "@adobe/helix-shared": "3.3.0",
     "@adobe/helix-status": "7.0.2",
-    "@adobe/openwhisk-action-logger": "2.0.2",
+    "@adobe/openwhisk-action-logger": "2.0.3",
     "@adobe/openwhisk-action-utils": "3.0.0",
     "@babel/core": "7.7.7",
     "epsagon": "1.46.1",
