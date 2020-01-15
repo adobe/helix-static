@@ -49,6 +49,19 @@ describe('Static Delivery Action #integrationtest', () => {
     assert.equal(res.headers.ETag, '"xSOcRd5oxR4XWFrm4Zmxew=="');
   });
 
+  it('deliver Typekit CSS file', async () => {
+    const res = await index.main({
+      owner: 'trieloff',
+      repo: 'helix-demo',
+      ref: 'master',
+      path: '/hlx_fonts/eic8tkf.css',
+      plain: true,
+    });
+
+    assert.equal(res.statusCode, 200);
+    assert.equal(res.headers['content-type'], 'text/css;charset=utf-8');
+  });
+
   it('deliver CSS file from ref', async () => {
     const res = await index.main({
       owner: 'trieloff',

@@ -29,6 +29,8 @@ const { space } = postcss.list;
 const uri = require('uri-js');
 const pkgJson = require('../package.json');
 
+const deliverFontCSS = require('./font-proxy');
+
 /* eslint-disable no-console */
 
 // one megabyte openwhisk limit + 20% Base64 inflation + safety padding
@@ -454,6 +456,10 @@ async function deliverStatic(params = {}) {
   if (blacklisted(file, allow, deny)) {
     log.info('blacklisted!');
     return forbidden();
+  }
+
+  if (/^\/hlx_fonts\/([a-z0-9]){7}\.css/.test(file)) {
+    return deliverFontCSS(file);
   }
 
   const githubToken = params.GITHUB_TOKEN || __ow_headers['x-github-token'];
