@@ -1,3 +1,10 @@
+## [1.5.39](https://github.com/adobe/helix-static/compare/v1.5.38...v1.5.39) (2020-01-15)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-shared to v4 ([#151](https://github.com/adobe/helix-static/issues/151)) ([5e5d4d1](https://github.com/adobe/helix-static/commit/5e5d4d115b741a92c4f886b6a82983110eb359e6))
+
 ## [1.5.38](https://github.com/adobe/helix-static/compare/v1.5.37...v1.5.38) (2020-01-14)
 
 
