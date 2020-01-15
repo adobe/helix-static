@@ -26,7 +26,7 @@ async function deliverFontCSS(file) {
         'content-type': headers['content-type'],
         'surrogate-control': 'max-age=300, stale-while-revalidate=2592000',
       },
-      body: body.replace(/https:\/\/use.typekit.net\//g, '/hlx_fonts/'),
+      body: body.replace(/https:\/\/use\.typekit\.net\//g, '/hlx_fonts/'),
     };
   } catch (e) {
     return {
