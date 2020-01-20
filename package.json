@@ -13,6 +13,7 @@
     "test-ci": "npm run lint && nyc mocha --reporter mocha-junit-reporter && nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "build": "wsk-builder -v",
     "deploy": "wsk-builder -v --deploy --test=/_status_check/healthcheck.json",
+    "deploy-test": "wsk-builder -v --deploy --test=/_status_check/healthcheck.json --pkgVersion=test",
     "deploy-sequences": "wsk-builder --no-build -no-hints -l latest -l major -l minor",
     "deploy-ci": "wsk-builder -v --deploy --test=/_status_check/healthcheck.json --pkgVersion=ci$CIRCLE_BUILD_NUM -l ci"
   },
