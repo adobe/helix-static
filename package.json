@@ -1,6 +1,6 @@
 {
   "name": "@adobe/helix-static",
-  "version": "1.5.42",
+  "version": "1.7.0",
   "private": true,
   "description": "Helix micro service for serving static files from GitHub",
   "main": "src/index.js",
@@ -13,6 +13,7 @@
     "test-ci": "npm run lint && nyc mocha --reporter mocha-junit-reporter && nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "build": "wsk-builder -v",
     "deploy": "wsk-builder -v --deploy --test=/_status_check/healthcheck.json",
+    "deploy-test": "wsk-builder -v --deploy --test=/_status_check/healthcheck.json --pkgVersion=test",
     "deploy-sequences": "wsk-builder --no-build -no-hints -l latest -l major -l minor",
     "deploy-ci": "wsk-builder -v --deploy --test=/_status_check/healthcheck.json --pkgVersion=ci$CIRCLE_BUILD_NUM -l ci"
   },
@@ -40,7 +41,7 @@
     "@adobe/openwhisk-action-logger": "2.0.3",
     "@adobe/openwhisk-action-utils": "4.0.0",
     "@babel/core": "7.8.3",
-    "epsagon": "1.46.2",
+    "epsagon": "1.48.0",
     "mime-types": "2.1.26",
     "object-hash": "2.0.1",
     "postcss": "7.0.26",
@@ -51,7 +52,7 @@
   },
   "devDependencies": {
     "@adobe/eslint-config-helix": "1.1.0",
-    "@adobe/helix-ops": "1.2.0",
+    "@adobe/helix-ops": "1.2.1",
     "@adobe/openwhisk-action-builder": "2.5.0",
     "@pollyjs/adapter-node-http": "4.0.0",
     "@pollyjs/core": "4.0.0",
@@ -59,7 +60,7 @@
     "@semantic-release/changelog": "3.0.6",
     "@semantic-release/exec": "4.0.0",
     "@semantic-release/git": "8.0.0",
-    "ajv": "6.10.2",
+    "ajv": "6.11.0",
     "archiver": "3.1.1",
     "codecov": "3.6.1",
     "commitizen": "4.0.3",
@@ -69,13 +70,13 @@
     "eslint-plugin-header": "3.0.0",
     "eslint-plugin-import": "2.20.0",
     "ghooks": "2.0.4",
-    "lint-staged": "9.5.0",
+    "lint-staged": "10.0.0",
     "lodash": "4.17.15",
     "mocha": "7.0.0",
-    "mocha-junit-reporter": "1.23.2",
+    "mocha-junit-reporter": "1.23.3",
     "nock": "11.7.2",
     "nyc": "15.0.0",
-    "semantic-release": "16.0.1"
+    "semantic-release": "16.0.2"
   },
   "lint-staged": {
     "*.js": "eslint"
