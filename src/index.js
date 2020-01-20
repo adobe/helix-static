@@ -464,6 +464,8 @@ async function deliverStatic(params = {}) {
 // todo: move to helix-status?
 let numInvocations = 0;
 const startTime = Date.now();
+const uuid = crypto.randomBytes(16).toString('hex');
+const runningActivations = new Set();
 
 function logActionStatus(action) {
   return async (params) => {
@@ -481,15 +483,24 @@ function logActionStatus(action) {
     const memInfo = process.memoryUsage().rss;
     const age = Date.now() - startTime;
     numInvocations += 1;
+    // eslint-disable-next-line no-underscore-dangle
+    const activationId = process.env.__OW_ACTIVATION_ID;
+    runningActivations.add(activationId);
     lg.infoFields('action-status', {
       status: {
         numInvocations,
         memInfo,
         age,
         numFileHandles,
+        uuid,
+        concurrency: runningActivations.size,
       },
     });
-    return action(params);
+    try {
+      return await action(params);
+    } finally {
+      runningActivations.delete(activationId);
+    }
   };
 }
 
