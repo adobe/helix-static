@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/adobe/helix-static/compare/v1.5.42...v1.6.0) (2020-01-20)
+
+
+### Features
+
+* **log:** log memory and filehandle stats ([#163](https://github.com/adobe/helix-static/issues/163)) ([7575759](https://github.com/adobe/helix-static/commit/7575759bca4784a99cf695e8a90378d222a9ce9a)), closes [#161](https://github.com/adobe/helix-static/issues/161)
+
 ## [1.5.42](https://github.com/adobe/helix-static/compare/v1.5.41...v1.5.42) (2020-01-16)
 
 
