@@ -11,6 +11,7 @@
  */
 // eslint-disable-next-line import/no-extraneous-dependencies
 const request = require('request-promise-native');
+const fs = require('fs');
 const crypto = require('crypto');
 const mime = require('mime-types');
 const postcss = require('postcss');
@@ -460,6 +461,39 @@ async function deliverStatic(params = {}) {
   return deliverPlain(owner, repo, ref, file, root, esi, branch, githubToken);
 }
 
+// todo: move to helix-status?
+let numInvocations = 0;
+const startTime = Date.now();
+
+function logActionStatus(action) {
+  return async (params) => {
+    const { __ow_logger: lg } = params;
+    const numFileHandles = await new Promise((resolve) => {
+      fs.readdir('/proc/self/fd', (err, list) => {
+        if (err) {
+          lg.info(`unable to read /proc/self/fd: ${err.message}`);
+          resolve(-1);
+        } else {
+          resolve(list.length);
+        }
+      });
+    });
+    const memInfo = process.memoryUsage().rss;
+    const age = Date.now() - startTime;
+    numInvocations += 1;
+    lg.infoFields('action-status', {
+      status: {
+        numInvocations,
+        memInfo,
+        age,
+        numFileHandles,
+      },
+    });
+    return action(params);
+  };
+}
+
+
 /**
  * Instruments the action with epsagon, if a EPSAGON_TOKEN is configured.
  */
@@ -491,6 +525,7 @@ function epsagon(action) {
 const main = wrap(deliverStatic)
   .with(epsagon)
   .with(status, { github: 'https://raw.githubusercontent.com/adobe/helix-static/master/src/index.js' })
+  .with(logActionStatus)
   .with(logger.trace)
   .with(logger);
 
