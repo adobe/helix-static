@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/adobe/helix-static/compare/v1.6.0...v1.7.0) (2020-01-20)
+
+
+### Features
+
+* **status:** add concurrency level and action uuid ([#164](https://github.com/adobe/helix-static/issues/164)) ([c07ea58](https://github.com/adobe/helix-static/commit/c07ea581ab16b8f535393f049466fdb98812d4d0))
+
 # [1.6.0](https://github.com/adobe/helix-static/compare/v1.5.42...v1.6.0) (2020-01-20)
 
 
