@@ -522,6 +522,7 @@ function epsagon(action) {
         appName: 'Helix Services',
         metadataOnly: false, // Optional, send more trace data
         ignoredKeys: [/[A-Z0-9_]+/],
+        urlPatternsToIgnore: ['api.coralogix.com'],
       });
     }
     return action(params);
