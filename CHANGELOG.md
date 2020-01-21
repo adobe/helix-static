@@ -1,3 +1,15 @@
+# [1.8.0](https://github.com/adobe/helix-static/compare/v1.7.0...v1.8.0) (2020-01-21)
+
+
+### Bug Fixes
+
+* **fonts:** fix unescaped dots in hostname regex ([6c61914](https://github.com/adobe/helix-static/commit/6c619143c591687225d2204062b055a6c2adc2cb))
+
+
+### Features
+
+* **css:** enable Adobe Fonts CSS serving and rewriting ([0783c5b](https://github.com/adobe/helix-static/commit/0783c5b791352aea5de235581549b88764bf863a)), closes [#152](https://github.com/adobe/helix-static/issues/152)
+
 # [1.7.0](https://github.com/adobe/helix-static/compare/v1.6.0...v1.7.0) (2020-01-20)
 
 
