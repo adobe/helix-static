@@ -1,3 +1,10 @@
+## [1.8.1](https://github.com/adobe/helix-static/compare/v1.8.0...v1.8.1) (2020-01-22)
+
+
+### Bug Fixes
+
+* **epsagon:** ensure that coralogix.com is not recorded ([#168](https://github.com/adobe/helix-static/issues/168)) ([ed08cc8](https://github.com/adobe/helix-static/commit/ed08cc860f32bbca77a7c86a4c7fbee4bc4b96ea))
+
 # [1.8.0](https://github.com/adobe/helix-static/compare/v1.7.0...v1.8.0) (2020-01-21)
 
 
