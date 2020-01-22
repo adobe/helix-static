@@ -35,10 +35,10 @@
   },
   "homepage": "https://github.com/adobe/helix-static#readme",
   "dependencies": {
-    "@adobe/helix-log": "4.4.2",
+    "@adobe/helix-log": "4.5.0",
     "@adobe/helix-shared": "5.0.0",
     "@adobe/helix-status": "7.0.3",
-    "@adobe/openwhisk-action-logger": "2.0.3",
+    "@adobe/openwhisk-action-logger": "2.0.4",
     "@adobe/openwhisk-action-utils": "4.0.0",
     "@babel/core": "7.8.3",
     "epsagon": "1.48.0",
