@@ -519,17 +519,18 @@ function epsagon(action) {
     if (params && params.EPSAGON_TOKEN) {
       // ensure that epsagon is only required, if a token is present.
       // This is to avoid invoking their patchers otherwise.
+      process.env.EPSAGON_SEND_TIMEOUT_SEC = 2;
       // eslint-disable-next-line global-require
       const { openWhiskWrapper } = require('epsagon');
+      // process.env.EPSAGON_DEBUG = 'TRUE';
       log.info('instrumenting epsagon.');
-      // eslint-disable-next-line no-param-reassign
-      action = openWhiskWrapper(action, {
+      return openWhiskWrapper(action, {
         token_param: 'EPSAGON_TOKEN',
         appName: 'Helix Services',
         metadataOnly: false, // Optional, send more trace data
         ignoredKeys: [/[A-Z0-9_]+/],
         urlPatternsToIgnore: ['api.coralogix.com'],
-      });
+      })(params);
     }
     return action(params);
   };
