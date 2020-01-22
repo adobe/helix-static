@@ -37,7 +37,7 @@
   "dependencies": {
     "@adobe/helix-log": "4.5.0",
     "@adobe/helix-shared": "5.0.0",
-    "@adobe/helix-status": "7.0.3",
+    "@adobe/helix-status": "7.1.0",
     "@adobe/openwhisk-action-logger": "2.0.4",
     "@adobe/openwhisk-action-utils": "4.0.0",
     "@babel/core": "7.8.3",
