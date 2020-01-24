@@ -1,3 +1,10 @@
+## [1.8.5](https://github.com/adobe/helix-static/compare/v1.8.4...v1.8.5) (2020-01-24)
+
+
+### Bug Fixes
+
+* **epsagon:** use helix-epsagon wrapper ([#172](https://github.com/adobe/helix-static/issues/172)) ([f3644f2](https://github.com/adobe/helix-static/commit/f3644f23d2802b147178e9371275393ca2531033))
+
 ## [1.8.4](https://github.com/adobe/helix-static/compare/v1.8.3...v1.8.4) (2020-01-23)
 
 
