@@ -1,3 +1,10 @@
+## [1.8.4](https://github.com/adobe/helix-static/compare/v1.8.3...v1.8.4) (2020-01-23)
+
+
+### Bug Fixes
+
+* **deps:** update [@adobe](https://github.com/adobe) ([eb925fa](https://github.com/adobe/helix-static/commit/eb925fa11f6933c7f3384a05763380a15d9d9bb2))
+
 ## [1.8.3](https://github.com/adobe/helix-static/compare/v1.8.2...v1.8.3) (2020-01-22)
 
 

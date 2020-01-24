@@ -1,6 +1,6 @@
 {
   "name": "@adobe/helix-static",
-  "version": "1.8.3",
+  "version": "1.8.4",
   "private": true,
   "description": "Helix micro service for serving static files from GitHub",
   "main": "src/index.js",
@@ -37,7 +37,7 @@
   "dependencies": {
     "@adobe/helix-epsagon": "1.0.1",
     "@adobe/helix-log": "4.5.0",
-    "@adobe/helix-shared": "5.0.0",
+    "@adobe/helix-shared": "5.1.0",
     "@adobe/helix-status": "7.1.1",
     "@adobe/openwhisk-action-logger": "2.0.4",
     "@adobe/openwhisk-action-utils": "4.0.0",
