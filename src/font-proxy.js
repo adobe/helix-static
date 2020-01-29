@@ -48,6 +48,7 @@ async function deliverFontCSS(file) {
         'cache-control': headers['cache-control'],
         'content-type': headers['content-type'],
         'surrogate-control': 'max-age=300, stale-while-revalidate=2592000',
+        link: (await getFontURLs(body)).map((url) => `<${url}>; rel=preload; as=font`).join(','),
       },
       body: body.replace(/https:\/\/use\.typekit\.net\//g, '/hlx_fonts/'),
     };
