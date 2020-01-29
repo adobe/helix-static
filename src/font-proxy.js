@@ -11,6 +11,29 @@
  */
 // eslint-disable-next-line import/no-extraneous-dependencies
 const request = require('request-promise-native');
+const postcss = require('postcss');
+
+async function getFontURLs(css) {
+  const foundurls = [];
+
+  function findFontURLs(tree) {
+    tree.walkDecls('src', (decl) => {
+      const urls = decl.value.split(',').map((rule) => ({
+        url: rule.replace(/.*url\(["']([^"']*)["']\).*/, '$1'),
+        format: rule.replace(/.*format\(["']([^"']*)["']\).*/, '$1'),
+      })).filter((rule) => rule.format === 'woff2')
+        .map((rule) => rule.url)
+        .map((body) => body.replace(/https:\/\/use\.typekit\.net\//g, '/hlx_fonts/'));
+      foundurls.push(...urls);
+    });
+  }
+
+  const processor = postcss()
+    .use(findFontURLs);
+
+  await processor.process(css, { from: undefined });
+  return foundurls;
+}
 
 async function deliverFontCSS(file) {
   const [kitid] = file.split('/').pop().split('.');
@@ -35,5 +58,7 @@ async function deliverFontCSS(file) {
     };
   }
 }
+
+deliverFontCSS.getFontURLs = getFontURLs;
 
 module.exports = deliverFontCSS;
