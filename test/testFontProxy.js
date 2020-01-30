@@ -15,8 +15,92 @@ const NodeHttpAdapter = require('@pollyjs/adapter-node-http');
 const FSPersister = require('@pollyjs/persister-fs');
 const { setupMocha: setupPolly } = require('@pollyjs/core');
 const deliverFontCSS = require('../src/font-proxy');
+const { getFontURLs } = require('../src/font-proxy');
 
 /* eslint-env mocha */
+
+describe('Adobe Fonts CSS Parser', () => {
+  it('getFontURLs returns a list of URLs', async () => {
+    const css = `/*
+    * The Typekit service used to deliver this font or fonts for use on websites
+    * is provided by Adobe and is subject to these Terms of Use
+    * http://www.adobe.com/products/eulas/tou_typekit. For font license
+    * information, see the list below.
+    *
+    * henriette:
+    *   - http://typekit.com/eulas/00000000000000003b9af759
+    *   - http://typekit.com/eulas/00000000000000003b9af75a
+    *   - http://typekit.com/eulas/00000000000000003b9af75d
+    *   - http://typekit.com/eulas/00000000000000003b9af75e
+    * henriette-compressed:
+    *   - http://typekit.com/eulas/00000000000000003b9af764
+    *   - http://typekit.com/eulas/00000000000000003b9af765
+    *   - http://typekit.com/eulas/00000000000000003b9af768
+    *   - http://typekit.com/eulas/00000000000000003b9af769
+    *
+    * © 2009-2019 Adobe Systems Incorporated. All Rights Reserved.
+    */
+   /*{"last_published":"2020-01-14 16:06:03 UTC"}*/
+   
+   @import url("https://p.typekit.net/p.css?s=1&k=eic8tkf&ht=tk&f=33805.33806.33809.33810.33816.33817.33820.33821&a=5215194&app=typekit&e=css");
+   
+   @font-face {
+   font-family:"henriette";
+   src:url("https://use.typekit.net/af/d91a29/00000000000000003b9af759/27/l?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=i4&v=3") format("woff2"),url("https://use.typekit.net/af/d91a29/00000000000000003b9af759/27/d?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=i4&v=3") format("woff"),url("https://use.typekit.net/af/d91a29/00000000000000003b9af759/27/a?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=i4&v=3") format("opentype");
+   font-display:auto;font-style:italic;font-weight:400;
+   }
+   
+   @font-face {
+   font-family:"henriette";
+   src:url("https://use.typekit.net/af/c5b4b1/00000000000000003b9af75a/27/l?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=n4&v=3") format("woff2"),url("https://use.typekit.net/af/c5b4b1/00000000000000003b9af75a/27/d?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=n4&v=3") format("woff"),url("https://use.typekit.net/af/c5b4b1/00000000000000003b9af75a/27/a?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=n4&v=3") format("opentype");
+   font-display:auto;font-style:normal;font-weight:400;
+   }
+   
+   @font-face {
+   font-family:"henriette";
+   src:url("https://use.typekit.net/af/c52cc9/00000000000000003b9af75d/27/l?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=i7&v=3") format("woff2"),url("https://use.typekit.net/af/c52cc9/00000000000000003b9af75d/27/d?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=i7&v=3") format("woff"),url("https://use.typekit.net/af/c52cc9/00000000000000003b9af75d/27/a?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=i7&v=3") format("opentype");
+   font-display:auto;font-style:italic;font-weight:700;
+   }
+   
+   @font-face {
+   font-family:"henriette";
+   src:url("https://use.typekit.net/af/d6053e/00000000000000003b9af75e/27/l?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=n7&v=3") format("woff2"),url("https://use.typekit.net/af/d6053e/00000000000000003b9af75e/27/d?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=n7&v=3") format("woff"),url("https://use.typekit.net/af/d6053e/00000000000000003b9af75e/27/a?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=n7&v=3") format("opentype");
+   font-display:auto;font-style:normal;font-weight:700;
+   }
+   
+   @font-face {
+   font-family:"henriette-compressed";
+   src:url("https://use.typekit.net/af/68fa2f/00000000000000003b9af764/27/l?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=n4&v=3") format("woff2"),url("https://use.typekit.net/af/68fa2f/00000000000000003b9af764/27/d?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=n4&v=3") format("woff"),url("https://use.typekit.net/af/68fa2f/00000000000000003b9af764/27/a?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=n4&v=3") format("opentype");
+   font-display:auto;font-style:normal;font-weight:400;
+   }
+   
+   @font-face {
+   font-family:"henriette-compressed";
+   src:url("https://use.typekit.net/af/bd7e57/00000000000000003b9af765/27/l?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=i4&v=3") format("woff2"),url("https://use.typekit.net/af/bd7e57/00000000000000003b9af765/27/d?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=i4&v=3") format("woff"),url("https://use.typekit.net/af/bd7e57/00000000000000003b9af765/27/a?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=i4&v=3") format("opentype");
+   font-display:auto;font-style:italic;font-weight:400;
+   }
+   
+   @font-face {
+   font-family:"henriette-compressed";
+   src:url("https://use.typekit.net/af/056440/00000000000000003b9af768/27/l?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=i7&v=3") format("woff2"),url("https://use.typekit.net/af/056440/00000000000000003b9af768/27/d?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=i7&v=3") format("woff"),url("https://use.typekit.net/af/056440/00000000000000003b9af768/27/a?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=i7&v=3") format("opentype");
+   font-display:auto;font-style:italic;font-weight:700;
+   }
+   
+   @font-face {
+   font-family:"henriette-compressed";
+   src:url("https://use.typekit.net/af/9d03dd/00000000000000003b9af769/27/l?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=n7&v=3") format("woff2"),url("https://use.typekit.net/af/9d03dd/00000000000000003b9af769/27/d?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=n7&v=3") format("woff"),url("https://use.typekit.net/af/9d03dd/00000000000000003b9af769/27/a?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=n7&v=3") format("opentype");
+   font-display:auto;font-style:normal;font-weight:700;
+   }
+   
+   .tk-henriette { font-family: "henriette",sans-serif; }
+   .tk-henriette-compressed { font-family: "henriette-compressed",sans-serif; }`;
+
+    const res = await getFontURLs(css);
+
+    assert.ok(Array.isArray(res));
+    assert.equal(res[0], '/hlx_fonts/af/d91a29/00000000000000003b9af759/27/l?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=i4&v=3');
+  });
+});
 
 describe('Adobe Fonts Proxy Test #unitttest', () => {
   setupPolly({
@@ -38,6 +122,7 @@ describe('Adobe Fonts Proxy Test #unitttest', () => {
     assert.ok(!res.body.match(/https:\/\/use.typekit.net/));
     assert.ok(res.body.match(/\/hlx_fonts\//));
     assert.equal(res.statusCode, 200);
+    assert.equal(res.headers.link, '</hlx_fonts/af/d91a29/00000000000000003b9af759/27/l?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=i4&v=3>; rel=preload; as=font,</hlx_fonts/af/c5b4b1/00000000000000003b9af75a/27/l?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=n4&v=3>; rel=preload; as=font,</hlx_fonts/af/c52cc9/00000000000000003b9af75d/27/l?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=i7&v=3>; rel=preload; as=font,</hlx_fonts/af/d6053e/00000000000000003b9af75e/27/l?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=n7&v=3>; rel=preload; as=font,</hlx_fonts/af/68fa2f/00000000000000003b9af764/27/l?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=n4&v=3>; rel=preload; as=font,</hlx_fonts/af/bd7e57/00000000000000003b9af765/27/l?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=i4&v=3>; rel=preload; as=font,</hlx_fonts/af/056440/00000000000000003b9af768/27/l?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=i7&v=3>; rel=preload; as=font,</hlx_fonts/af/9d03dd/00000000000000003b9af769/27/l?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=n7&v=3>; rel=preload; as=font');
   });
 
   it('Delivers 404 for missing kit', async () => {
