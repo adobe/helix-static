@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/adobe/helix-static/compare/v1.8.9...v1.9.0) (2020-01-30)
+
+
+### Features
+
+* **fonts:** send woff2 fonts via HTTP/2 server push ([72b8ec9](https://github.com/adobe/helix-static/commit/72b8ec92764c9e73edd44ac44addb35cc125cffd))
+
 ## [1.8.9](https://github.com/adobe/helix-static/compare/v1.8.8...v1.8.9) (2020-01-29)
 
 
