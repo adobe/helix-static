@@ -1,3 +1,10 @@
+## [1.9.3](https://github.com/adobe/helix-static/compare/v1.9.2...v1.9.3) (2020-02-04)
+
+
+### Bug Fixes
+
+* **deps:** update external ([#185](https://github.com/adobe/helix-static/issues/185)) ([1d3ed56](https://github.com/adobe/helix-static/commit/1d3ed567922873726cece22bd592847be7d9f186))
+
 ## [1.9.2](https://github.com/adobe/helix-static/compare/v1.9.1...v1.9.2) (2020-01-31)
 
 
