@@ -1,3 +1,10 @@
+## [1.9.4](https://github.com/adobe/helix-static/compare/v1.9.3...v1.9.4) (2020-02-11)
+
+
+### Bug Fixes
+
+* **deps:** update dependency object-hash to v2.0.2 ([#190](https://github.com/adobe/helix-static/issues/190)) ([04f8322](https://github.com/adobe/helix-static/commit/04f8322e5b5a6b7e9f2b116d76d402a5e426e60f))
+
 ## [1.9.3](https://github.com/adobe/helix-static/compare/v1.9.2...v1.9.3) (2020-02-04)
 
 
