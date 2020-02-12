@@ -1,3 +1,10 @@
+## [1.9.5](https://github.com/adobe/helix-static/compare/v1.9.4...v1.9.5) (2020-02-12)
+
+
+### Bug Fixes
+
+* **fonts:** do not pass push (preload) headers onto client ([565cb50](https://github.com/adobe/helix-static/commit/565cb50ac54129be25187e996ee27d0713ea27e0)), closes [#191](https://github.com/adobe/helix-static/issues/191)
+
 ## [1.9.4](https://github.com/adobe/helix-static/compare/v1.9.3...v1.9.4) (2020-02-11)
 
 
