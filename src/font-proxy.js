@@ -49,7 +49,7 @@ async function getSanitizedCssAndUrls(cssToSanitize) {
 
   function findAndRemoveExtraImport(tree) {
     tree.walkAtRules('import', (rule) => {
-      if (rule.params.indexOf('p.typekit.net') !== -1) {
+      if (rule.params.match(/https:\/\/p.typekit.net/)) {
         rule.remove();
       }
     });
