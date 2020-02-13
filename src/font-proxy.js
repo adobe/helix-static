@@ -13,11 +13,17 @@
 const request = require('request-promise-native');
 const postcss = require('postcss');
 
-async function getFontURLs(css) {
+/**
+ * Gets the santized CSS and URLs to add to the response header
+ * @param {string} css the css to sanitize
+ * @returns {object} css, urls
+ */
+async function getSanitizedCssAndUrls(cssToSanitize) {
   const foundurls = [];
 
-  function findFontURLs(tree) {
+  function findAndReplaceFontURLs(tree) {
     tree.walkDecls('src', (decl) => {
+      // Find & push the URLs into an array for HEAD response inclusion
       const urls = decl.value.split(',').map((rule) => ({
         url: rule.replace(/.*url\(["']([^"']*)["']\).*/, '$1'),
         format: rule.replace(/.*format\(["']([^"']*)["']\).*/, '$1'),
@@ -25,14 +31,34 @@ async function getFontURLs(css) {
         .map((rule) => rule.url)
         .map((body) => body.replace(/https:\/\/use\.typekit\.net\//g, '/hlx_fonts/'));
       foundurls.push(...urls);
+
+      // Add swap before replacing the src
+      const fontSwap = postcss.decl({ prop: 'font-display', value: 'swap' });
+      decl.parent.insertAfter(decl, fontSwap);
+
+      // Once URLs have been found and added, replace the declarations
+      decl.replaceWith(postcss.decl(
+        {
+          prop: 'src',
+          value: decl.value.replace(/https:\/\/use\.typekit\.net\//g, '/hlx_fonts/'),
+        },
+      ));
+    });
+    return tree;
+  }
+
+  function findAndRemoveExtraImport(tree) {
+    tree.walkAtRules('import', (rule) => {
+      if (rule.params.match(/https:\/\/p\.typekit\.net/)) {
+        rule.remove();
+      }
     });
   }
 
-  const processor = postcss()
-    .use(findFontURLs);
+  const processor = postcss().use(findAndReplaceFontURLs).use(findAndRemoveExtraImport);
+  const { css } = await processor.process(cssToSanitize, { from: undefined });
 
-  await processor.process(css, { from: undefined });
-  return foundurls;
+  return { css, foundurls };
 }
 
 async function deliverFontCSS(file) {
@@ -42,16 +68,20 @@ async function deliverFontCSS(file) {
     const { body, headers } = await request(`https://use.typekit.net/${kitid}.css`, {
       resolveWithFullResponse: true,
     });
-    return {
+
+    const { css, foundurls } = await getSanitizedCssAndUrls(body);
+
+    const response = {
       statusCode: 200,
       headers: {
         'cache-control': headers['cache-control'],
         'content-type': headers['content-type'],
         'surrogate-control': 'max-age=300, stale-while-revalidate=2592000',
-        link: (await getFontURLs(body)).map((url) => `<${url}>; rel=preload; as=font; x-http2-push-only`).join(','),
+        link: foundurls.map((url) => `<${url}>; rel=preload; as=font; x-http2-push-only`).join(','),
       },
-      body: body.replace(/https:\/\/use\.typekit\.net\//g, '/hlx_fonts/'),
+      body: css,
     };
+    return response;
   } catch (e) {
     return {
       statusCode: 404,
@@ -60,6 +90,6 @@ async function deliverFontCSS(file) {
   }
 }
 
-deliverFontCSS.getFontURLs = getFontURLs;
+deliverFontCSS.getSanitizedCssAndUrls = getSanitizedCssAndUrls;
 
 module.exports = deliverFontCSS;
