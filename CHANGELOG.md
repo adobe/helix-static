@@ -1,3 +1,10 @@
+# [1.10.0](https://github.com/adobe/helix-static/compare/v1.9.6...v1.10.0) (2020-02-13)
+
+
+### Features
+
+* **fonts:** remove extra tracking css import call ([5e41213](https://github.com/adobe/helix-static/commit/5e41213e60c82a5de35c292cdfe9eab62b9a31d4)), closes [#196](https://github.com/adobe/helix-static/issues/196)
+
 ## [1.9.6](https://github.com/adobe/helix-static/compare/v1.9.5...v1.9.6) (2020-02-12)
 
 
