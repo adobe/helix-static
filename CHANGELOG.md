@@ -1,3 +1,10 @@
+## [1.10.3](https://github.com/adobe/helix-static/compare/v1.10.2...v1.10.3) (2020-02-14)
+
+
+### Bug Fixes
+
+* **add crossorigin for font requests:** added cross origin parameter to font header preconnect ([df55a8f](https://github.com/adobe/helix-static/commit/df55a8fc0e16e98a9d17db431964115ef28f32c9))
+
 ## [1.10.2](https://github.com/adobe/helix-static/compare/v1.10.1...v1.10.2) (2020-02-14)
 
 
