@@ -77,7 +77,7 @@ async function deliverFontCSS(file) {
         'cache-control': headers['cache-control'],
         'content-type': headers['content-type'],
         'surrogate-control': 'max-age=300, stale-while-revalidate=2592000',
-        link: foundurls.map((url) => `<${url}>; rel=preload; as=font`).join(','),
+        link: foundurls.map((url) => `<${url}>; rel=preload; as=font; crossorigin=anonymous`).join(','),
       },
       body: css,
     };
