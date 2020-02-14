@@ -1,3 +1,10 @@
+## [1.10.1](https://github.com/adobe/helix-static/compare/v1.10.0...v1.10.1) (2020-02-14)
+
+
+### Bug Fixes
+
+* **remove h2 push only:** remove preload condition for h2 push only ([a683c30](https://github.com/adobe/helix-static/commit/a683c3055989c503063e428fb613a347065f9206))
+
 # [1.10.0](https://github.com/adobe/helix-static/compare/v1.9.6...v1.10.0) (2020-02-13)
 
 
