@@ -40,7 +40,7 @@
     "@adobe/helix-shared": "6.0.2",
     "@adobe/helix-status": "7.1.2",
     "@adobe/openwhisk-action-logger": "2.2.0",
-    "@adobe/openwhisk-action-utils": "4.2.0",
+    "@adobe/openwhisk-action-utils": "4.2.1",
     "@babel/core": "7.8.6",
     "mime-types": "2.1.26",
     "object-hash": "2.0.3",
