@@ -1,3 +1,10 @@
+## [1.10.19](https://github.com/adobe/helix-static/compare/v1.10.18...v1.10.19) (2020-03-10)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @babel/core to v7.8.7 ([#222](https://github.com/adobe/helix-static/issues/222)) ([1272f80](https://github.com/adobe/helix-static/commit/1272f809f3ef114916620fe85b78704a97f47887))
+
 ## [1.10.18](https://github.com/adobe/helix-static/compare/v1.10.17...v1.10.18) (2020-03-09)
 
 
