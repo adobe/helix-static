@@ -1,3 +1,10 @@
+## [1.10.26](https://github.com/adobe/helix-static/compare/v1.10.25...v1.10.26) (2020-03-24)
+
+
+### Bug Fixes
+
+* **deps:** update external ([#237](https://github.com/adobe/helix-static/issues/237)) ([0bc4bab](https://github.com/adobe/helix-static/commit/0bc4bab6b808a80e6542bf1e07ff07662409221f))
+
 ## [1.10.25](https://github.com/adobe/helix-static/compare/v1.10.24...v1.10.25) (2020-03-23)
 
 
