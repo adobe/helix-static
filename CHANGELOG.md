@@ -1,3 +1,10 @@
+## [1.10.29](https://github.com/adobe/helix-static/compare/v1.10.28...v1.10.29) (2020-04-06)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-epsagon to v1.1.12 ([4d9fa47](https://github.com/adobe/helix-static/commit/4d9fa4741b34012cad6088b9f0fc463407f3c037))
+
 ## [1.10.28](https://github.com/adobe/helix-static/compare/v1.10.27...v1.10.28) (2020-03-26)
 
 
