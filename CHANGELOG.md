@@ -1,3 +1,11 @@
+## [1.10.32](https://github.com/adobe/helix-static/compare/v1.10.31...v1.10.32) (2020-04-08)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-epsagon to v1.2.0 ([#252](https://github.com/adobe/helix-static/issues/252)) ([60ba2a3](https://github.com/adobe/helix-static/commit/60ba2a3d357bafa127cf4558e2fc350187ae16cc))
+* **index:** remove action status again ([#253](https://github.com/adobe/helix-static/issues/253)) ([9806166](https://github.com/adobe/helix-static/commit/9806166cbd667049256c22c8377d51fb462a01c5))
+
 ## [1.10.31](https://github.com/adobe/helix-static/compare/v1.10.30...v1.10.31) (2020-04-08)
 
 
