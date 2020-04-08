@@ -11,7 +11,6 @@
  */
 // eslint-disable-next-line import/no-extraneous-dependencies
 const request = require('request-promise-native');
-const fs = require('fs');
 const crypto = require('crypto');
 const mime = require('mime-types');
 const postcss = require('postcss');
@@ -468,49 +467,6 @@ async function deliverStatic(params = {}) {
   return deliverPlain(owner, repo, ref, file, root, esi, branch, githubToken);
 }
 
-// todo: move to helix-status?
-let numInvocations = 0;
-const startTime = Date.now();
-const uuid = crypto.randomBytes(16).toString('hex');
-const runningActivations = new Set();
-
-function logActionStatus(action) {
-  return async (params) => {
-    const { __ow_logger: lg } = params;
-    const numFileHandles = await new Promise((resolve) => {
-      fs.readdir('/proc/self/fd', (err, list) => {
-        if (err) {
-          lg.info(`unable to read /proc/self/fd: ${err.message}`);
-          resolve(-1);
-        } else {
-          resolve(list.length);
-        }
-      });
-    });
-    const memInfo = process.memoryUsage().rss;
-    const age = Date.now() - startTime;
-    numInvocations += 1;
-    // eslint-disable-next-line no-underscore-dangle
-    const activationId = process.env.__OW_ACTIVATION_ID;
-    runningActivations.add(activationId);
-    lg.infoFields('action-status', {
-      status: {
-        numInvocations,
-        memInfo,
-        age,
-        numFileHandles,
-        uuid,
-        concurrency: runningActivations.size,
-      },
-    });
-    try {
-      return await action(params);
-    } finally {
-      runningActivations.delete(activationId);
-    }
-  };
-}
-
 /**
  * Main function called by the openwhisk invoker.
  * @param params Action params
@@ -519,7 +475,6 @@ function logActionStatus(action) {
 const main = wrap(deliverStatic)
   .with(epsagon)
   .with(status, { github: 'https://raw.githubusercontent.com/adobe/helix-static/master/src/index.js' })
-  .with(logActionStatus)
   .with(logger.trace)
   .with(logger);
 
