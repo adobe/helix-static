@@ -323,6 +323,7 @@ describe('Static Delivery Action #unittest', () => {
     const res = await index.main({ __ow_method: 'get' });
     assert.equal(res.statusCode, 204);
     assert.deepEqual(res.headers, {
+      'x-last-activation-id': undefined,
       'x-version': pkgJson.version,
     });
   });
