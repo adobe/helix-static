@@ -1,3 +1,10 @@
+## [1.10.33](https://github.com/adobe/helix-static/compare/v1.10.32...v1.10.33) (2020-04-14)
+
+
+### Bug Fixes
+
+* **deploy:** use helix-services package ([#258](https://github.com/adobe/helix-static/issues/258)) ([ea4525d](https://github.com/adobe/helix-static/commit/ea4525dfbad8b5b20c7c7bccbdb4a7cc89f6436e))
+
 ## [1.10.32](https://github.com/adobe/helix-static/compare/v1.10.31...v1.10.32) (2020-04-08)
 
 
