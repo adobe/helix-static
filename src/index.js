@@ -400,6 +400,9 @@ function blacklisted(path, allow, deny) {
   if (blacklist) {
     return blacklist.test(path) || blacklisted(path);
   }
+  if (/^\.well-known\/.*$/.test(path)) {
+    return false;
+  }
   if (/^(.*\/?)package\.json$/.test(path)) {
     return true;
   }
