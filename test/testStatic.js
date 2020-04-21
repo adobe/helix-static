@@ -282,10 +282,10 @@ describe('Static Delivery Action #unittest', () => {
     assert.equal(index.blacklisted('foo/html.jst', '^.*\\.htl$|^.*\\.js$'), true);
     assert.equal(index.blacklisted('src/html.htl', '^.*\\.htl$|^.*\\.js$'), true);
 
-    assert.equal(index.blacklisted('.well-known/keybase.txt', '^.*\\.htl$|^.*\\.js$'), false);
-    assert.equal(index.blacklisted('.well-known/dnt-policy.txt', '^.*\\.htl$|^.*\\.js$'), false);
-    assert.equal(index.blacklisted('.well-known/assetlinks.json', '^.*\\.htl$|^.*\\.js$'), false);
-    assert.equal(index.blacklisted('.well-known/apple-developer-merchantid-domain-association', '^.*\\.htl$|^.*\\.js$'), false);
+    assert.equal(index.blacklisted('.well-known/keybase.txt'), false);
+    assert.equal(index.blacklisted('.well-known/dnt-policy.txt'), false);
+    assert.equal(index.blacklisted('.well-known/assetlinks.json'), false);
+    assert.equal(index.blacklisted('.well-known/apple-developer-merchantid-domain-association'), false);
 
     assert.equal(index.blacklisted('foo/html.htl', '^.*\\.htl$|^.*\\.js$', 'foo'), true);
     assert.equal(index.blacklisted('boo/html.htl', '^.*\\.htl$|^.*\\.js$', 'foo'), false);
