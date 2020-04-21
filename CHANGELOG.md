@@ -1,3 +1,10 @@
+# [1.11.0](https://github.com/adobe/helix-static/compare/v1.10.36...v1.11.0) (2020-04-21)
+
+
+### Features
+
+* **whitelist:** whitelist all .well-known URLs ([b5f74c8](https://github.com/adobe/helix-static/commit/b5f74c86ec73a14a403475d3b11b84b2e8f97f44)), closes [#266](https://github.com/adobe/helix-static/issues/266)
+
 ## [1.10.36](https://github.com/adobe/helix-static/compare/v1.10.35...v1.10.36) (2020-04-15)
 
 
