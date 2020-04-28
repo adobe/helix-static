@@ -304,6 +304,17 @@ describe('Static Delivery Action #unittest', () => {
     assert.ok(res.body.indexOf('Arial') > 0, true);
   });
 
+  it('main() returns well-known static file from GitHub', async () => {
+    const res = await index.main({
+      owner: 'davidnuescheler',
+      repo: 'n2',
+      path: '.well-known/apple-developer-merchantid-domain-association',
+      plain: true,
+    });
+    assert.equal(res.headers['Content-Type'], 'text/plain');
+    assert.ok(res.body.indexOf('7B227') === 0, true);
+  });
+
   it('main() normalizes URLs', async () => {
     const res = await index.main({
       owner: 'adobe',
