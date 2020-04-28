@@ -1,3 +1,10 @@
+## [1.11.4](https://github.com/adobe/helix-static/compare/v1.11.3...v1.11.4) (2020-04-28)
+
+
+### Bug Fixes
+
+* **index:** tweak mime type for well-known file ([83fafa7](https://github.com/adobe/helix-static/commit/83fafa74faf68887cad0fa9d49ae6409aed2168e)), closes [#282](https://github.com/adobe/helix-static/issues/282)
+
 ## [1.11.3](https://github.com/adobe/helix-static/compare/v1.11.2...v1.11.3) (2020-04-27)
 
 
