@@ -293,11 +293,12 @@ function processBody(type, responsebody, esi = false, entry) {
   return responsebody.toString();
 }
 
+/* eslint-disable consistent-return
+*/
 function mymimelookup(filename) {
   if (/^.well-known\/apple-developer-merchantid-domain-association$/.test(filename)) {
     return 'text/plain';
   }
-  return undefined;
 }
 
 /**
