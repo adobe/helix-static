@@ -293,6 +293,13 @@ function processBody(type, responsebody, esi = false, entry) {
   return responsebody.toString();
 }
 
+function mymimelookup(filename) {
+  if (/^.well-known\/apple-developer-merchantid-domain-association$/.test(filename)) {
+    return 'text/plain';
+  }
+  return undefined;
+}
+
 /**
  * Delivers a plain file from the given github repository.
  *
@@ -330,7 +337,7 @@ function deliverPlain(owner, repo, ref, entry, root, esi = false, branch, github
   }
 
   return request.get(rawopts).then(async (response) => {
-    const type = mime.lookup(cleanentry) || 'application/octet-stream';
+    const type = mime.lookup(cleanentry) || mymimelookup(cleanentry) || 'application/octet-stream';
     const size = parseInt(response.headers['content-length'], 10);
     log.info(`got response. size=${size}, type=${type}`);
     if (size < REDIRECT_LIMIT) {
