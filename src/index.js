@@ -382,17 +382,16 @@ function deliverPlain(owner, repo, ref, entry, root, esi = false, branch, github
         body: entry,
       };
     }
-    let { statusCode } = rqerror;
+    const { statusCode, message, response } = rqerror;
     if (statusCode === 404) {
       return error(entry, statusCode);
     }
     if (statusCode === 500) {
-      statusCode = 502; // bad gateway
+      return error(message, 502); // bad gateway
     }
-    log.error('error while fetching content', rqerror.message);
+    log.error('error while fetching content', message);
     return error(
-      (rqerror.response && rqerror.response.body && rqerror.response.body.toString())
-      || rqerror.message,
+      (response && response.body && response.body.toString()) || message,
       statusCode,
     );
   });
