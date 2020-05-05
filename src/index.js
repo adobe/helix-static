@@ -387,7 +387,7 @@ function deliverPlain(owner, repo, ref, entry, root, esi = false, branch, github
       return error(entry, statusCode);
     }
     if (statusCode === 500) {
-      log.warn('error 500 from backend: ' + message);
+      log.warn(`error 500 from backend: ${message}`);
       return error(message, 502); // bad gateway
     }
     log.error('unknown error while fetching content', message);
