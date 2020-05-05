@@ -382,14 +382,18 @@ function deliverPlain(owner, repo, ref, entry, root, esi = false, branch, github
         body: entry,
       };
     }
-    if (rqerror.statusCode === 404 || rqerror.statusCode === '404') {
-      return error(entry, rqerror.statusCode);
+    const { statusCode, message, response } = rqerror;
+    if (statusCode === 404) {
+      return error(entry, statusCode);
     }
-    log.error('error while fetching content', rqerror.message);
+    if (statusCode === 500) {
+      log.warn(`error 500 from backend: ${message}`);
+      return error(message, 502); // bad gateway
+    }
+    log.error('unknown error while fetching content', message);
     return error(
-      (rqerror.response && rqerror.response.body && rqerror.response.body.toString())
-      || rqerror.message,
-      rqerror.statusCode,
+      (response && response.body && response.body.toString()) || message,
+      statusCode,
     );
   });
 }
