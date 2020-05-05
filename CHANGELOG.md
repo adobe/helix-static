@@ -1,3 +1,11 @@
+## [1.11.5](https://github.com/adobe/helix-static/compare/v1.11.4...v1.11.5) (2020-05-05)
+
+
+### Bug Fixes
+
+* **deps:** update external ([#276](https://github.com/adobe/helix-static/issues/276)) ([62d356c](https://github.com/adobe/helix-static/commit/62d356cced796294c145921f5bc2cca1fedcce26))
+* **index:** report 500 from received from backend as 502 ([#278](https://github.com/adobe/helix-static/issues/278)) ([d297ced](https://github.com/adobe/helix-static/commit/d297ced6965a782665f56569ae4cbc492b3f6602)), closes [#277](https://github.com/adobe/helix-static/issues/277)
+
 ## [1.11.4](https://github.com/adobe/helix-static/compare/v1.11.3...v1.11.4) (2020-04-28)
 
 
