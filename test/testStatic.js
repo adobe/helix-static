@@ -21,7 +21,7 @@ const pkgJson = require('../package.json');
 describe('Static Delivery Action #integrationtest', () => {
   setupPolly({
     recordFailedRequests: true,
-    recordIfMissing: true,
+    recordIfMissing: false,
     logging: false,
     adapters: [NodeHttpAdapter],
     persister: FSPersister,
@@ -231,7 +231,7 @@ describe('CSS and JS Rewriting', () => {
 describe('Static Delivery Action #unittest', () => {
   setupPolly({
     recordFailedRequests: false,
-    recordIfMissing: true,
+    recordIfMissing: false,
     logging: false,
     matchRequestsBy: {
       headers: {
