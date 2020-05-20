@@ -1,3 +1,10 @@
+## [1.11.13](https://github.com/adobe/helix-static/compare/v1.11.12...v1.11.13) (2020-05-20)
+
+
+### Bug Fixes
+
+* **static:** properly sanitize URLs to avoid issues due to double-slashes ([af2a577](https://github.com/adobe/helix-static/commit/af2a577cdeee453b10d03dc421ff6b715f2905c3))
+
 ## [1.11.12](https://github.com/adobe/helix-static/compare/v1.11.11...v1.11.12) (2020-05-18)
 
 
