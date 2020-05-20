@@ -45,7 +45,7 @@ describe('Static Delivery Action #integrationtest', () => {
     assert.equal(res.headers['Content-Type'], 'text/css');
     assert.equal(res.headers['X-Static'], 'Raw/Static');
     assert.equal(res.headers['Cache-Control'], 's-maxage=300, stale-while-revalidate=2592000');
-    assert.equal(res.headers['Surrogate-Key'], 'AYnQlbzbj4dsnOxH');
+    assert.equal(res.headers['Surrogate-Key'], 'C0OzgWe1bfWP5Mm0');
     assert.equal(res.headers.ETag, '"xSOcRd5oxR4XWFrm4Zmxew=="');
   });
 
@@ -165,6 +165,22 @@ describe('Static Delivery Action #integrationtest', () => {
     assert.equal(res.headers.Location, 'https://raw.githubusercontent.com/trieloff/helix-demo/master/big-image.jpg');
     assert.equal(res.headers['X-Content-Type'], 'image/jpeg');
     assert.equal(res.headers['Surrogate-Key'], 'uAqncPGZlUF7rYnE');
+    assert.equal(res.headers['X-Static'], 'Raw/Static');
+  }).timeout(5000);
+
+  it('deliver big PNG file even when there are slashes everywhere', async () => {
+    const res = await index.main({
+      owner: 'adobedocs',
+      repo: 'adobeio-codelabs-debugging',
+      ref: '/404c0901bf4e4795514645c75aa914ec58e6f105/',
+      path: '//lessons/assets/front-banner.png',
+      plain: true,
+    });
+
+    assert.equal(res.statusCode, 307);
+    assert.equal(res.headers.Location, 'https://raw.githubusercontent.com/adobedocs/adobeio-codelabs-debugging/404c0901bf4e4795514645c75aa914ec58e6f105/lessons/assets/front-banner.png');
+    assert.equal(res.headers['X-Content-Type'], 'image/png');
+    assert.equal(res.headers['Surrogate-Key'], 'd/lHMxH5Pol2lPcI');
     assert.equal(res.headers['X-Static'], 'Raw/Static');
   }).timeout(5000);
 });
