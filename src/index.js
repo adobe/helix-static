@@ -315,7 +315,8 @@ function mymimelookup(filename) {
  */
 function deliverPlain(owner, repo, ref, entry, root, esi = false, branch, githubToken) {
   const cleanentry = (`${root}/${entry}`).replace(/^\//, '').replace(/[/]+/g, '/');
-  const url = `https://raw.githubusercontent.com/${owner}/${repo}/${ref}/${cleanentry}`;
+  const cleanpath = `${owner}/${repo}/${ref}/${cleanentry}`.replace(/[/]+/g, '/');
+  const url = `https://raw.githubusercontent.com/${cleanpath}`;
   log.info(`deliverPlain: url=${url}`);
   const rawopts = {
     url,
