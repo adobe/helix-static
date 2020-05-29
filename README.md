@@ -9,7 +9,7 @@
 [![GitHub license](https://img.shields.io/github/license/adobe/helix-static.svg)](https://github.com/adobe/helix-static/blob/master/LICENSE.txt)
 [![GitHub issues](https://img.shields.io/github/issues/adobe/helix-static.svg)](https://github.com/adobe/helix-static/issues)
 [![LGTM Code Quality Grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/adobe/helix-static.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/adobe/helix-static)
-[![Greenkeeper badge](https://badges.greenkeeper.io/adobe/helix-static.svg)](https://greenkeeper.io/)
+
 
 
 ## About
