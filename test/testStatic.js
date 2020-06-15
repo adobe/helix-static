@@ -275,39 +275,39 @@ describe('Static Delivery Action #unittest', () => {
     assert.equal(index.isBinary('application/javascript'), false);
   });
 
-  it('blacklisted() #unittest', () => {
-    assert.equal(index.blacklisted('index.html'), false);
-    assert.equal(index.blacklisted('/index.html'), false);
-    assert.equal(index.blacklisted('/robots.txt'), false);
-    assert.equal(index.blacklisted('robots.txt'), false);
-    assert.equal(index.blacklisted('hello.css'), false);
-    assert.equal(index.blacklisted('/style/hello.css'), false);
-    assert.equal(index.blacklisted('foo/html.htl'), false);
+  it('rejected() #unittest', () => {
+    assert.equal(index.rejected('index.html'), false);
+    assert.equal(index.rejected('/index.html'), false);
+    assert.equal(index.rejected('/robots.txt'), false);
+    assert.equal(index.rejected('robots.txt'), false);
+    assert.equal(index.rejected('hello.css'), false);
+    assert.equal(index.rejected('/style/hello.css'), false);
+    assert.equal(index.rejected('foo/html.htl'), false);
 
-    assert.equal(index.blacklisted('package.json'), true);
-    assert.equal(index.blacklisted('/package.json'), true);
-    assert.equal(index.blacklisted('helix-config.yaml'), true);
-    assert.equal(index.blacklisted('/helix-config.yaml'), true);
-    assert.equal(index.blacklisted('.circleci/config.yml'), true);
-    assert.equal(index.blacklisted('/.circleci/config.yml'), true);
-    assert.equal(index.blacklisted('/src/html.htl'), true);
-    assert.equal(index.blacklisted('src/html.htl'), true);
+    assert.equal(index.rejected('package.json'), true);
+    assert.equal(index.rejected('/package.json'), true);
+    assert.equal(index.rejected('helix-config.yaml'), true);
+    assert.equal(index.rejected('/helix-config.yaml'), true);
+    assert.equal(index.rejected('.circleci/config.yml'), true);
+    assert.equal(index.rejected('/.circleci/config.yml'), true);
+    assert.equal(index.rejected('/src/html.htl'), true);
+    assert.equal(index.rejected('src/html.htl'), true);
 
-    assert.equal(index.blacklisted('foo/html.htl', '^.*\\.htl$|^.*\\.js$'), false);
-    assert.equal(index.blacklisted('foo/html.js', '^.*\\.htl$|^.*\\.js$'), false);
-    assert.equal(index.blacklisted('foo/html.jst', '^.*\\.htl$|^.*\\.js$'), true);
-    assert.equal(index.blacklisted('src/html.htl', '^.*\\.htl$|^.*\\.js$'), true);
+    assert.equal(index.rejected('foo/html.htl', '^.*\\.htl$|^.*\\.js$'), false);
+    assert.equal(index.rejected('foo/html.js', '^.*\\.htl$|^.*\\.js$'), false);
+    assert.equal(index.rejected('foo/html.jst', '^.*\\.htl$|^.*\\.js$'), true);
+    assert.equal(index.rejected('src/html.htl', '^.*\\.htl$|^.*\\.js$'), true);
 
-    assert.equal(index.blacklisted('.well-known/keybase.txt'), false);
-    assert.equal(index.blacklisted('.well-known/dnt-policy.txt'), false);
-    assert.equal(index.blacklisted('.well-known/assetlinks.json'), false);
-    assert.equal(index.blacklisted('.well-known/apple-developer-merchantid-domain-association'), false);
+    assert.equal(index.rejected('.well-known/keybase.txt'), false);
+    assert.equal(index.rejected('.well-known/dnt-policy.txt'), false);
+    assert.equal(index.rejected('.well-known/assetlinks.json'), false);
+    assert.equal(index.rejected('.well-known/apple-developer-merchantid-domain-association'), false);
 
-    assert.equal(index.blacklisted('foo/html.htl', '^.*\\.htl$|^.*\\.js$', 'foo'), true);
-    assert.equal(index.blacklisted('boo/html.htl', '^.*\\.htl$|^.*\\.js$', 'foo'), false);
-    assert.equal(index.blacklisted('src/html.htl', '^.*\\.htl$|^.*\\.js$', 'foo'), true);
+    assert.equal(index.rejected('foo/html.htl', '^.*\\.htl$|^.*\\.js$', 'foo'), true);
+    assert.equal(index.rejected('boo/html.htl', '^.*\\.htl$|^.*\\.js$', 'foo'), false);
+    assert.equal(index.rejected('src/html.htl', '^.*\\.htl$|^.*\\.js$', 'foo'), true);
 
-    assert.equal(index.blacklisted('foo/html.htl', '^.*\\.htl$|^.*\\.js$', ''), false);
+    assert.equal(index.rejected('foo/html.htl', '^.*\\.htl$|^.*\\.js$', ''), false);
   });
 
   it('main() returns static file from GitHub', async () => {

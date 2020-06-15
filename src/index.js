@@ -400,18 +400,18 @@ function deliverPlain(owner, repo, ref, entry, root, esi = false, branch, github
 }
 
 /**
- * The blacklist of paths that may never be served
+ * The rejected paths that may never be served
  * @param {*} path
  */
-function blacklisted(path, allow, deny) {
-  const whitelist = allow ? new RegExp(allow) : false;
-  const blacklist = deny ? new RegExp(deny) : false;
+function rejected(path, allow, deny) {
+  const allowlist = allow ? new RegExp(allow) : false;
+  const denylist = deny ? new RegExp(deny) : false;
 
-  if (whitelist) {
-    return !(whitelist.test(path)) || blacklisted(path, undefined, deny);
+  if (allowlist) {
+    return !(allowlist.test(path)) || rejected(path, undefined, deny);
   }
-  if (blacklist) {
-    return blacklist.test(path) || blacklisted(path);
+  if (denylist) {
+    return denylist.test(path) || rejected(path);
   }
   if (/^\.well-known\/.*$/.test(path)) {
     return false;
@@ -470,8 +470,8 @@ async function deliverStatic(params = {}) {
 
   const file = uri.normalize(path);
   log.info(`deliverStatic with ${owner}/${repo}/${ref} path=${path} file=${file} allow=${allow} deny=${deny} root=${root} esi=${esi}`);
-  if (blacklisted(file, allow, deny)) {
-    log.info('blacklisted!');
+  if (rejected(file, allow, deny)) {
+    log.info('rejected!');
     return forbidden();
   }
 
@@ -499,7 +499,7 @@ module.exports = {
   error,
   addHeaders,
   isBinary,
-  blacklisted,
+  rejected,
   getBody: processBody,
   main,
 };
