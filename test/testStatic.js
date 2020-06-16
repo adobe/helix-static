@@ -151,7 +151,6 @@ describe('Static Delivery Action #integrationtest', () => {
     assert.equal(res.statusCode, 404);
   });
 
-
   it('deliver big JPEG file', async () => {
     const res = await index.main({
       owner: 'trieloff',
