@@ -1,3 +1,10 @@
+## [1.11.32](https://github.com/adobe/helix-static/compare/v1.11.31...v1.11.32) (2020-06-26)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-shared to v7.8.1 ([9b398ad](https://github.com/adobe/helix-static/commit/9b398ad994b6bdd1abc8f6b808478e902213ed08))
+
 ## [1.11.31](https://github.com/adobe/helix-static/compare/v1.11.30...v1.11.31) (2020-06-26)
 
 
