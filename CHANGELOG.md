@@ -1,3 +1,10 @@
+## [1.11.35](https://github.com/adobe/helix-static/compare/v1.11.34...v1.11.35) (2020-06-30)
+
+
+### Bug Fixes
+
+* **font:** handle exceptions from request ([#334](https://github.com/adobe/helix-static/issues/334)) ([f4d82e5](https://github.com/adobe/helix-static/commit/f4d82e559a26c6f7f6be3542ab00077f4925998e)), closes [#281](https://github.com/adobe/helix-static/issues/281)
+
 ## [1.11.34](https://github.com/adobe/helix-static/compare/v1.11.33...v1.11.34) (2020-06-29)
 
 
