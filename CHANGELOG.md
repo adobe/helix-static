@@ -1,3 +1,10 @@
+## [1.11.36](https://github.com/adobe/helix-static/compare/v1.11.35...v1.11.36) (2020-06-30)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @babel/core to v7.10.4 ([cdae5d7](https://github.com/adobe/helix-static/commit/cdae5d7cba1d16979d3c2a05487183c0a4c4deea))
+
 ## [1.11.35](https://github.com/adobe/helix-static/compare/v1.11.34...v1.11.35) (2020-06-30)
 
 
