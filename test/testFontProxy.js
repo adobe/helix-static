@@ -132,4 +132,12 @@ describe('Adobe Fonts Proxy Test #unitttest', () => {
     assert.equal(res.statusCode, 404);
     assert.equal(res.body, 'not found');
   });
+
+  it('Delivers 500 for connection error', async function test() {
+    this.polly.server.any().intercept(() => {
+      throw new Error('socket closed');
+    });
+    const res = await deliverFontCSS('/hlx_fonts/foobar.css');
+    assert.equal(res.statusCode, 502);
+  });
 });

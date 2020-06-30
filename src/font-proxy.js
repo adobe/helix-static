@@ -12,6 +12,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 const request = require('request-promise-native');
 const postcss = require('postcss');
+const log = require('@adobe/helix-log');
 
 /**
  * Gets the santized CSS and URLs to add to the response header
@@ -71,7 +72,7 @@ async function deliverFontCSS(file) {
 
     const { css, foundurls } = await getSanitizedCssAndUrls(body);
 
-    const response = {
+    return {
       statusCode: 200,
       headers: {
         'cache-control': headers['cache-control'],
@@ -81,11 +82,16 @@ async function deliverFontCSS(file) {
       },
       body: css,
     };
-    return response;
   } catch (e) {
+    if (e.response) {
+      return {
+        statusCode: 404,
+        body: e.response.body,
+      };
+    }
+    log.error(`Error while retrieving font: ${e.message}`);
     return {
-      statusCode: 404,
-      body: e.response.body,
+      statusCode: 502,
     };
   }
 }
