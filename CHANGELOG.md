@@ -1,3 +1,10 @@
+## [1.11.39](https://github.com/adobe/helix-static/compare/v1.11.38...v1.11.39) (2020-07-02)
+
+
+### Bug Fixes
+
+* **deps:** update minor ([a93a628](https://github.com/adobe/helix-static/commit/a93a628e78108a37ed6cbfa5cc1830812c8961b8))
+
 ## [1.11.38](https://github.com/adobe/helix-static/compare/v1.11.37...v1.11.38) (2020-07-02)
 
 
