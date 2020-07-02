@@ -1,3 +1,10 @@
+## [1.11.37](https://github.com/adobe/helix-static/compare/v1.11.36...v1.11.37) (2020-07-02)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-status to v8 ([#338](https://github.com/adobe/helix-static/issues/338)) ([c6b790c](https://github.com/adobe/helix-static/commit/c6b790c0e027a01fa032a7e5daf2ec7bc6d584b0))
+
 ## [1.11.36](https://github.com/adobe/helix-static/compare/v1.11.35...v1.11.36) (2020-06-30)
 
 
