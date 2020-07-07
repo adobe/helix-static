@@ -9,6 +9,8 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+process.env.HELIX_FETCH_FORCE_HTTP1 = 'true';
+
 const assert = require('assert');
 const path = require('path');
 const NodeHttpAdapter = require('@pollyjs/adapter-node-http');
@@ -46,7 +48,7 @@ describe('Static Delivery Action #integrationtest', () => {
     assert.equal(res.headers['X-Static'], 'Raw/Static');
     assert.equal(res.headers['Cache-Control'], 's-maxage=300, stale-while-revalidate=2592000');
     assert.equal(res.headers['Surrogate-Key'], 'C0OzgWe1bfWP5Mm0');
-    assert.equal(res.headers.ETag, '"xSOcRd5oxR4XWFrm4Zmxew=="');
+    assert.equal(res.headers.ETag, '"52zefhrgED86CD3YtqFN5XClUcGQDRIg3xTukWKhpF0="');
   });
 
   it('deliver Typekit CSS file', async () => {
@@ -93,7 +95,7 @@ describe('Static Delivery Action #integrationtest', () => {
     assert.equal(res.headers['X-Static'], 'Raw/Static');
     assert.equal(res.headers['Cache-Control'], 's-maxage=300, stale-while-revalidate=2592000');
     assert.equal(res.headers['Surrogate-Key'], 'LiWDcUs5H72QTkGl');
-    assert.equal(res.headers.ETag, '"hQQa9WA2n198wTAbYXlO4A=="');
+    assert.equal(res.headers.ETag, '"zei2DOT55/ukAFvbmB1QwDy2e3KnWuXg41yw2R6TRng="');
   });
 
   it('deliver JSON file', async () => {
@@ -110,7 +112,7 @@ describe('Static Delivery Action #integrationtest', () => {
     assert.equal(res.headers['X-Static'], 'Raw/Static');
     assert.equal(res.headers['Cache-Control'], 's-maxage=300, stale-while-revalidate=2592000');
     assert.equal(res.headers['Surrogate-Key'], 'CIUWTRUuAYPY51zR');
-    assert.equal(res.headers.ETag, '"oJWmHG4De8PUYQZFhlujXg=="');
+    assert.equal(res.headers.ETag, '"uc0mBep1KTsWuJKpfF5LC8GPPa/Qy9+JfIAljVdBXIA="');
   });
 
   it('deliver missing file', async () => {
@@ -165,7 +167,7 @@ describe('Static Delivery Action #integrationtest', () => {
     assert.equal(res.headers['X-Content-Type'], 'image/jpeg');
     assert.equal(res.headers['Surrogate-Key'], 'uAqncPGZlUF7rYnE');
     assert.equal(res.headers['X-Static'], 'Raw/Static');
-  }).timeout(5000);
+  }).timeout(25000);
 
   it('deliver big PNG file even when there are slashes everywhere', async () => {
     const res = await index.main({
@@ -181,7 +183,7 @@ describe('Static Delivery Action #integrationtest', () => {
     assert.equal(res.headers['X-Content-Type'], 'image/png');
     assert.equal(res.headers['Surrogate-Key'], 'd/lHMxH5Pol2lPcI');
     assert.equal(res.headers['X-Static'], 'Raw/Static');
-  }).timeout(5000);
+  }).timeout(25000);
 });
 
 describe('CSS and JS Rewriting', () => {
@@ -226,7 +228,17 @@ describe('CSS and JS Rewriting', () => {
       'import { transform } from "<esi:include src="@babel/core.url"/><esi:remove>@babel/core</esi:remove>";code();');
   });
 });
+/*
 
+ "headers": {
+      "connection": "keep-alive",
+      "accept": "application/json,text/*;q=0.9,**;q=0.8",
+      "user-agent": "Project Helix Static",
+      "accept-encoding": "br;q=1, gzip;q=0.8, deflate;q=0.5",
+      "host": "raw.githubusercontent.com"
+    },
+
+*/
 describe('Static Delivery Action #unittest', () => {
   setupPolly({
     recordFailedRequests: false,
@@ -323,6 +335,7 @@ describe('Static Delivery Action #unittest', () => {
     const res = await index.main({
       owner: 'davidnuescheler',
       repo: 'n2',
+      ref: '8b8ef9736746eb15cdd9c019b1a4df9eafdf0bb3',
       path: '.well-known/apple-developer-merchantid-domain-association',
       plain: true,
     });
@@ -396,7 +409,18 @@ barba.init({
     assert.equal(res.statusCode, 403);
   });
 
-  it('main() returns static file from private GitHub repo (gh token via header)', async () => {
+  it('main() returns static file from private GitHub repo (gh token via header)', async function p() {
+    const { server } = this.polly;
+
+    server
+      .any()
+      .intercept((req, res) => {
+        console.log('III', req.headers.authorization);
+        assert.equal(req.headers.authorization, 'token undisclosed-token');
+        res.setHeader('content-length', 2);
+        res.status(200).send('ok');
+      });
+
     const res = await index.main({
       owner: 'adobe',
       repo: 'project-helix', // private repository
@@ -406,7 +430,18 @@ barba.init({
     assert.equal(res.statusCode, 200);
   });
 
-  it('main() returns static file from private GitHub repo (gh token via param)', async () => {
+  it('main() returns static file from private GitHub repo (gh token via param)', async function p() {
+    const { server } = this.polly;
+
+    server
+      .any()
+      .intercept((req, res) => {
+        console.log('III', req.headers.authorization);
+        assert.equal(req.headers.authorization, 'token undisclosed-token');
+        res.setHeader('content-length', 2);
+        res.status(200).send('ok');
+      });
+
     const res = await index.main({
       owner: 'adobe',
       repo: 'project-helix', // private repository

@@ -10,7 +10,11 @@
  * governing permissions and limitations under the License.
  */
 // eslint-disable-next-line import/no-extraneous-dependencies
-const request = require('request-promise-native');
+const { fetch } = require('@adobe/helix-fetch').context({
+  httpsProtocols:
+  /* istanbul ignore next */
+  process.env.HELIX_FETCH_FORCE_HTTP1 ? ['http1'] : ['http2', 'http1'],
+});
 const postcss = require('postcss');
 const log = require('@adobe/helix-log');
 
@@ -66,17 +70,22 @@ async function deliverFontCSS(file) {
   const [kitid] = file.split('/').pop().split('.');
 
   try {
-    const { body, headers } = await request(`https://use.typekit.net/${kitid}.css`, {
-      resolveWithFullResponse: true,
-    });
+    const response = await fetch(`https://use.typekit.net/${kitid}.css`);
+    const body = await response.text();
+    const { headers } = response;
+
+    if (!response.ok) {
+      const err = new Error(response.statusText);
+      err.response = response;
+      throw err;
+    }
 
     const { css, foundurls } = await getSanitizedCssAndUrls(body);
-
     return {
       statusCode: 200,
       headers: {
-        'cache-control': headers['cache-control'],
-        'content-type': headers['content-type'],
+        'cache-control': headers.get('cache-control'),
+        'content-type': headers.get('content-type'),
         'surrogate-control': 'max-age=300, stale-while-revalidate=2592000',
         link: foundurls.map((url) => `<${url}>; rel=preload; as=font; crossorigin=anonymous`).join(','),
       },
@@ -86,7 +95,7 @@ async function deliverFontCSS(file) {
     if (e.response) {
       return {
         statusCode: 404,
-        body: e.response.body,
+        body: await e.response.text(),
       };
     }
     log.error(`Error while retrieving font: ${e.message}`);

@@ -10,7 +10,11 @@
  * governing permissions and limitations under the License.
  */
 // eslint-disable-next-line import/no-extraneous-dependencies
-const request = require('request-promise-native');
+const { fetch, AbortController } = require('@adobe/helix-fetch').context({
+  httpsProtocols:
+  /* istanbul ignore next */
+  process.env.HELIX_FETCH_FORCE_HTTP1 ? ['http1'] : ['http2', 'http1'],
+});
 const crypto = require('crypto');
 const mime = require('mime-types');
 const postcss = require('postcss');
@@ -124,7 +128,7 @@ function isJSON(type) {
  * Adds general headers to the response.
  * @param {object} headers - The headers object.
  * @param {string} ref - Content ref (branch, tag, or sha)
- * @param {string} content - The response content.
+ * @param {Buffer} content - The response content.
  * @returns {object} the new headers.
  */
 function addHeaders(headers, ref, content) {
@@ -135,7 +139,7 @@ function addHeaders(headers, ref, content) {
       'Cache-Control': 'max-age=86400, stale-while-revalidate=2592000',
     };
   } else if (content) {
-    const hash = crypto.createHash('md5').update(content);
+    const hash = crypto.createHash('sha256').update(content);
     cacheheaders = {
       ETag: `"${hash.digest('base64')}"`,
       // stale-while-revalidate: 30 days
@@ -272,25 +276,25 @@ function rewriteJavaScript(javascript, base = '') {
 /**
  * Processes the body according to the content type.
  * @param {string} type - the content type
- * @param {string} responsebody - the response body
+ * @param {Buffer} responsebody - the response body
  * @param {boolean} esi - esi flag
  * @param {string} entry - the base href
  * @returns {Function|any|string|any} the response body
  */
 function processBody(type, responsebody, esi = false, entry) {
   if (isBinary(type)) {
-    return Buffer.from(responsebody).toString('base64');
+    return responsebody.toString('base64');
   }
   if (isJSON(type)) {
-    return JSON.parse(responsebody);
+    return JSON.parse(responsebody.toString('utf-8'));
   }
   if (esi && isCSS(type)) {
-    return rewriteCSS(responsebody.toString(), entry);
+    return rewriteCSS(responsebody.toString('utf-8'), entry);
   }
   if (esi && isJavaScript(type)) {
-    return rewriteJavaScript(responsebody.toString(), entry);
+    return rewriteJavaScript(responsebody.toString('utf-8'), entry);
   }
-  return responsebody.toString();
+  return responsebody.toString('utf-8');
 }
 
 /* eslint-disable consistent-return
@@ -319,12 +323,9 @@ function deliverPlain(owner, repo, ref, entry, root, esi = false, branch, github
   const url = `https://raw.githubusercontent.com/${cleanpath}`;
   log.info(`deliverPlain: url=${url}`);
   const rawopts = {
-    url,
     headers: {
       'User-Agent': 'Project Helix Static',
     },
-    resolveWithFullResponse: true,
-    encoding: null,
   };
   if (githubToken) {
     rawopts.headers.Authorization = `token ${githubToken}`;
@@ -338,12 +339,25 @@ function deliverPlain(owner, repo, ref, entry, root, esi = false, branch, github
     surrogateKey = computeSurrogateKey(url);
   }
 
-  return request.get(rawopts).then(async (response) => {
+  const controller = new AbortController();
+
+  rawopts.signal = controller.signal;
+
+  return fetch(url, rawopts).then(async (response) => {
     const type = mime.lookup(cleanentry) || mymimelookup(cleanentry) || 'application/octet-stream';
-    const size = parseInt(response.headers['content-length'], 10);
+    const size = parseInt(response.headers.get('content-length'), 10);
     log.info(`got response. size=${size}, type=${type}`);
+    if (!response.ok) {
+      const reqErr = new Error(response.statusText);
+      reqErr.statusCode = response.status;
+      reqErr.response = {
+        body: await response.text(),
+      };
+
+      throw reqErr;
+    }
     if (size < REDIRECT_LIMIT) {
-      const body = await processBody(type, response.body, esi, entry);
+      const body = await processBody(type, await response.buffer(), esi, entry);
       log.info(`delivering file ${cleanentry} type ${type} binary: ${isBinary(type)}`);
       return {
         statusCode: 200,
@@ -352,11 +366,15 @@ function deliverPlain(owner, repo, ref, entry, root, esi = false, branch, github
           'X-Static': 'Raw/Static',
           'X-ESI': esi ? 'enabled' : undefined,
           'Surrogate-Key': surrogateKey,
-        }, ref, response.body),
+        }, ref, await response.buffer()),
         body,
       };
     }
     log.info(`size exceeds limit ${REDIRECT_LIMIT}. sending redirect.`);
+
+    // abort the request
+    controller.abort();
+
     return {
       statusCode: 307,
       headers: {
