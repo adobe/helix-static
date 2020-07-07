@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 // eslint-disable-next-line import/no-extraneous-dependencies
-const { fetch } = require('@adobe/helix-fetch').context({
+const { fetch, AbortController } = require('@adobe/helix-fetch').context({
   httpsProtocols:
   /* istanbul ignore next */
   process.env.HELIX_FETCH_FORCE_HTTP1 ? ['http1'] : ['http2', 'http1'],
@@ -339,6 +339,10 @@ function deliverPlain(owner, repo, ref, entry, root, esi = false, branch, github
     surrogateKey = computeSurrogateKey(url);
   }
 
+  const controller = new AbortController();
+
+  rawopts.signal = controller.signal;
+
   return fetch(url, rawopts).then(async (response) => {
     const type = mime.lookup(cleanentry) || mymimelookup(cleanentry) || 'application/octet-stream';
     const size = parseInt(response.headers.get('content-length'), 10);
@@ -367,8 +371,9 @@ function deliverPlain(owner, repo, ref, entry, root, esi = false, branch, github
       };
     }
     log.info(`size exceeds limit ${REDIRECT_LIMIT}. sending redirect.`);
-    // pretend to read body
-    response.buffer();
+
+    // abort the request
+    controller.abort();
 
     return {
       statusCode: 307,
