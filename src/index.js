@@ -128,7 +128,7 @@ function isJSON(type) {
  * Adds general headers to the response.
  * @param {object} headers - The headers object.
  * @param {string} ref - Content ref (branch, tag, or sha)
- * @param {string} content - The response content.
+ * @param {Buffer} content - The response content.
  * @returns {object} the new headers.
  */
 function addHeaders(headers, ref, content) {
@@ -139,7 +139,7 @@ function addHeaders(headers, ref, content) {
       'Cache-Control': 'max-age=86400, stale-while-revalidate=2592000',
     };
   } else if (content) {
-    const hash = crypto.createHash('sha256').update(Buffer.from(content));
+    const hash = crypto.createHash('sha256').update(content);
     cacheheaders = {
       ETag: `"${hash.digest('base64')}"`,
       // stale-while-revalidate: 30 days
@@ -276,25 +276,25 @@ function rewriteJavaScript(javascript, base = '') {
 /**
  * Processes the body according to the content type.
  * @param {string} type - the content type
- * @param {string} responsebody - the response body
+ * @param {Buffer} responsebody - the response body
  * @param {boolean} esi - esi flag
  * @param {string} entry - the base href
  * @returns {Function|any|string|any} the response body
  */
 function processBody(type, responsebody, esi = false, entry) {
   if (isBinary(type)) {
-    return Buffer.from(responsebody).toString('base64');
+    return responsebody.toString('base64');
   }
   if (isJSON(type)) {
-    return JSON.parse(Buffer.from(responsebody).toString('utf-8'));
+    return JSON.parse(responsebody.toString('utf-8'));
   }
   if (esi && isCSS(type)) {
-    return rewriteCSS(Buffer.from(responsebody).toString('utf-8'), entry);
+    return rewriteCSS(responsebody.toString('utf-8'), entry);
   }
   if (esi && isJavaScript(type)) {
-    return rewriteJavaScript(Buffer.from(responsebody).toString('utf-8'), entry);
+    return rewriteJavaScript(responsebody.toString('utf-8'), entry);
   }
-  return Buffer.from(responsebody).toString('utf-8');
+  return responsebody.toString('utf-8');
 }
 
 /* eslint-disable consistent-return
@@ -353,7 +353,7 @@ function deliverPlain(owner, repo, ref, entry, root, esi = false, branch, github
       throw reqErr;
     }
     if (size < REDIRECT_LIMIT) {
-      const body = await processBody(type, await response.arrayBuffer(), esi, entry);
+      const body = await processBody(type, await response.buffer(), esi, entry);
       log.info(`delivering file ${cleanentry} type ${type} binary: ${isBinary(type)}`);
       return {
         statusCode: 200,
@@ -362,13 +362,13 @@ function deliverPlain(owner, repo, ref, entry, root, esi = false, branch, github
           'X-Static': 'Raw/Static',
           'X-ESI': esi ? 'enabled' : undefined,
           'Surrogate-Key': surrogateKey,
-        }, ref, await response.arrayBuffer()),
+        }, ref, await response.buffer()),
         body,
       };
     }
     log.info(`size exceeds limit ${REDIRECT_LIMIT}. sending redirect.`);
     // pretend to read body
-    response.readable();
+    response.buffer();
 
     return {
       statusCode: 307,
