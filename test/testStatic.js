@@ -415,6 +415,7 @@ barba.init({
     server
       .any()
       .intercept((req, res) => {
+        // eslint-disable-next-line no-console
         console.log('III', req.headers.authorization);
         assert.equal(req.headers.authorization, 'token undisclosed-token');
         res.setHeader('content-length', 2);
@@ -436,6 +437,7 @@ barba.init({
     server
       .any()
       .intercept((req, res) => {
+        // eslint-disable-next-line no-console
         console.log('III', req.headers.authorization);
         assert.equal(req.headers.authorization, 'token undisclosed-token');
         res.setHeader('content-length', 2);
