@@ -1,3 +1,10 @@
+## [1.11.41](https://github.com/adobe/helix-static/compare/v1.11.40...v1.11.41) (2020-07-14)
+
+
+### Bug Fixes
+
+* **font:** create new fetch context for each invocation ([#352](https://github.com/adobe/helix-static/issues/352)) ([ea873a2](https://github.com/adobe/helix-static/commit/ea873a2139bb664a666b4f7ccd811ec5c2270a75))
+
 ## [1.11.40](https://github.com/adobe/helix-static/compare/v1.11.39...v1.11.40) (2020-07-13)
 
 
