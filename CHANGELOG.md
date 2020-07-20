@@ -1,3 +1,10 @@
+## [1.11.43](https://github.com/adobe/helix-static/compare/v1.11.42...v1.11.43) (2020-07-20)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-fetch to v1.8.0 ([399e308](https://github.com/adobe/helix-static/commit/399e308691b9aa914baf417a6d087628e42da80b))
+
 ## [1.11.42](https://github.com/adobe/helix-static/compare/v1.11.41...v1.11.42) (2020-07-18)
 
 
