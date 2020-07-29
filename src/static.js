@@ -112,5 +112,5 @@ async function deliverStatic(params = {}) {
 }
 
 module.exports = {
-  deliverStatic,
+  deliverStatic, rejected,
 };

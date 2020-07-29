@@ -78,10 +78,13 @@ function addHeaders(headers, ref, content) {
  * @param githubToken
  */
 function fetchFromGithub(params, bodyCallback = (body) => body) {
+  console.log('FETCH', params);
   const {
-    owner, repo, ref, entry, root, esi = false, branch, githubToken,
+    owner, repo, ref = 'master', entry, root = '', esi = false, branch, githubToken,
   } = params;
-  const cleanentry = (`${root}/${entry}`).replace(/^\//, '').replace(/[/]+/g, '/');
+
+  const { path, ext } = params.params;
+  const cleanentry = (`${root}/${path}.${ext}`).replace(/^\//, '').replace(/[/]+/g, '/');
   const cleanpath = `${owner}/${repo}/${ref}/${cleanentry}`.replace(/[/]+/g, '/');
   const url = `https://raw.githubusercontent.com/${cleanpath}`;
   log.info(`deliverPlain: url=${url}`);

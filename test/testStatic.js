@@ -18,6 +18,8 @@ const FSPersister = require('@pollyjs/persister-fs');
 const { setupMocha: setupPolly } = require('@pollyjs/core');
 const index = require('../src/index');
 const pkgJson = require('../package.json');
+const { rejected } = require('../src/static');
+const utils = require('../src/utils');
 
 /* eslint-env mocha */
 describe('Static Delivery Action #integrationtest', () => {
@@ -259,7 +261,7 @@ describe('Static Delivery Action #unittest', () => {
   });
 
   it('error() #unittest', () => {
-    const error = index.error('Test');
+    const error = utils.error('Test');
     assert.equal(error.statusCode, '500');
     assert.ok(error.body.match('Test'));
     assert.ok(!error.body.match('404'));
@@ -275,50 +277,50 @@ describe('Static Delivery Action #unittest', () => {
   });
 
   it('isBinary() #unittest', () => {
-    assert.equal(index.isBinary('application/octet-stream'), true);
-    assert.equal(index.isBinary('image/png'), true);
-    assert.equal(index.isBinary('un/known'), true);
-    assert.equal(index.isBinary('image/svg+xml'), true);
+    assert.equal(utils.isBinary('application/octet-stream'), true);
+    assert.equal(utils.isBinary('image/png'), true);
+    assert.equal(utils.isBinary('un/known'), true);
+    assert.equal(utils.isBinary('image/svg+xml'), true);
 
-    assert.equal(index.isBinary('text/html'), false);
-    assert.equal(index.isBinary('text/xml'), false);
-    assert.equal(index.isBinary('application/json'), false);
-    assert.equal(index.isBinary('application/javascript'), false);
+    assert.equal(utils.isBinary('text/html'), false);
+    assert.equal(utils.isBinary('text/xml'), false);
+    assert.equal(utils.isBinary('application/json'), false);
+    assert.equal(utils.isBinary('application/javascript'), false);
   });
 
   it('rejected() #unittest', () => {
-    assert.equal(index.rejected('index.html'), false);
-    assert.equal(index.rejected('/index.html'), false);
-    assert.equal(index.rejected('/robots.txt'), false);
-    assert.equal(index.rejected('robots.txt'), false);
-    assert.equal(index.rejected('hello.css'), false);
-    assert.equal(index.rejected('/style/hello.css'), false);
-    assert.equal(index.rejected('foo/html.htl'), false);
+    assert.equal(rejected('index.html'), false);
+    assert.equal(rejected('/index.html'), false);
+    assert.equal(rejected('/robots.txt'), false);
+    assert.equal(rejected('robots.txt'), false);
+    assert.equal(rejected('hello.css'), false);
+    assert.equal(rejected('/style/hello.css'), false);
+    assert.equal(rejected('foo/html.htl'), false);
 
-    assert.equal(index.rejected('package.json'), true);
-    assert.equal(index.rejected('/package.json'), true);
-    assert.equal(index.rejected('helix-config.yaml'), true);
-    assert.equal(index.rejected('/helix-config.yaml'), true);
-    assert.equal(index.rejected('.circleci/config.yml'), true);
-    assert.equal(index.rejected('/.circleci/config.yml'), true);
-    assert.equal(index.rejected('/src/html.htl'), true);
-    assert.equal(index.rejected('src/html.htl'), true);
+    assert.equal(rejected('package.json'), true);
+    assert.equal(rejected('/package.json'), true);
+    assert.equal(rejected('helix-config.yaml'), true);
+    assert.equal(rejected('/helix-config.yaml'), true);
+    assert.equal(rejected('.circleci/config.yml'), true);
+    assert.equal(rejected('/.circleci/config.yml'), true);
+    assert.equal(rejected('/src/html.htl'), true);
+    assert.equal(rejected('src/html.htl'), true);
 
-    assert.equal(index.rejected('foo/html.htl', '^.*\\.htl$|^.*\\.js$'), false);
-    assert.equal(index.rejected('foo/html.js', '^.*\\.htl$|^.*\\.js$'), false);
-    assert.equal(index.rejected('foo/html.jst', '^.*\\.htl$|^.*\\.js$'), true);
-    assert.equal(index.rejected('src/html.htl', '^.*\\.htl$|^.*\\.js$'), true);
+    assert.equal(rejected('foo/html.htl', '^.*\\.htl$|^.*\\.js$'), false);
+    assert.equal(rejected('foo/html.js', '^.*\\.htl$|^.*\\.js$'), false);
+    assert.equal(rejected('foo/html.jst', '^.*\\.htl$|^.*\\.js$'), true);
+    assert.equal(rejected('src/html.htl', '^.*\\.htl$|^.*\\.js$'), true);
 
-    assert.equal(index.rejected('.well-known/keybase.txt'), false);
-    assert.equal(index.rejected('.well-known/dnt-policy.txt'), false);
-    assert.equal(index.rejected('.well-known/assetlinks.json'), false);
-    assert.equal(index.rejected('.well-known/apple-developer-merchantid-domain-association'), false);
+    assert.equal(rejected('.well-known/keybase.txt'), false);
+    assert.equal(rejected('.well-known/dnt-policy.txt'), false);
+    assert.equal(rejected('.well-known/assetlinks.json'), false);
+    assert.equal(rejected('.well-known/apple-developer-merchantid-domain-association'), false);
 
-    assert.equal(index.rejected('foo/html.htl', '^.*\\.htl$|^.*\\.js$', 'foo'), true);
-    assert.equal(index.rejected('boo/html.htl', '^.*\\.htl$|^.*\\.js$', 'foo'), false);
-    assert.equal(index.rejected('src/html.htl', '^.*\\.htl$|^.*\\.js$', 'foo'), true);
+    assert.equal(rejected('foo/html.htl', '^.*\\.htl$|^.*\\.js$', 'foo'), true);
+    assert.equal(rejected('boo/html.htl', '^.*\\.htl$|^.*\\.js$', 'foo'), false);
+    assert.equal(rejected('src/html.htl', '^.*\\.htl$|^.*\\.js$', 'foo'), true);
 
-    assert.equal(index.rejected('foo/html.htl', '^.*\\.htl$|^.*\\.js$', ''), false);
+    assert.equal(rejected('foo/html.htl', '^.*\\.htl$|^.*\\.js$', ''), false);
   });
 
   it('main() returns static file from GitHub', async () => {
@@ -350,6 +352,7 @@ describe('Static Delivery Action #unittest', () => {
       path: './demos/simple/htdocs/style.css',
       plain: true,
     });
+
     assert.ok(res.body.indexOf('Arial') > 0, true);
   });
 
@@ -381,8 +384,8 @@ describe('Static Delivery Action #unittest', () => {
       plain: true,
       esi: true,
     });
-    assert.equal(res.body, `import barba from "<esi:include src="/web_modules/@barba--core.js.url"/><esi:remove>./web_modules/@barba--core.js</esi:remove>";import
-prefetch from "<esi:include src="/web_modules/@barba--prefetch.js.url"/><esi:remove>./web_modules/@barba--prefetch.js</esi:remove>";
+    assert.equal(res.body, `import barba from "<esi:include src="web_modules/@barba--core.js.url"/><esi:remove>./web_modules/@barba--core.js</esi:remove>";import
+prefetch from "<esi:include src="web_modules/@barba--prefetch.js.url"/><esi:remove>./web_modules/@barba--prefetch.js</esi:remove>";
 
 // tells barba to use the prefetch module
 barba.use(prefetch);
