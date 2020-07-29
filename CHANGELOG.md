@@ -1,3 +1,59 @@
+## [1.11.47](https://github.com/adobe/helix-static/compare/v1.11.46...v1.11.47) (2020-07-23)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-status to v8.1.2 ([#360](https://github.com/adobe/helix-static/issues/360)) ([c14f32c](https://github.com/adobe/helix-static/commit/c14f32c5df3801998f49b67169681cb4c5e19d77))
+
+## [1.11.46](https://github.com/adobe/helix-static/compare/v1.11.45...v1.11.46) (2020-07-22)
+
+
+### Bug Fixes
+
+* **deps:** update [@adobe](https://github.com/adobe) fixes ([330400c](https://github.com/adobe/helix-static/commit/330400ca0e40468f6c812f63c4ba38083f2b9f70))
+
+## [1.11.45](https://github.com/adobe/helix-static/compare/v1.11.44...v1.11.45) (2020-07-21)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-shared to v7.10.0 ([#358](https://github.com/adobe/helix-static/issues/358)) ([8c7a568](https://github.com/adobe/helix-static/commit/8c7a56867391b16cb632f7c104620b61b4bb8b04))
+
+## [1.11.44](https://github.com/adobe/helix-static/compare/v1.11.43...v1.11.44) (2020-07-21)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-status to v8.1.1 ([#357](https://github.com/adobe/helix-static/issues/357)) ([a94b5e5](https://github.com/adobe/helix-static/commit/a94b5e50cef53b59b2a65daee652d96f3b3a7b28))
+
+## [1.11.43](https://github.com/adobe/helix-static/compare/v1.11.42...v1.11.43) (2020-07-20)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-fetch to v1.8.0 ([399e308](https://github.com/adobe/helix-static/commit/399e308691b9aa914baf417a6d087628e42da80b))
+
+## [1.11.42](https://github.com/adobe/helix-static/compare/v1.11.41...v1.11.42) (2020-07-18)
+
+
+### Bug Fixes
+
+* **deps:** update external fixes ([469e1d1](https://github.com/adobe/helix-static/commit/469e1d1b9a0f3ea2f5a37c3c24b586a6ae69cefd))
+
+## [1.11.41](https://github.com/adobe/helix-static/compare/v1.11.40...v1.11.41) (2020-07-14)
+
+
+### Bug Fixes
+
+* **font:** create new fetch context for each invocation ([#352](https://github.com/adobe/helix-static/issues/352)) ([ea873a2](https://github.com/adobe/helix-static/commit/ea873a2139bb664a666b4f7ccd811ec5c2270a75))
+
+## [1.11.40](https://github.com/adobe/helix-static/compare/v1.11.39...v1.11.40) (2020-07-13)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-fetch to v1.7.1 ([f75a7a1](https://github.com/adobe/helix-static/commit/f75a7a1ad95586868062bc71cad2637ef49115bd))
+
 ## [1.11.39](https://github.com/adobe/helix-static/compare/v1.11.38...v1.11.39) (2020-07-02)
 
 
