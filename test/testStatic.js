@@ -193,6 +193,7 @@ describe('Static Delivery Action #integrationtest', () => {
 
 describe('CSS and JS Rewriting', () => {
   it('Rewrite CSS', async () => {
+    assert.equal(await css('{', true), '{');
     assert.equal(await css('', true), '');
     assert.equal(await css(`.element {
   background: url('images/../sprite.png?foo=bar');
@@ -380,6 +381,18 @@ describe('Static Delivery Action #unittest', () => {
       'x-last-activation-id': undefined,
       'x-version': pkgJson.version,
     });
+  });
+
+  it('main() normalizes URLs in rewritten CSS', async () => {
+    const res = await index.main({
+      owner: 'trieloff',
+      repo: 'helix-demo',
+      path: '/css/bulma.css',
+      root: '/htdocs',
+      plain: true,
+      esi: true,
+    });
+    assert.equal(res.body.indexOf('/*! bulma.io v0.7.4 | MIT License | github.com/jgthms/bulma */'), 0);
   });
 
   it('main() normalizes URLs in rewritten Javascript', async () => {

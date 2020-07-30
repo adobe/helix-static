@@ -105,7 +105,7 @@ async function deliverStatic(params = {}) {
 
   return router
     .register('/hlx_fonts/:kitid([a-z0-9]{7}).css', fontCSS)
-    .register(':path(.*).css', githubCSS, isESI)
+    .register(':path(.*).:ext(css)', githubCSS, isESI)
     .register(':path(.*).:ext(m?js)', githubJS, isESI)
     .register(':path(.*).:ext(.*)', githubPlain)
     .handle(file, params);
