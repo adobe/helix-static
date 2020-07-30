@@ -77,7 +77,7 @@ function addHeaders(headers, ref, content) {
  * @param branch
  * @param githubToken
  */
-function fetchFromGithub(params, bodyCallback = (body) => body) {
+function fetchFromGithub(params, bodyCallback) {
   const {
     owner, repo, ref = 'master', entry, root = '', esi = false, branch, githubToken,
   } = params;
