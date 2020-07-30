@@ -100,7 +100,7 @@ describe('Static Delivery Action #integrationtest', () => {
     assert.equal(res.headers['X-Static'], 'Raw/Static');
     assert.equal(res.headers['Cache-Control'], 's-maxage=300, stale-while-revalidate=2592000');
     assert.equal(res.headers['Surrogate-Key'], 'LiWDcUs5H72QTkGl');
-    assert.equal(res.headers.ETag, '"zei2DOT55/ukAFvbmB1QwDy2e3KnWuXg41yw2R6TRng="');
+    assert.equal(res.headers.ETag, '"VIXMjwsHOMPLZGtviFum1TGBFMz6zCQKINQseZ6Ub6k="');
   });
 
   it('deliver JSON file', async () => {
@@ -117,7 +117,7 @@ describe('Static Delivery Action #integrationtest', () => {
     assert.equal(res.headers['X-Static'], 'Raw/Static');
     assert.equal(res.headers['Cache-Control'], 's-maxage=300, stale-while-revalidate=2592000');
     assert.equal(res.headers['Surrogate-Key'], 'CIUWTRUuAYPY51zR');
-    assert.equal(res.headers.ETag, '"uc0mBep1KTsWuJKpfF5LC8GPPa/Qy9+JfIAljVdBXIA="');
+    assert.equal(res.headers.ETag, '"hNCISMWqyUDaDY2zDTMKXb1peyzXunKE791FEtjILtg="');
   });
 
   it('deliver missing file', async () => {

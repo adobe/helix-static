@@ -14,6 +14,7 @@ const log = require('@adobe/helix-log');
 const crypto = require('crypto');
 const { computeSurrogateKey } = require('@adobe/helix-shared').utils;
 const mime = require('mime-types');
+const ohash = require('object-hash');
 const { fetch, AbortController } = require('@adobe/helix-fetch').context({
   httpsProtocols:
   /* istanbul ignore next */
@@ -49,7 +50,9 @@ function addHeaders(headers, ref, content) {
       'Cache-Control': 'max-age=86400, stale-while-revalidate=2592000',
     };
   } else if (content) {
-    const hash = crypto.createHash('sha256').update(content);
+    const hash = typeof content === 'object'
+      ? crypto.createHash('sha256').update(ohash(content))
+      : crypto.createHash('sha256').update(content);
     cacheheaders = {
       ETag: `"${hash.digest('base64')}"`,
       // stale-while-revalidate: 30 days
