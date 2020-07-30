@@ -237,6 +237,11 @@ describe('CSS and JS Rewriting', () => {
     assert.equal(await js('import { transform } from "@babel/core";code();', true),
       'import { transform } from "<esi:include src="@babel/core.url"/><esi:remove>@babel/core</esi:remove>";code();');
   });
+
+  it('Do not Rewrite broken JS', async () => {
+    assert.equal(await js('{', true),
+      '{');
+  });
 });
 /*
 
