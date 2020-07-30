@@ -81,3 +81,4 @@ function handle(opts) {
 }
 
 module.exports = handle;
+module.exports.js = processBody;

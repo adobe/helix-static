@@ -184,5 +184,5 @@ function fetchFromGithub(params, bodyCallback = (body) => body) {
 }
 
 module.exports = {
-  fetchFromGithub,
+  fetchFromGithub, addHeaders,
 };

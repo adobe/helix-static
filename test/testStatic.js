@@ -20,6 +20,9 @@ const index = require('../src/index');
 const pkgJson = require('../package.json');
 const { rejected } = require('../src/static');
 const utils = require('../src/utils');
+const gh = require('../src/github-fetcher');
+const { css } = require('../src/handlers/github-css');
+const { js } = require('../src/handlers/github-js');
 
 /* eslint-env mocha */
 describe('Static Delivery Action #integrationtest', () => {
@@ -190,43 +193,47 @@ describe('Static Delivery Action #integrationtest', () => {
 
 describe('CSS and JS Rewriting', () => {
   it('Rewrite CSS', async () => {
-    assert.equal(await index.getBody('text/css', '', true), '');
-    assert.equal(await index.getBody('text/css', `.element {
+    assert.equal(await css('', true), '');
+    assert.equal(await css(`.element {
   background: url('images/../sprite.png?foo=bar');
 }`, true), `.element {
   background: url('images/../sprite.png?foo=bar');
 }`);
-    assert.equal(await index.getBody('text/css', `.element {
+    assert.equal(await css(`.element {
   background: url('https://example.com/sprite.png?foo=bar');
 }`, true), `.element {
   background: url('https://example.com/sprite.png?foo=bar');
 }`);
-    assert.equal(await index.getBody('text/css', `.element {
+    assert.equal(await css(`.element {
   background: url('images/../sprite.png');
 }`, true), `.element {
   background: url('<esi:include src="sprite.png.url"/><esi:remove>sprite.png</esi:remove>');
 }`);
-    assert.equal(await index.getBody('text/css', `.element {
+    assert.equal(await css(`.element {
   background: url("images/../sprite.png");
 }`, true), `.element {
   background: url("<esi:include src="sprite.png.url"/><esi:remove>sprite.png</esi:remove>");
 }`);
-    assert.equal(await index.getBody('text/css',
-      '@import "fineprint.css" print;', true),
+    assert.equal(await css(
+      '@import "fineprint.css" print;', true,
+    ),
     '@import "<esi:include src="fineprint.css.url"/><esi:remove>fineprint.css</esi:remove>" print;');
-    assert.equal(await index.getBody('text/css',
-      '@import \'fineprint.css\' print;', true),
+    assert.equal(await css(
+      '@import \'fineprint.css\' print;', true,
+    ),
     '@import \'<esi:include src="fineprint.css.url"/><esi:remove>fineprint.css</esi:remove>\' print;');
-    assert.equal(await index.getBody('text/css',
-      '@import url(\'fineprint.css\') print;', true),
+    assert.equal(await css(
+      '@import url(\'fineprint.css\') print;', true,
+    ),
     '@import url(\'<esi:include src="fineprint.css.url"/><esi:remove>fineprint.css</esi:remove>\') print;');
-    assert.equal(await index.getBody('text/css',
-      '@import url("fineprint.css") print;', true),
+    assert.equal(await css(
+      '@import url("fineprint.css") print;', true,
+    ),
     '@import url("<esi:include src="fineprint.css.url"/><esi:remove>fineprint.css</esi:remove>") print;');
   });
 
   it('Rewrite JS', async () => {
-    assert.equal(await index.getBody('text/javascript', 'import { transform } from "@babel/core";code();', true),
+    assert.equal(await js('import { transform } from "@babel/core";code();', true),
       'import { transform } from "<esi:include src="@babel/core.url"/><esi:remove>@babel/core</esi:remove>";code();');
   });
 });
@@ -269,10 +276,10 @@ describe('Static Delivery Action #unittest', () => {
 
   it('addHeaders() #unittest', () => {
     const before = {};
-    const afterMaster = index.addHeaders(before, 'master', 'foobar');
+    const afterMaster = gh.addHeaders(before, 'master', 'foobar');
     assert.ok(afterMaster.ETag.match(/^".*"$/));
 
-    const afterSha = index.addHeaders(before, 'bcdcc24e8ebc25a07a35d05afd85551a83fa5af3', 'foobar');
+    const afterSha = gh.addHeaders(before, 'bcdcc24e8ebc25a07a35d05afd85551a83fa5af3', 'foobar');
     assert.ok(afterSha['Cache-Control'].match(/^max-age/));
   });
 
