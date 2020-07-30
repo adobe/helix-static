@@ -131,7 +131,7 @@ function fetchFromGithub(params, bodyCallback) {
           'X-Static': 'Raw/Static',
           'X-ESI': esi ? 'enabled' : undefined,
           'Surrogate-Key': surrogateKey,
-        }, ref, await response.buffer()),
+        }, ref, body),
         body,
       };
     }

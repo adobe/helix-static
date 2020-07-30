@@ -400,7 +400,7 @@ describe('Static Delivery Action #unittest', () => {
     assert.equal(res.body.indexOf('/*! bulma.io v0.7.4 | MIT License | github.com/jgthms/bulma */'), 0);
   });
 
-  it('main() normalizes URLs in rewritten Javascript', async () => {
+  it.only('main() normalizes URLs in rewritten Javascript', async () => {
     const res = await index.main({
       owner: 'trieloff',
       repo: 'helix-demo',
