@@ -56,7 +56,7 @@ describe('Static Delivery Action #integrationtest', () => {
     assert.equal(res.headers.ETag, '"52zefhrgED86CD3YtqFN5XClUcGQDRIg3xTukWKhpF0="');
   });
 
-  it.only('deliver Typekit CSS file', async () => {
+  it('deliver Typekit CSS file', async () => {
     const res = await index.main({
       owner: 'trieloff',
       repo: 'helix-demo',

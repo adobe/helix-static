@@ -78,7 +78,6 @@ function addHeaders(headers, ref, content) {
  * @param githubToken
  */
 function fetchFromGithub(params, bodyCallback = (body) => body) {
-  console.log('FETCH', params);
   const {
     owner, repo, ref = 'master', entry, root = '', esi = false, branch, githubToken,
   } = params;
@@ -164,7 +163,7 @@ function fetchFromGithub(params, bodyCallback = (body) => body) {
           'Content-Type': 'text/plain',
           'Cache-Control': 's-maxage=300',
         },
-        body: entry,
+        body: cleanentry,
       };
     }
     const { statusCode, message, response } = rqerror;
