@@ -29,7 +29,7 @@ const REDIRECT_LIMIT = 750000;
 
 /* eslint-disable consistent-return
 */
-function mymimelookup(filename) {
+function mimeTypeLookup(filename) {
   if (/^.well-known\/apple-developer-merchantid-domain-association$/.test(filename)) {
     return 'text/plain';
   }
@@ -112,7 +112,7 @@ function fetchFromGithub(params, bodyCallback) {
   rawopts.signal = controller.signal;
 
   return fetch(url, rawopts).then(async (response) => {
-    const type = mime.lookup(cleanentry) || mymimelookup(cleanentry) || 'application/octet-stream';
+    const type = mime.lookup(cleanentry) || mimeTypeLookup(cleanentry) || 'application/octet-stream';
     const size = parseInt(response.headers.get('content-length'), 10);
     log.info(`got response. size=${size}, type=${type}`);
     if (!response.ok) {
