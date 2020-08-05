@@ -44,6 +44,7 @@
     "@babel/core": "7.11.0",
     "mime-types": "2.1.27",
     "object-hash": "2.0.3",
+    "path-to-regexp": "^6.1.0",
     "postcss": "7.0.32",
     "postcss-url": "8.0.0",
     "postcss-value-parser": "4.1.0",

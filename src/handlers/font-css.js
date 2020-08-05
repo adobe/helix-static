@@ -62,9 +62,7 @@ async function getSanitizedCssAndUrls(cssToSanitize) {
   return { css, foundurls };
 }
 
-async function deliverFontCSS(file) {
-  const [kitid] = file.split('/').pop().split('.');
-
+async function deliverFontCSS({ params: { kitid } }) {
   const fetchContext = fetchAPI.context({
     httpsProtocols:
     /* istanbul ignore next */

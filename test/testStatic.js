@@ -18,6 +18,11 @@ const FSPersister = require('@pollyjs/persister-fs');
 const { setupMocha: setupPolly } = require('@pollyjs/core');
 const index = require('../src/index');
 const pkgJson = require('../package.json');
+const { rejected } = require('../src/static');
+const utils = require('../src/utils');
+const gh = require('../src/github-fetcher');
+const { css } = require('../src/handlers/github-css');
+const { js } = require('../src/handlers/github-js');
 
 /* eslint-env mocha */
 describe('Static Delivery Action #integrationtest', () => {
@@ -95,7 +100,7 @@ describe('Static Delivery Action #integrationtest', () => {
     assert.equal(res.headers['X-Static'], 'Raw/Static');
     assert.equal(res.headers['Cache-Control'], 's-maxage=300, stale-while-revalidate=2592000');
     assert.equal(res.headers['Surrogate-Key'], 'LiWDcUs5H72QTkGl');
-    assert.equal(res.headers.ETag, '"zei2DOT55/ukAFvbmB1QwDy2e3KnWuXg41yw2R6TRng="');
+    assert.equal(res.headers.ETag, '"VIXMjwsHOMPLZGtviFum1TGBFMz6zCQKINQseZ6Ub6k="');
   });
 
   it('deliver JSON file', async () => {
@@ -112,7 +117,7 @@ describe('Static Delivery Action #integrationtest', () => {
     assert.equal(res.headers['X-Static'], 'Raw/Static');
     assert.equal(res.headers['Cache-Control'], 's-maxage=300, stale-while-revalidate=2592000');
     assert.equal(res.headers['Surrogate-Key'], 'CIUWTRUuAYPY51zR');
-    assert.equal(res.headers.ETag, '"uc0mBep1KTsWuJKpfF5LC8GPPa/Qy9+JfIAljVdBXIA="');
+    assert.equal(res.headers.ETag, '"hNCISMWqyUDaDY2zDTMKXb1peyzXunKE791FEtjILtg="');
   });
 
   it('deliver missing file', async () => {
@@ -188,44 +193,54 @@ describe('Static Delivery Action #integrationtest', () => {
 
 describe('CSS and JS Rewriting', () => {
   it('Rewrite CSS', async () => {
-    assert.equal(await index.getBody('text/css', '', true), '');
-    assert.equal(await index.getBody('text/css', `.element {
+    assert.equal(await css('{', true), '{');
+    assert.equal(await css('', true), '');
+    assert.equal(await css(`.element {
   background: url('images/../sprite.png?foo=bar');
 }`, true), `.element {
   background: url('images/../sprite.png?foo=bar');
 }`);
-    assert.equal(await index.getBody('text/css', `.element {
+    assert.equal(await css(`.element {
   background: url('https://example.com/sprite.png?foo=bar');
 }`, true), `.element {
   background: url('https://example.com/sprite.png?foo=bar');
 }`);
-    assert.equal(await index.getBody('text/css', `.element {
+    assert.equal(await css(`.element {
   background: url('images/../sprite.png');
 }`, true), `.element {
   background: url('<esi:include src="sprite.png.url"/><esi:remove>sprite.png</esi:remove>');
 }`);
-    assert.equal(await index.getBody('text/css', `.element {
+    assert.equal(await css(`.element {
   background: url("images/../sprite.png");
 }`, true), `.element {
   background: url("<esi:include src="sprite.png.url"/><esi:remove>sprite.png</esi:remove>");
 }`);
-    assert.equal(await index.getBody('text/css',
-      '@import "fineprint.css" print;', true),
+    assert.equal(await css(
+      '@import "fineprint.css" print;', true,
+    ),
     '@import "<esi:include src="fineprint.css.url"/><esi:remove>fineprint.css</esi:remove>" print;');
-    assert.equal(await index.getBody('text/css',
-      '@import \'fineprint.css\' print;', true),
+    assert.equal(await css(
+      '@import \'fineprint.css\' print;', true,
+    ),
     '@import \'<esi:include src="fineprint.css.url"/><esi:remove>fineprint.css</esi:remove>\' print;');
-    assert.equal(await index.getBody('text/css',
-      '@import url(\'fineprint.css\') print;', true),
+    assert.equal(await css(
+      '@import url(\'fineprint.css\') print;', true,
+    ),
     '@import url(\'<esi:include src="fineprint.css.url"/><esi:remove>fineprint.css</esi:remove>\') print;');
-    assert.equal(await index.getBody('text/css',
-      '@import url("fineprint.css") print;', true),
+    assert.equal(await css(
+      '@import url("fineprint.css") print;', true,
+    ),
     '@import url("<esi:include src="fineprint.css.url"/><esi:remove>fineprint.css</esi:remove>") print;');
   });
 
   it('Rewrite JS', async () => {
-    assert.equal(await index.getBody('text/javascript', 'import { transform } from "@babel/core";code();', true),
+    assert.equal(await js('import { transform } from "@babel/core";code();', true),
       'import { transform } from "<esi:include src="@babel/core.url"/><esi:remove>@babel/core</esi:remove>";code();');
+  });
+
+  it('Do not Rewrite broken JS', async () => {
+    assert.equal(await js('{', true),
+      '{');
   });
 });
 /*
@@ -259,7 +274,7 @@ describe('Static Delivery Action #unittest', () => {
   });
 
   it('error() #unittest', () => {
-    const error = index.error('Test');
+    const error = utils.error('Test');
     assert.equal(error.statusCode, '500');
     assert.ok(error.body.match('Test'));
     assert.ok(!error.body.match('404'));
@@ -267,58 +282,58 @@ describe('Static Delivery Action #unittest', () => {
 
   it('addHeaders() #unittest', () => {
     const before = {};
-    const afterMaster = index.addHeaders(before, 'master', 'foobar');
+    const afterMaster = gh.addHeaders(before, 'master', 'foobar');
     assert.ok(afterMaster.ETag.match(/^".*"$/));
 
-    const afterSha = index.addHeaders(before, 'bcdcc24e8ebc25a07a35d05afd85551a83fa5af3', 'foobar');
+    const afterSha = gh.addHeaders(before, 'bcdcc24e8ebc25a07a35d05afd85551a83fa5af3', 'foobar');
     assert.ok(afterSha['Cache-Control'].match(/^max-age/));
   });
 
   it('isBinary() #unittest', () => {
-    assert.equal(index.isBinary('application/octet-stream'), true);
-    assert.equal(index.isBinary('image/png'), true);
-    assert.equal(index.isBinary('un/known'), true);
-    assert.equal(index.isBinary('image/svg+xml'), true);
+    assert.equal(utils.isBinary('application/octet-stream'), true);
+    assert.equal(utils.isBinary('image/png'), true);
+    assert.equal(utils.isBinary('un/known'), true);
+    assert.equal(utils.isBinary('image/svg+xml'), true);
 
-    assert.equal(index.isBinary('text/html'), false);
-    assert.equal(index.isBinary('text/xml'), false);
-    assert.equal(index.isBinary('application/json'), false);
-    assert.equal(index.isBinary('application/javascript'), false);
+    assert.equal(utils.isBinary('text/html'), false);
+    assert.equal(utils.isBinary('text/xml'), false);
+    assert.equal(utils.isBinary('application/json'), false);
+    assert.equal(utils.isBinary('application/javascript'), false);
   });
 
   it('rejected() #unittest', () => {
-    assert.equal(index.rejected('index.html'), false);
-    assert.equal(index.rejected('/index.html'), false);
-    assert.equal(index.rejected('/robots.txt'), false);
-    assert.equal(index.rejected('robots.txt'), false);
-    assert.equal(index.rejected('hello.css'), false);
-    assert.equal(index.rejected('/style/hello.css'), false);
-    assert.equal(index.rejected('foo/html.htl'), false);
+    assert.equal(rejected('index.html'), false);
+    assert.equal(rejected('/index.html'), false);
+    assert.equal(rejected('/robots.txt'), false);
+    assert.equal(rejected('robots.txt'), false);
+    assert.equal(rejected('hello.css'), false);
+    assert.equal(rejected('/style/hello.css'), false);
+    assert.equal(rejected('foo/html.htl'), false);
 
-    assert.equal(index.rejected('package.json'), true);
-    assert.equal(index.rejected('/package.json'), true);
-    assert.equal(index.rejected('helix-config.yaml'), true);
-    assert.equal(index.rejected('/helix-config.yaml'), true);
-    assert.equal(index.rejected('.circleci/config.yml'), true);
-    assert.equal(index.rejected('/.circleci/config.yml'), true);
-    assert.equal(index.rejected('/src/html.htl'), true);
-    assert.equal(index.rejected('src/html.htl'), true);
+    assert.equal(rejected('package.json'), true);
+    assert.equal(rejected('/package.json'), true);
+    assert.equal(rejected('helix-config.yaml'), true);
+    assert.equal(rejected('/helix-config.yaml'), true);
+    assert.equal(rejected('.circleci/config.yml'), true);
+    assert.equal(rejected('/.circleci/config.yml'), true);
+    assert.equal(rejected('/src/html.htl'), true);
+    assert.equal(rejected('src/html.htl'), true);
 
-    assert.equal(index.rejected('foo/html.htl', '^.*\\.htl$|^.*\\.js$'), false);
-    assert.equal(index.rejected('foo/html.js', '^.*\\.htl$|^.*\\.js$'), false);
-    assert.equal(index.rejected('foo/html.jst', '^.*\\.htl$|^.*\\.js$'), true);
-    assert.equal(index.rejected('src/html.htl', '^.*\\.htl$|^.*\\.js$'), true);
+    assert.equal(rejected('foo/html.htl', '^.*\\.htl$|^.*\\.js$'), false);
+    assert.equal(rejected('foo/html.js', '^.*\\.htl$|^.*\\.js$'), false);
+    assert.equal(rejected('foo/html.jst', '^.*\\.htl$|^.*\\.js$'), true);
+    assert.equal(rejected('src/html.htl', '^.*\\.htl$|^.*\\.js$'), true);
 
-    assert.equal(index.rejected('.well-known/keybase.txt'), false);
-    assert.equal(index.rejected('.well-known/dnt-policy.txt'), false);
-    assert.equal(index.rejected('.well-known/assetlinks.json'), false);
-    assert.equal(index.rejected('.well-known/apple-developer-merchantid-domain-association'), false);
+    assert.equal(rejected('.well-known/keybase.txt'), false);
+    assert.equal(rejected('.well-known/dnt-policy.txt'), false);
+    assert.equal(rejected('.well-known/assetlinks.json'), false);
+    assert.equal(rejected('.well-known/apple-developer-merchantid-domain-association'), false);
 
-    assert.equal(index.rejected('foo/html.htl', '^.*\\.htl$|^.*\\.js$', 'foo'), true);
-    assert.equal(index.rejected('boo/html.htl', '^.*\\.htl$|^.*\\.js$', 'foo'), false);
-    assert.equal(index.rejected('src/html.htl', '^.*\\.htl$|^.*\\.js$', 'foo'), true);
+    assert.equal(rejected('foo/html.htl', '^.*\\.htl$|^.*\\.js$', 'foo'), true);
+    assert.equal(rejected('boo/html.htl', '^.*\\.htl$|^.*\\.js$', 'foo'), false);
+    assert.equal(rejected('src/html.htl', '^.*\\.htl$|^.*\\.js$', 'foo'), true);
 
-    assert.equal(index.rejected('foo/html.htl', '^.*\\.htl$|^.*\\.js$', ''), false);
+    assert.equal(rejected('foo/html.htl', '^.*\\.htl$|^.*\\.js$', ''), false);
   });
 
   it('main() returns static file from GitHub', async () => {
@@ -350,6 +365,7 @@ describe('Static Delivery Action #unittest', () => {
       path: './demos/simple/htdocs/style.css',
       plain: true,
     });
+
     assert.ok(res.body.indexOf('Arial') > 0, true);
   });
 
@@ -372,6 +388,18 @@ describe('Static Delivery Action #unittest', () => {
     });
   });
 
+  it('main() normalizes URLs in rewritten CSS', async () => {
+    const res = await index.main({
+      owner: 'trieloff',
+      repo: 'helix-demo',
+      path: '/css/bulma.css',
+      root: '/htdocs',
+      plain: true,
+      esi: true,
+    });
+    assert.equal(res.body.indexOf('/*! bulma.io v0.7.4 | MIT License | github.com/jgthms/bulma */'), 0);
+  });
+
   it('main() normalizes URLs in rewritten Javascript', async () => {
     const res = await index.main({
       owner: 'trieloff',
@@ -381,8 +409,8 @@ describe('Static Delivery Action #unittest', () => {
       plain: true,
       esi: true,
     });
-    assert.equal(res.body, `import barba from "<esi:include src="/web_modules/@barba--core.js.url"/><esi:remove>./web_modules/@barba--core.js</esi:remove>";import
-prefetch from "<esi:include src="/web_modules/@barba--prefetch.js.url"/><esi:remove>./web_modules/@barba--prefetch.js</esi:remove>";
+    assert.equal(res.body, `import barba from "<esi:include src="web_modules/@barba--core.js.url"/><esi:remove>./web_modules/@barba--core.js</esi:remove>";import
+prefetch from "<esi:include src="web_modules/@barba--prefetch.js.url"/><esi:remove>./web_modules/@barba--prefetch.js</esi:remove>";
 
 // tells barba to use the prefetch module
 barba.use(prefetch);
