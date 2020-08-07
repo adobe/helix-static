@@ -11,6 +11,13 @@
  */
 process.env.HELIX_FETCH_FORCE_HTTP1 = 'true';
 
+const assert = require('assert');
+const path = require('path');
+const NodeHttpAdapter = require('@pollyjs/adapter-node-http');
+const FSPersister = require('@pollyjs/persister-fs');
+const { setupMocha: setupPolly } = require('@pollyjs/core');
+const index = require('../src/index');
+
 const params = {
   level: 'info',
   ow: {
@@ -25,11 +32,10 @@ const params = {
   actionOptions: {
     name: 'fb53660b8f84df4df216593b048ed09f9ce38fcc/hlx--static',
     params: {
-      path: '/404.html',
+      path: '/README.md',
       plain: true,
       __ow_headers: {
         accept: 'text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8',
-        authorization: '[undisclosed secret]',
         'cdn-loop': 'Fastly, Fastly, Fastly, Fastly, Fastly, Fastly',
         connection: 'close',
         'fastly-client': '1',
@@ -72,9 +78,38 @@ const params = {
       owner: 'adobe',
       repo: 'helix-pages',
       ref: '39430ac97ada5b011835f66e42462b94a3112957',
-      root: '/htdocs',
+      root: '/',
       branch: 'master',
     },
   },
   timestamp: '2020-08-07T07:30:39.993026669Z',
 };
+
+/* eslint-env mocha */
+describe('Fastly Delivery Action #integrationtest', () => {
+  setupPolly({
+    recordFailedRequests: true,
+    recordIfMissing: false,
+    logging: false,
+    adapters: [NodeHttpAdapter],
+    persister: FSPersister,
+    persisterOptions: {
+      fs: {
+        recordingsDir: path.resolve(__dirname, 'fixtures/recordings'),
+      },
+    },
+  });
+
+  it('deliver MD file', async () => {
+    // const { server } = this.polly;
+
+    const res = await index.main(params.actionOptions.params);
+
+    assert.equal(res.statusCode, 200);
+    assert.equal(res.headers['Content-Type'], 'text/css');
+    assert.equal(res.headers['X-Static'], 'Raw/Static');
+    assert.equal(res.headers['Cache-Control'], 's-maxage=300, stale-while-revalidate=2592000');
+    assert.equal(res.headers['Surrogate-Key'], 'C0OzgWe1bfWP5Mm0');
+    assert.equal(res.headers.ETag, '"52zefhrgED86CD3YtqFN5XClUcGQDRIg3xTukWKhpF0="');
+  });
+});
