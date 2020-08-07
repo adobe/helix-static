@@ -27,6 +27,8 @@ const {
 // one megabyte openwhisk limit + 20% Base64 inflation + safety padding
 const REDIRECT_LIMIT = 750000;
 
+const RAW_HOST = 'raw.githubusercontent.com';
+
 /* eslint-disable consistent-return
 */
 function mimeTypeLookup(filename) {
@@ -85,16 +87,26 @@ function fetchFromGithub(params, bodyCallback) {
     owner, repo, ref = 'master', entry, root = '', esi = false, branch, githubToken,
   } = params;
 
+  const fastlyHost = (params.__ow_headers['hlx-forwarded-host'] || RAW_HOST).split(',').pop().trim();
+
   const { path, ext } = params.params;
   const cleanentry = (`${root}/${path}.${ext}`).replace(/^\//, '').replace(/[/]+/g, '/');
   const cleanpath = `${owner}/${repo}/${ref}/${cleanentry}`.replace(/[/]+/g, '/');
-  const url = `https://raw.githubusercontent.com/${cleanpath}`;
+  const url = `https://${fastlyHost}/${cleanpath}`;
   log.info(`deliverPlain: url=${url}`);
   const rawopts = {
     headers: {
       'User-Agent': 'Project Helix Static',
     },
   };
+
+  // tell fastly to get the file from github
+  // fastly will cache the file in case GH is down
+  if (fastlyHost !== RAW_HOST) {
+    rawopts.headers['X-Backend-URL'] = `/${cleanpath}`;
+    rawopts.headers['X-Request-Type'] = 'Static/Redirect';
+  }
+
   if (githubToken) {
     rawopts.headers.Authorization = `token ${githubToken}`;
   }
@@ -102,7 +114,7 @@ function fetchFromGithub(params, bodyCallback) {
   //  url (for surrogate control) always uses branch name
   let surrogateKey;
   if (branch && branch !== ref) {
-    surrogateKey = computeSurrogateKey(`https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${cleanentry}`);
+    surrogateKey = computeSurrogateKey(`https://${RAW_HOST}/${owner}/${repo}/${branch}/${cleanentry}`);
   } else {
     surrogateKey = computeSurrogateKey(url);
   }

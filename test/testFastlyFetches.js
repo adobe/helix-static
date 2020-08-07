@@ -100,16 +100,24 @@ describe('Fastly Delivery Action #integrationtest', () => {
     },
   });
 
-  it('deliver MD file', async () => {
-    // const { server } = this.polly;
+  it('deliver MD file', async function md() {
+    const { server } = this.polly;
+
+    server.any('https://theblog--adobe.hlx.page/adobe/helix-pages/39430ac97ada5b011835f66e42462b94a3112957/README.md')
+      .intercept((req, res) => {
+        assert.equal(req.headers['x-backend-url'], '/adobe/helix-pages/39430ac97ada5b011835f66e42462b94a3112957/README.md');
+        res
+          .status(200)
+          .setHeader('Content-Length', 8)
+          .send('# README');
+      });
 
     const res = await index.main(params.actionOptions.params);
 
     assert.equal(res.statusCode, 200);
-    assert.equal(res.headers['Content-Type'], 'text/css');
+    assert.equal(res.headers['Content-Type'], 'text/markdown');
     assert.equal(res.headers['X-Static'], 'Raw/Static');
-    assert.equal(res.headers['Cache-Control'], 's-maxage=300, stale-while-revalidate=2592000');
-    assert.equal(res.headers['Surrogate-Key'], 'C0OzgWe1bfWP5Mm0');
-    assert.equal(res.headers.ETag, '"52zefhrgED86CD3YtqFN5XClUcGQDRIg3xTukWKhpF0="');
+    assert.equal(res.headers['Cache-Control'], 'max-age=86400, stale-while-revalidate=2592000');
+    assert.equal(res.headers['Surrogate-Key'], '2gHzoH19oOyi9EGt');
   });
 });
