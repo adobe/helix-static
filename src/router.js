@@ -31,8 +31,8 @@ class Router {
     const [route, handler] = pair;
 
     return handler({
-      ...route(path),
       ...options,
+      ...route(path),
     });
   }
 }
