@@ -33,13 +33,18 @@ function getbaseurl() {
 
 describe('Post-Deploy Tests #online #postdeploy', () => {
   it('ferrumjsorg/index.html gets delivered', async () => {
+    let url;
+
     await chai
       .request('https://adobeioruntime.net/')
-      .get(`${getbaseurl()}?owner=adobe&repo=ferrumjsorg&ref=54d751f37633fa777ce0816390b3bdbe515d0295&path=/index.html&branch=master`)
+      .get(`${getbaseurl()}?owner=adobe&repo=ferrumjsorg&ref=54d751f37633fa777ce0816390b3bdbe515d0295&path=/index.html&branch=master&params=`)
       .then((response) => {
+        url = response.request.url;
+
         expect(response).to.have.status(200);
         expect(response).to.be.html;
       }).catch((e) => {
+        e.message = `At ${url}\n      ${e.message}`;
         throw e;
       });
   }).timeout(10000);
