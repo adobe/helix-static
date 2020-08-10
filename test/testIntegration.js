@@ -16,7 +16,7 @@ const { main } = require('../src/index');
 
 /* eslint-env mocha */
 describe('Static Delivery Action #online #integrationtest', () => {
-  it('ferrumjsorg/index.html dets delivered', async () => {
+  it('ferrumjsorg/index.html gets delivered', async () => {
     const res = await main({
       path: '/index.html',
       esi: false,
