@@ -87,7 +87,9 @@ function fetchFromGithub(params, bodyCallback) {
     owner, repo, ref = 'master', entry, root = '', esi = false, branch, githubToken,
   } = params;
 
-  const fastlyHost = (params.__ow_headers['hlx-forwarded-host'] || RAW_HOST).split(',').pop().trim();
+  const fastlyHost = (params.__ow_headers
+    ? params.__ow_headers['hlx-forwarded-host']
+    : undefined || RAW_HOST).split(',').pop().trim();
 
   const { path, ext } = params.params;
   const cleanentry = (`${root}/${path}.${ext}`).replace(/^\//, '').replace(/[/]+/g, '/');
