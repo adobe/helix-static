@@ -1,3 +1,10 @@
+## [1.11.52](https://github.com/adobe/helix-static/compare/v1.11.51...v1.11.52) (2020-08-11)
+
+
+### Bug Fixes
+
+* **router:** avoid conflict with external params ([499ae38](https://github.com/adobe/helix-static/commit/499ae381a5b5350883df3c90e753846ecc83289f)), closes [#369](https://github.com/adobe/helix-static/issues/369)
+
 ## [1.11.51](https://github.com/adobe/helix-static/compare/v1.11.50...v1.11.51) (2020-08-08)
 
 
