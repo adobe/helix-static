@@ -1,3 +1,24 @@
+## [1.11.52](https://github.com/adobe/helix-static/compare/v1.11.51...v1.11.52) (2020-08-11)
+
+
+### Bug Fixes
+
+* **router:** avoid conflict with external params ([499ae38](https://github.com/adobe/helix-static/commit/499ae381a5b5350883df3c90e753846ecc83289f)), closes [#369](https://github.com/adobe/helix-static/issues/369)
+
+## [1.11.51](https://github.com/adobe/helix-static/compare/v1.11.50...v1.11.51) (2020-08-08)
+
+
+### Bug Fixes
+
+* **deps:** update external fixes ([2bc4f45](https://github.com/adobe/helix-static/commit/2bc4f45f8f5a7efdfb68dbbb02036f97de862203))
+
+## [1.11.50](https://github.com/adobe/helix-static/compare/v1.11.49...v1.11.50) (2020-08-08)
+
+
+### Bug Fixes
+
+* **deps:** pin dependency path-to-regexp to 6.1.0 ([460205c](https://github.com/adobe/helix-static/commit/460205c038815c54b3ddaa975d476b31a6872db7))
+
 ## [1.11.49](https://github.com/adobe/helix-static/compare/v1.11.48...v1.11.49) (2020-08-03)
 
 

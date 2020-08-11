@@ -67,6 +67,13 @@ jobs:
         name: Semantic Release
         command: npm run semantic-release
 
+    - store_test_results:
+        path: junit
+
+    - run:
+        name: Post-Deployment Integration Test
+        command: npm run test-postdeploy
+
     - run:
         name: Link Sequences
         command: npm run deploy-sequences
