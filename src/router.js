@@ -31,8 +31,12 @@ class Router {
     const [route, handler] = pair;
 
     return handler({
-      ...route(path),
+      // when using the spread operator, latter arguments
+      // override earlier ones. Having route as the second
+      // argument ensures options.params cannot override
+      // route().params
       ...options,
+      ...route(path),
     });
   }
 }
