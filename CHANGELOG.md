@@ -1,3 +1,10 @@
+# [1.12.0](https://github.com/adobe/helix-static/compare/v1.11.53...v1.12.0) (2020-08-14)
+
+
+### Features
+
+* return 504 on connnect timeout ([#373](https://github.com/adobe/helix-static/issues/373)) ([420bc73](https://github.com/adobe/helix-static/commit/420bc7374d91365d7f8136b195b502e60bce54d0)), closes [#372](https://github.com/adobe/helix-static/issues/372)
+
 ## [1.11.53](https://github.com/adobe/helix-static/compare/v1.11.52...v1.11.53) (2020-08-12)
 
 
