@@ -177,6 +177,11 @@ function fetchFromGithub(params, bodyCallback) {
       log.warn(`error 500 from backend: ${message}`);
       return error(message, 502); // bad gateway
     }
+    const { code, syscall } = rqerror;
+    if (code === 'ETIMEDOUT' && syscall === 'connect') {
+      log.warn(`connect to backend timed out: ${message}`);
+      return error(message, 504); // gateway timeout
+    }
     log.error('unknown error while fetching content', message);
     return error(
       (response && response.body && response.body.toString()) || message,
