@@ -46,7 +46,6 @@ describe('Static Delivery Action #online #integrationtest', () => {
       root: '',
       repo: 'theblog',
     });
-
     assert.equal(res.statusCode, 307);
   });
 });
