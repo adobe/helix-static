@@ -1,3 +1,10 @@
+## [1.12.5](https://github.com/adobe/helix-static/compare/v1.12.4...v1.12.5) (2020-08-27)
+
+
+### Bug Fixes
+
+* **openwhisk:** add hard response size limit ([6eb8d91](https://github.com/adobe/helix-static/commit/6eb8d913b6b8d1e260a948fe4981e5e7ee649d12)), closes [#380](https://github.com/adobe/helix-static/issues/380)
+
 ## [1.12.4](https://github.com/adobe/helix-static/compare/v1.12.3...v1.12.4) (2020-08-26)
 
 
