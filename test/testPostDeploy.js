@@ -48,4 +48,20 @@ describe('Post-Deploy Tests #online #postdeploy', () => {
         throw e;
       });
   }).timeout(10000);
+
+  it('theblog/sitemap.xml gets delivered', async () => {
+    let url;
+
+    await chai
+      .request('https://adobeioruntime.net/')
+      .get(`${getbaseurl()}?owner=adobe&repo=theblog&ref=7966963696682b955c13ac0cefb8ed9af065f66a&path=/sitemap.xml&branch=staging&params=`)
+      .then((response) => {
+        url = response.request.url;
+
+        expect(response).to.have.status(200);
+      }).catch((e) => {
+        e.message = `At ${url}\n      ${e.message}`;
+        throw e;
+      });
+  }).timeout(10000);
 });
