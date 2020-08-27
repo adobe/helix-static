@@ -32,4 +32,21 @@ describe('Static Delivery Action #online #integrationtest', () => {
 
     assert.equal(res.statusCode, 200);
   });
+
+  it('theblog/sitemap.xml gets delivered', async () => {
+    const res = await main({
+      ref: '7966963696682b955c13ac0cefb8ed9af065f66a',
+      package: '8c8a56985d9b2624d338e98af8ba8cf03124dc11',
+      path: '/sitemap.xml',
+      params: '',
+      owner: 'adobe',
+      branch: 'staging',
+      esi: false,
+      plain: true,
+      root: '',
+      repo: 'theblog',
+    });
+
+    assert.equal(res.statusCode, 307);
+  });
 });
