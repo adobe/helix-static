@@ -58,7 +58,7 @@ describe('Post-Deploy Tests #online #postdeploy', () => {
       .then((response) => {
         url = response.request.url;
 
-        expect(response).to.have.status(200);
+        expect(response).to.have.status(307);
       }).catch((e) => {
         e.message = `At ${url}\n      ${e.message}`;
         throw e;
