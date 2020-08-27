@@ -27,6 +27,8 @@ const {
 // one megabyte openwhisk limit + 20% Base64 inflation + safety padding
 const REDIRECT_LIMIT = 750000;
 
+const HARD_LIMIT = 1048576;
+
 /* eslint-disable consistent-return
 */
 function mimeTypeLookup(filename) {
@@ -127,7 +129,8 @@ function fetchFromGithub(params, bodyCallback) {
     if (size < REDIRECT_LIMIT) {
       const body = await bodyCallback(await response.buffer(), { type, esi, entry });
       log.info(`delivering file ${cleanentry} type ${type} binary: ${isBinary(type)}`);
-      return {
+
+      const retval = {
         statusCode: 200,
         headers: addHeaders({
           'Content-Type': type,
@@ -137,6 +140,22 @@ function fetchFromGithub(params, bodyCallback) {
         }, ref, body),
         body,
       };
+
+      if (JSON.stringify(retval).length > HARD_LIMIT) {
+        log.warn(`result size exceeds limit ${HARD_LIMIT}. sending redirect.`);
+        return {
+          statusCode: 307,
+          headers: {
+            Location: url,
+            'X-Content-Type': type,
+            'X-Static': 'Raw/Static',
+            'Cache-Control': 's-maxage=300',
+            'Surrogate-Key': surrogateKey,
+          },
+        };
+      }
+
+      return retval;
     }
     log.info(`size exceeds limit ${REDIRECT_LIMIT}. sending redirect.`);
 
