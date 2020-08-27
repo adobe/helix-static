@@ -58,7 +58,7 @@ describe('Post-Deploy Tests #online #postdeploy', () => {
       .then((response) => {
         url = response.request.url;
 
-        expect(response).to.have.status(307);
+        expect(response).to.redirectTo('https://raw.githubusercontent.com/adobe/theblog/7966963696682b955c13ac0cefb8ed9af065f66a/sitemap.xml');
       }).catch((e) => {
         e.message = `At ${url}\n      ${e.message}`;
         throw e;
