@@ -1,3 +1,10 @@
+## [1.12.7](https://github.com/adobe/helix-static/compare/v1.12.6...v1.12.7) (2020-09-04)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/openwhisk-action-utils to v4.3.0 ([#387](https://github.com/adobe/helix-static/issues/387)) ([e45249e](https://github.com/adobe/helix-static/commit/e45249e865d63acdf154794a2da0b27a32640b39))
+
 ## [1.12.6](https://github.com/adobe/helix-static/compare/v1.12.5...v1.12.6) (2020-09-02)
 
 
