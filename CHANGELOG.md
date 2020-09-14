@@ -1,3 +1,10 @@
+## [1.12.11](https://github.com/adobe/helix-static/compare/v1.12.10...v1.12.11) (2020-09-14)
+
+
+### Bug Fixes
+
+* **deps:** update [@adobe](https://github.com/adobe) fixes ([fced323](https://github.com/adobe/helix-static/commit/fced32387077cfeecae231d9b472bb3ff1e7a836))
+
 ## [1.12.10](https://github.com/adobe/helix-static/compare/v1.12.9...v1.12.10) (2020-09-10)
 
 
