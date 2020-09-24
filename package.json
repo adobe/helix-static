@@ -46,7 +46,7 @@
     "mime-types": "2.1.27",
     "object-hash": "2.0.3",
     "path-to-regexp": "6.1.0",
-    "postcss": "7.0.34",
+    "postcss": "8.0.9",
     "postcss-url": "8.0.0",
     "postcss-value-parser": "4.1.0",
     "sanitizer": "0.1.3",
