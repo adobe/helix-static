@@ -1,3 +1,10 @@
+## [1.12.17](https://github.com/adobe/helix-static/compare/v1.12.16...v1.12.17) (2020-09-30)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-status to v8.2.1 ([4f10c5e](https://github.com/adobe/helix-static/commit/4f10c5e769947edeeba75329b9fa968d984d28d4))
+
 ## [1.12.16](https://github.com/adobe/helix-static/compare/v1.12.15...v1.12.16) (2020-09-29)
 
 
