@@ -41,7 +41,7 @@
     "@adobe/helix-shared": "7.16.4",
     "@adobe/helix-status": "8.2.2",
     "@adobe/openwhisk-action-logger": "2.2.2",
-    "@adobe/openwhisk-action-utils": "4.3.3",
+    "@adobe/openwhisk-action-utils": "4.4.0",
     "@babel/core": "7.12.9",
     "mime-types": "2.1.27",
     "object-hash": "2.0.3",
