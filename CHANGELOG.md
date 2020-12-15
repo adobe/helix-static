@@ -1,3 +1,10 @@
+## [1.12.40](https://github.com/adobe/helix-static/compare/v1.12.39...v1.12.40) (2020-12-15)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/openwhisk-action-logger to v2.3.0 ([65441af](https://github.com/adobe/helix-static/commit/65441af67c45c3cdfb02e744ee5d2bf8347bb40f))
+
 ## [1.12.39](https://github.com/adobe/helix-static/compare/v1.12.38...v1.12.39) (2020-12-12)
 
 
