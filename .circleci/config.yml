@@ -101,7 +101,7 @@ jobs:
     - run:
         name: Post-Deployment Integration Test
         command: npm run test-postdeploy
-        
+
     - store_test_results:
         path: junit
 workflows:
@@ -114,10 +114,10 @@ workflows:
           - build
         filters:
           branches:
-            ignore: master
+            ignore: main
     - semantic-release:
         requires:
         - build
         filters:
           branches:
-            only: master
+            only: main

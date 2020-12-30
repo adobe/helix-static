@@ -5,8 +5,8 @@
 ## Status
 
 [![codecov](https://img.shields.io/codecov/c/github/adobe/helix-static.svg)](https://codecov.io/gh/adobe/helix-static)
-[![CircleCI](https://img.shields.io/circleci/project/github/adobe/helix-static/master.svg)](https://circleci.com/gh/adobe/helix-static/tree/master)
-[![GitHub license](https://img.shields.io/github/license/adobe/helix-static.svg)](https://github.com/adobe/helix-static/blob/master/LICENSE.txt)
+[![CircleCI](https://img.shields.io/circleci/project/github/adobe/helix-static/main.svg)](https://circleci.com/gh/adobe/helix-static/tree/main)
+[![GitHub license](https://img.shields.io/github/license/adobe/helix-static.svg)](https://github.com/adobe/helix-static/blob/main/LICENSE.txt)
 [![GitHub issues](https://img.shields.io/github/issues/adobe/helix-static.svg)](https://github.com/adobe/helix-static/issues)
 [![LGTM Code Quality Grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/adobe/helix-static.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/adobe/helix-static)
 
@@ -32,5 +32,5 @@ Contributions are highly welcome.
 
 Deploying Helix Static requires the `wsk` command line client, authenticated to a namespace of your choice. For Project Helix, we use the `helix` namespace.
 
-All commits to master that pass the testing will be deployed automatically. All commits to branches that will pass the testing will get commited as `/helix-services/static@ci<num>` and tagged with the CI build number.
+All commits to main that pass the testing will be deployed automatically. All commits to branches that will pass the testing will get commited as `/helix-services/static@ci<num>` and tagged with the CI build number.
 
