@@ -12,7 +12,6 @@
 const { wrap: status } = require('@adobe/helix-status');
 const { wrap } = require('@adobe/openwhisk-action-utils');
 const { logger } = require('@adobe/openwhisk-action-logger');
-const { epsagon } = require('@adobe/helix-epsagon');
 const { deliverStatic } = require('./static');
 
 /**
@@ -20,13 +19,7 @@ const { deliverStatic } = require('./static');
  * @param params Action params
  * @returns {Promise<*>} The response
  */
-const main = wrap(deliverStatic)
-  .with(epsagon)
+module.exports.main = wrap(deliverStatic)
   .with(status, { github: 'https://raw.githubusercontent.com/adobe/helix-static/master/src/index.js' })
   .with(logger.trace)
   .with(logger);
-
-// todo: do we still need those exports?
-module.exports = {
-  main,
-};

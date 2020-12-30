@@ -2,7 +2,7 @@ version: 2.1
 executors:
   node10:
     docker:
-    - image: trieloff/githop:node
+    - image: circleci/node:10.23.0-buster
       environment:
         NPM_CONFIG_PREFIX: "~/.npm-global"
     working_directory: ~/repo
@@ -110,12 +110,14 @@ workflows:
     jobs:
     - build
     - branch-deploy:
+        context: Project Helix
         requires:
           - build
         filters:
           branches:
             ignore: main
     - semantic-release:
+        context: Project Helix
         requires:
         - build
         filters:

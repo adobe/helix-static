@@ -10,6 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
+const { Response } = require('node-fetch');
 const sanitizer = require('sanitizer');
 const log = require('@adobe/helix-log');
 
@@ -65,35 +66,33 @@ function isJavaScript(type) {
  * Generates an error response
  * @param {string} message - error message
  * @param {number} code - error code.
- * @returns response
+ * @returns {Response} The response
  */
 function error(message, code = 500) {
-  const statusCode = code === 400 ? 404 : code;
+  const status = code === 400 ? 404 : code;
   log.info('delivering error', message, code);
-  return {
-    statusCode,
+  return new Response(sanitizer.escape(message), {
+    status,
     headers: {
       'Content-Type': 'text/html',
       'X-Static': 'Raw/Static',
       'Cache-Control': 'max-age=300',
     },
-    body: sanitizer.escape(message),
-  };
+  });
 }
 
 /**
  * Generate a `forbidden` response.
- * @returns {object} a response object.
+ * @returns {Response} The response
  */
 function forbidden() {
-  return {
-    statusCode: 403,
+  return new Response('forbidden.', {
+    status: 403,
     headers: {
       'Content-Type': 'text/plain',
       'Cache-Control': 'max-age=300', // don't bother us for the next five minutes
     },
-    body: 'forbidden.',
-  };
+  });
 }
 
 module.exports = {

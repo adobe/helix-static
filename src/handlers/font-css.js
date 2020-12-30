@@ -10,6 +10,7 @@
  * governing permissions and limitations under the License.
  */
 // eslint-disable-next-line import/no-extraneous-dependencies
+const { Response } = require('node-fetch');
 const fetchAPI = require('@adobe/helix-fetch');
 const postcss = require('postcss');
 const log = require('@adobe/helix-log');
@@ -75,33 +76,26 @@ async function deliverFontCSS({ params: { kitid } }) {
     const { headers } = response;
 
     if (!response.ok) {
-      const err = new Error(response.statusText);
-      err.response = response;
-      throw err;
+      return new Response(body, {
+        status: 404,
+      });
     }
 
     const { css, foundurls } = await getSanitizedCssAndUrls(body);
-    return {
-      statusCode: 200,
+    return new Response(css, {
+      status: 200,
       headers: {
         'cache-control': headers.get('cache-control'),
         'content-type': headers.get('content-type'),
         'surrogate-control': 'max-age=300, stale-while-revalidate=2592000',
         link: foundurls.map((url) => `<${url}>; rel=preload; as=font; crossorigin=anonymous`).join(','),
       },
-      body: css,
-    };
+    });
   } catch (e) {
-    if (e.response) {
-      return {
-        statusCode: 404,
-        body: await e.response.text(),
-      };
-    }
     log.error(`Error while retrieving font: ${e.message}`);
-    return {
-      statusCode: 502,
-    };
+    return new Response('', {
+      status: 502,
+    });
   } finally {
     await fetchContext.disconnectAll();
   }

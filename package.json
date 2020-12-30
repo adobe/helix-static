@@ -9,17 +9,19 @@
     "semantic-prepare": "node ./build/prepare.js",
     "commit": "git-cz",
     "lint": "eslint .",
-    "test": "nyc mocha -i -g \"#online\" && npm run lint",
-    "test-ci": "npm run lint && nyc mocha --reporter xunit --reporter-options output=./junit/test-results.xml -i -g \"#postdeploy\" && nyc report --reporter=text-lcov > coverage.lcov && codecov",
-    "test-postdeploy": "mocha --reporter xunit --reporter-options output=./junit/test-results.xml -g \"#online\"",
-    "build": "wsk-builder -v",
-    "deploy": "wsk-builder -v --deploy --test=/_status_check/healthcheck.json",
-    "deploy-test": "wsk-builder -v --deploy --test=/_status_check/healthcheck.json --pkgVersion=test",
-    "deploy-sequences": "wsk-builder --no-build -no-hints -l latest -l major -l minor",
-    "deploy-ci": "wsk-builder -v --deploy --test=/_status_check/healthcheck.json --pkgVersion=ci$CIRCLE_BUILD_NUM -l ci"
+    "test": "nyc mocha test/*.test.js -i -g \"#online\" && npm run lint",
+    "test-ci": "npm run lint && nyc mocha test/*.test.js --reporter xunit --reporter-options output=./junit/test-results.xml -i -g \"Post-Deploy\" && nyc report --reporter=text-lcov > coverage.lcov && codecov",
+    "test-postdeploy": "mocha test/*.test.js --reporter xunit --reporter-options output=./junit/test-results.xml -g \"#online\"",
+    "build": "hedy -v",
+    "deploy": "hedy -v --deploy --test=/_status_check/healthcheck.json",
+    "deploy-test": "hedy -v --deploy --test=/_status_check/healthcheck.json --pkgVersion=test",
+    "deploy-sequences": "hedy --no-build -no-hints -l latest -l major -l minor",
+    "deploy-ci": "hedy -v --deploy --test=/_status_check/healthcheck.json --pkgVersion=ci$CIRCLE_BUILD_NUM -l ci"
   },
   "wsk": {
-    "name": "helix-services/static@${version}"
+    "namespace": "helix",
+    "name": "helix-services/static@${version}",
+    "memory": 512
   },
   "repository": {
     "type": "git",
@@ -35,7 +37,6 @@
   },
   "homepage": "https://github.com/adobe/helix-static#readme",
   "dependencies": {
-    "@adobe/helix-epsagon": "1.5.5",
     "@adobe/helix-fetch": "1.9.2",
     "@adobe/helix-log": "4.5.3",
     "@adobe/helix-shared": "7.18.0",
@@ -44,6 +45,7 @@
     "@adobe/openwhisk-action-utils": "4.4.0",
     "@babel/core": "7.12.10",
     "mime-types": "2.1.27",
+    "node-fetch": "2.6.1",
     "object-hash": "2.1.1",
     "path-to-regexp": "6.2.0",
     "postcss": "8.2.1",
@@ -54,7 +56,7 @@
   },
   "devDependencies": {
     "@adobe/eslint-config-helix": "1.1.3",
-    "@adobe/openwhisk-action-builder": "2.15.1",
+    "@adobe/helix-deploy": "1.15.0",
     "@pollyjs/adapter-node-http": "5.1.0",
     "@pollyjs/core": "5.1.0",
     "@pollyjs/persister-fs": "5.0.0",
