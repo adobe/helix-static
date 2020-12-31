@@ -1,3 +1,10 @@
+# [1.13.0](https://github.com/adobe/helix-static/compare/v1.12.43...v1.13.0) (2020-12-31)
+
+
+### Features
+
+* migrate to helix-deploy ([#444](https://github.com/adobe/helix-static/issues/444)) ([145cb15](https://github.com/adobe/helix-static/commit/145cb1505b32989258ba514a05126b0951b16249)), closes [#442](https://github.com/adobe/helix-static/issues/442)
+
 ## [1.12.43](https://github.com/adobe/helix-static/compare/v1.12.42...v1.12.43) (2020-12-27)
 
 
