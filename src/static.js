@@ -9,6 +9,7 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+const { Response } = require('node-fetch');
 const uri = require('uri-js');
 const log = require('@adobe/helix-log');
 const { Router } = require('./router');
@@ -57,18 +58,19 @@ function isESI({ esi }) {
 
 /**
  *
- * @param {Object} params The OpenWhisk parameters
- * @param {string} params.owner Repository owner on GitHub
- * @param {string} params.repo Repository name on GitHub
- * @param {string} params.ref SHA of a commit or name of a branch or tag on GitHub
- * @param {string} params.path path to the requested file (if used with `entry`)
- * @param {string} params.allow regular expression pattern that all delivered files must follow
- * @param {string} params.deny regular expression pattern that all delivered files may not follow
- * @param {string} params.root document root for all static files in the repository
- * @param {boolean} params.esi replace relative URL references in JS and CSS with ESI references
- * @param {Object} params.__ow_headers The request headers of this web action invokation
+ * @param {Request} req The Request
+ * @param {Context} context The context
+ * @returns {Promise<Response>} The response
  */
-async function deliverStatic(params = {}) {
+// eslint-disable-next-line no-unused-vars
+async function deliverStatic(req, context) {
+  const { searchParams } = new URL(req.url);
+  const params = Array.from(searchParams.entries()).reduce((p, [key, value]) => {
+    // eslint-disable-next-line no-param-reassign
+    p[key] = value;
+    return p;
+  }, {});
+
   const {
     owner,
     repo,
@@ -78,17 +80,15 @@ async function deliverStatic(params = {}) {
     deny,
     root = '',
     esi = false,
-    __ow_headers = {},
   } = params;
 
   if (!owner && !repo && !path) {
-    return {
-      statusCode: 204,
-      body: '',
+    return new Response('', {
+      status: 204,
       headers: {
         'x-version': pkgJson.version,
       },
-    };
+    });
   }
 
   const file = uri.normalize(path);
@@ -101,7 +101,7 @@ async function deliverStatic(params = {}) {
   const router = new Router();
 
   // eslint-disable-next-line  no-param-reassign
-  params.githubToken = params.GITHUB_TOKEN || __ow_headers['x-github-token'];
+  params.githubToken = params.GITHUB_TOKEN || req.headers.get('x-github-token');
 
   return router
     .register('/hlx_fonts/:kitid([a-z0-9]{7}).css', fontCSS)

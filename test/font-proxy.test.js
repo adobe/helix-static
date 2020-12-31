@@ -18,6 +18,7 @@ const FSPersister = require('@pollyjs/persister-fs');
 const { setupMocha: setupPolly } = require('@pollyjs/core');
 const deliverFontCSS = require('../src/handlers/font-css');
 const { getSanitizedCssAndUrls } = require('../src/handlers/font-css');
+const { retrofitResponse } = require('./utils.js');
 
 /* eslint-env mocha */
 
@@ -119,7 +120,7 @@ describe('Adobe Fonts Proxy Test #unitttest', () => {
   });
 
   it('Delivers rewritten Kit', async () => {
-    const res = await deliverFontCSS({ params: { kitid: 'eic8tkf' } });
+    const res = retrofitResponse(await deliverFontCSS({ params: { kitid: 'eic8tkf' } }));
     assert.equal(res.headers['cache-control'], 'private, max-age=600, stale-while-revalidate=604800');
     assert.ok(!res.body.match(/https:\/\/use.typekit\.net/));
     assert.ok(!res.body.match(/https:\/\/p.typekit\.net/));
@@ -130,7 +131,7 @@ describe('Adobe Fonts Proxy Test #unitttest', () => {
   });
 
   it('Delivers 404 for missing kit', async () => {
-    const res = await deliverFontCSS({ params: { kitid: 'foobar' } });
+    const res = retrofitResponse(await deliverFontCSS({ params: { kitid: 'foobar' } }));
     assert.equal(res.statusCode, 404);
     assert.equal(res.body, 'not found');
   });
@@ -139,7 +140,7 @@ describe('Adobe Fonts Proxy Test #unitttest', () => {
     this.polly.server.any().intercept(() => {
       throw new Error('socket closed');
     });
-    const res = await deliverFontCSS({ params: { kitid: 'foobar' } });
+    const res = retrofitResponse(await deliverFontCSS({ params: { kitid: 'foobar' } }));
     assert.equal(res.statusCode, 502);
   });
 });

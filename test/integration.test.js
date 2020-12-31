@@ -12,7 +12,10 @@
 process.env.HELIX_FETCH_FORCE_HTTP1 = 'true';
 
 const assert = require('assert');
-const { main } = require('../src/index');
+const { main: universalMain } = require('../src/index');
+const { retrofit } = require('./utils.js');
+
+const main = retrofit(universalMain);
 
 /* eslint-env mocha */
 describe('Static Delivery Action #online #integrationtest', () => {

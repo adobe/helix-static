@@ -10,6 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
+const { Response } = require('node-fetch');
 const log = require('@adobe/helix-log');
 const crypto = require('crypto');
 const { computeSurrogateKey } = require('@adobe/helix-shared').utils;
@@ -73,14 +74,14 @@ function addHeaders(headers, ref, content) {
 /**
  * Delivers a plain file from the given github repository.
  *
- * @param owner
- * @param repo
- * @param ref
- * @param entry
- * @param root
- * @param esi
- * @param branch
- * @param githubToken
+ * @param {string} params.owner
+ * @param {string} params.repo
+ * @param {string} params.ref
+ * @param {string} params.entry
+ * @param {string} params.root
+ * @param {boolean} params.esi
+ * @param {string} params.branch
+ * @param {string} params.githubToken
  */
 function fetchFromGithub(params, bodyCallback) {
   const {
@@ -130,21 +131,10 @@ function fetchFromGithub(params, bodyCallback) {
       const body = await bodyCallback(await response.buffer(), { type, esi, entry });
       log.info(`delivering file ${cleanentry} type ${type} binary: ${isBinary(type)}`);
 
-      const retval = {
-        statusCode: 200,
-        headers: addHeaders({
-          'Content-Type': type,
-          'X-Static': 'Raw/Static',
-          'X-ESI': esi ? 'enabled' : undefined,
-          'Surrogate-Key': surrogateKey,
-        }, ref, body),
-        body,
-      };
-
-      if (JSON.stringify(retval).length > HARD_LIMIT) {
+      if (body.length > HARD_LIMIT) {
         log.warn(`result size exceeds limit ${HARD_LIMIT}. sending redirect.`);
-        return {
-          statusCode: 307,
+        return new Response('', {
+          status: 307,
           headers: {
             Location: url,
             'X-Content-Type': type,
@@ -152,18 +142,26 @@ function fetchFromGithub(params, bodyCallback) {
             'Cache-Control': 's-maxage=300',
             'Surrogate-Key': surrogateKey,
           },
-        };
+        });
       }
 
-      return retval;
+      return new Response(body, {
+        status: 200,
+        headers: addHeaders({
+          'Content-Type': type,
+          'X-Static': 'Raw/Static',
+          'X-ESI': esi ? 'enabled' : undefined,
+          'Surrogate-Key': surrogateKey,
+        }, ref, body),
+      });
     }
     log.info(`size exceeds limit ${REDIRECT_LIMIT}. sending redirect.`);
 
     // abort the request
     controller.abort();
 
-    return {
-      statusCode: 307,
+    return new Response('', {
+      status: 307,
       headers: {
         Location: url,
         'X-Content-Type': type,
@@ -171,7 +169,7 @@ function fetchFromGithub(params, bodyCallback) {
         'Cache-Control': 's-maxage=300',
         'Surrogate-Key': surrogateKey,
       },
-    };
+    });
   }).catch((rqerror) => {
     if (esi) {
       // the ESI failed, so we simply fall back to the original URL
@@ -179,14 +177,13 @@ function fetchFromGithub(params, bodyCallback) {
       // for five minutes, in order to prevent the static function
       // from being called too often
       log.info(`error while fetching content. override status ${rqerror.statusCode} due to esi flag.`);
-      return {
-        statusCode: 404,
+      return new Response(cleanentry, {
+        status: 404,
         headers: {
           'Content-Type': 'text/plain',
           'Cache-Control': 's-maxage=300',
         },
-        body: cleanentry,
-      };
+      });
     }
     const { statusCode, message, response } = rqerror;
     if (statusCode === 404) {

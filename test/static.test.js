@@ -23,6 +23,9 @@ const utils = require('../src/utils');
 const gh = require('../src/github-fetcher');
 const { css } = require('../src/handlers/github-css');
 const { js } = require('../src/handlers/github-js');
+const { retrofit } = require('./utils.js');
+
+const main = retrofit(index.main);
 
 /* eslint-env mocha */
 describe('Static Delivery Action #integrationtest', () => {
@@ -40,7 +43,7 @@ describe('Static Delivery Action #integrationtest', () => {
   });
 
   it('theblog/sitemap.xml gets delivered', async () => {
-    const res = await index.main({
+    const res = await main({
       ref: '7966963696682b955c13ac0cefb8ed9af065f66a',
       package: '8c8a56985d9b2624d338e98af8ba8cf03124dc11',
       path: '/sitemap.xml',
@@ -56,7 +59,7 @@ describe('Static Delivery Action #integrationtest', () => {
   });
 
   it('deliver CSS file', async () => {
-    const res = await index.main({
+    const res = await main({
       owner: 'trieloff',
       repo: 'helix-demo',
       ref: 'master',
@@ -65,15 +68,15 @@ describe('Static Delivery Action #integrationtest', () => {
     });
 
     assert.equal(res.statusCode, 200);
-    assert.equal(res.headers['Content-Type'], 'text/css');
-    assert.equal(res.headers['X-Static'], 'Raw/Static');
-    assert.equal(res.headers['Cache-Control'], 's-maxage=300, stale-while-revalidate=2592000');
-    assert.equal(res.headers['Surrogate-Key'], 'C0OzgWe1bfWP5Mm0');
-    assert.equal(res.headers.ETag, '"52zefhrgED86CD3YtqFN5XClUcGQDRIg3xTukWKhpF0="');
+    assert.equal(res.headers['content-type'], 'text/css');
+    assert.equal(res.headers['x-static'], 'Raw/Static');
+    assert.equal(res.headers['cache-control'], 's-maxage=300, stale-while-revalidate=2592000');
+    assert.equal(res.headers['surrogate-key'], 'C0OzgWe1bfWP5Mm0');
+    assert.equal(res.headers.etag, '"52zefhrgED86CD3YtqFN5XClUcGQDRIg3xTukWKhpF0="');
   });
 
   it('deliver Typekit CSS file', async () => {
-    const res = await index.main({
+    const res = await main({
       owner: 'trieloff',
       repo: 'helix-demo',
       ref: 'master',
@@ -86,7 +89,7 @@ describe('Static Delivery Action #integrationtest', () => {
   });
 
   it('deliver CSS file from ref', async () => {
-    const res = await index.main({
+    const res = await main({
       owner: 'trieloff',
       repo: 'helix-demo',
       ref: '3e8dec3886cb75bcea6970b4b00783f69cbf487a',
@@ -96,14 +99,14 @@ describe('Static Delivery Action #integrationtest', () => {
     });
 
     assert.equal(res.statusCode, 200);
-    assert.equal(res.headers['Content-Type'], 'text/css');
-    assert.equal(res.headers['X-Static'], 'Raw/Static');
-    assert.equal(res.headers['Cache-Control'], 'max-age=86400, stale-while-revalidate=2592000');
-    assert.equal(res.headers['Surrogate-Key'], 'AYnQlbzbj4dsnOxH');
+    assert.equal(res.headers['content-type'], 'text/css');
+    assert.equal(res.headers['x-static'], 'Raw/Static');
+    assert.equal(res.headers['cache-control'], 'max-age=86400, stale-while-revalidate=2592000');
+    assert.equal(res.headers['surrogate-key'], 'AYnQlbzbj4dsnOxH');
   });
 
   it('deliver PNG file', async () => {
-    const res = await index.main({
+    const res = await main({
       owner: 'trieloff',
       repo: 'helix-demo',
       ref: 'master',
@@ -112,15 +115,15 @@ describe('Static Delivery Action #integrationtest', () => {
     });
 
     assert.equal(res.statusCode, 200);
-    assert.equal(res.headers['Content-Type'], 'image/png');
-    assert.equal(res.headers['X-Static'], 'Raw/Static');
-    assert.equal(res.headers['Cache-Control'], 's-maxage=300, stale-while-revalidate=2592000');
-    assert.equal(res.headers['Surrogate-Key'], 'LiWDcUs5H72QTkGl');
-    assert.equal(res.headers.ETag, '"VIXMjwsHOMPLZGtviFum1TGBFMz6zCQKINQseZ6Ub6k="');
+    assert.equal(res.headers['content-type'], 'image/png');
+    assert.equal(res.headers['x-static'], 'Raw/Static');
+    assert.equal(res.headers['cache-control'], 's-maxage=300, stale-while-revalidate=2592000');
+    assert.equal(res.headers['surrogate-key'], 'LiWDcUs5H72QTkGl');
+    assert.equal(res.headers.etag, '"VIXMjwsHOMPLZGtviFum1TGBFMz6zCQKINQseZ6Ub6k="');
   });
 
   it('deliver JSON file', async () => {
-    const res = await index.main({
+    const res = await main({
       owner: 'trieloff',
       repo: 'helix-demo',
       ref: 'master',
@@ -129,15 +132,15 @@ describe('Static Delivery Action #integrationtest', () => {
     });
 
     assert.equal(res.statusCode, 200);
-    assert.equal(res.headers['Content-Type'], 'application/json');
-    assert.equal(res.headers['X-Static'], 'Raw/Static');
-    assert.equal(res.headers['Cache-Control'], 's-maxage=300, stale-while-revalidate=2592000');
-    assert.equal(res.headers['Surrogate-Key'], 'CIUWTRUuAYPY51zR');
-    assert.equal(res.headers.ETag, '"hNCISMWqyUDaDY2zDTMKXb1peyzXunKE791FEtjILtg="');
+    assert.equal(res.headers['content-type'], 'application/json');
+    assert.equal(res.headers['x-static'], 'Raw/Static');
+    assert.equal(res.headers['cache-control'], 's-maxage=300, stale-while-revalidate=2592000');
+    assert.equal(res.headers['surrogate-key'], 'CIUWTRUuAYPY51zR');
+    assert.equal(res.headers.etag, '"hNCISMWqyUDaDY2zDTMKXb1peyzXunKE791FEtjILtg="');
   });
 
   it('deliver missing file', async () => {
-    const res = await index.main({
+    const res = await main({
       owner: 'trieloff',
       repo: 'helix-demo',
       ref: 'master',
@@ -149,7 +152,7 @@ describe('Static Delivery Action #integrationtest', () => {
   });
 
   it('deliver missing file with esi', async () => {
-    const res = await index.main({
+    const res = await main({
       owner: 'trieloff',
       repo: 'helix-demo',
       ref: 'master',
@@ -163,7 +166,7 @@ describe('Static Delivery Action #integrationtest', () => {
   });
 
   it('deliver invalid file', async () => {
-    const res = await index.main({
+    const res = await main({
       owner: 'trieloff',
       repo: 'helix-demo',
       ref: 'master',
@@ -175,7 +178,7 @@ describe('Static Delivery Action #integrationtest', () => {
   });
 
   it('deliver big JPEG file', async () => {
-    const res = await index.main({
+    const res = await main({
       owner: 'trieloff',
       repo: 'helix-demo',
       ref: 'master',
@@ -184,14 +187,14 @@ describe('Static Delivery Action #integrationtest', () => {
     });
 
     assert.equal(res.statusCode, 307);
-    assert.equal(res.headers.Location, 'https://raw.githubusercontent.com/trieloff/helix-demo/master/big-image.jpg');
-    assert.equal(res.headers['X-Content-Type'], 'image/jpeg');
-    assert.equal(res.headers['Surrogate-Key'], 'uAqncPGZlUF7rYnE');
-    assert.equal(res.headers['X-Static'], 'Raw/Static');
+    assert.equal(res.headers.location, 'https://raw.githubusercontent.com/trieloff/helix-demo/master/big-image.jpg');
+    assert.equal(res.headers['x-content-type'], 'image/jpeg');
+    assert.equal(res.headers['surrogate-key'], 'uAqncPGZlUF7rYnE');
+    assert.equal(res.headers['x-static'], 'Raw/Static');
   }).timeout(25000);
 
   it('deliver big PNG file even when there are slashes everywhere', async () => {
-    const res = await index.main({
+    const res = await main({
       owner: 'adobedocs',
       repo: 'adobeio-codelabs-debugging',
       ref: '/404c0901bf4e4795514645c75aa914ec58e6f105/',
@@ -200,10 +203,10 @@ describe('Static Delivery Action #integrationtest', () => {
     });
 
     assert.equal(res.statusCode, 307);
-    assert.equal(res.headers.Location, 'https://raw.githubusercontent.com/adobedocs/adobeio-codelabs-debugging/404c0901bf4e4795514645c75aa914ec58e6f105/lessons/assets/front-banner.png');
-    assert.equal(res.headers['X-Content-Type'], 'image/png');
-    assert.equal(res.headers['Surrogate-Key'], 'd/lHMxH5Pol2lPcI');
-    assert.equal(res.headers['X-Static'], 'Raw/Static');
+    assert.equal(res.headers.location, 'https://raw.githubusercontent.com/adobedocs/adobeio-codelabs-debugging/404c0901bf4e4795514645c75aa914ec58e6f105/lessons/assets/front-banner.png');
+    assert.equal(res.headers['x-content-type'], 'image/png');
+    assert.equal(res.headers['surrogate-key'], 'd/lHMxH5Pol2lPcI');
+    assert.equal(res.headers['x-static'], 'Raw/Static');
   }).timeout(25000);
 });
 
@@ -291,9 +294,9 @@ describe('Static Delivery Action #unittest', () => {
 
   it('error() #unittest', () => {
     const error = utils.error('Test');
-    assert.equal(error.statusCode, '500');
-    assert.ok(error.body.match('Test'));
-    assert.ok(!error.body.match('404'));
+    assert.equal(error.status, '500');
+    assert.ok(String(error.body).match('Test'));
+    assert.ok(!String(error.body).match('404'));
   });
 
   it('addHeaders() #unittest', () => {
@@ -353,7 +356,7 @@ describe('Static Delivery Action #unittest', () => {
   });
 
   it('main() returns static file from GitHub', async () => {
-    const res = await index.main({
+    const res = await main({
       owner: 'adobe',
       repo: 'helix-cli',
       path: '/demos/simple/htdocs/style.css',
@@ -363,19 +366,19 @@ describe('Static Delivery Action #unittest', () => {
   });
 
   it('main() returns well-known static file from GitHub', async () => {
-    const res = await index.main({
+    const res = await main({
       owner: 'davidnuescheler',
       repo: 'n2',
       ref: '8b8ef9736746eb15cdd9c019b1a4df9eafdf0bb3',
       path: '.well-known/apple-developer-merchantid-domain-association',
       plain: true,
     });
-    assert.equal(res.headers['Content-Type'], 'text/plain');
+    assert.equal(res.headers['content-type'], 'text/plain');
     assert.ok(res.body.indexOf('7B227') === 0, true);
   });
 
   it('main() normalizes URLs', async () => {
-    const res = await index.main({
+    const res = await main({
       owner: 'adobe',
       repo: 'helix-cli',
       path: './demos/simple/htdocs/style.css',
@@ -386,7 +389,7 @@ describe('Static Delivery Action #unittest', () => {
   });
 
   it('main() normalizes URLs anywhere', async () => {
-    const res = await index.main({
+    const res = await main({
       owner: 'adobe',
       repo: 'helix-cli',
       path: './demos/simple/test/../htdocs/style.css',
@@ -396,16 +399,16 @@ describe('Static Delivery Action #unittest', () => {
   });
 
   it('main() reports version for get request to /', async () => {
-    const res = await index.main({ __ow_method: 'get' });
+    const res = await main({ __ow_method: 'get' });
     assert.equal(res.statusCode, 204);
     assert.deepEqual(res.headers, {
-      'x-last-activation-id': undefined,
+      'content-type': 'text/plain;charset=UTF-8',
       'x-version': pkgJson.version,
     });
   });
 
   it('main() normalizes URLs in rewritten CSS', async () => {
-    const res = await index.main({
+    const res = await main({
       owner: 'trieloff',
       repo: 'helix-demo',
       path: '/css/bulma.css',
@@ -417,7 +420,7 @@ describe('Static Delivery Action #unittest', () => {
   });
 
   it('main() normalizes URLs in rewritten Javascript', async () => {
-    const res = await index.main({
+    const res = await main({
       owner: 'trieloff',
       repo: 'helix-demo',
       path: '/index.js',
@@ -445,7 +448,7 @@ barba.init({
   });
 
   it('main() returns 403 in case of backlisted file', async () => {
-    const res = await index.main({
+    const res = await main({
       owner: 'adobe',
       repo: 'helix-cli',
       path: '/package.json',
@@ -466,7 +469,7 @@ barba.init({
         res.status(200).send('ok');
       });
 
-    const res = await index.main({
+    const res = await main({
       owner: 'adobe',
       repo: 'project-helix', // private repository
       path: 'helix_logo.ico',
@@ -488,7 +491,7 @@ barba.init({
         res.status(200).send('ok');
       });
 
-    const res = await index.main({
+    const res = await main({
       owner: 'adobe',
       repo: 'project-helix', // private repository
       path: 'helix_logo.ico',
