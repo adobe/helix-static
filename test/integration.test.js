@@ -51,4 +51,32 @@ describe('Static Delivery Action #online #integrationtest', () => {
     });
     assert.equal(res.statusCode, 307);
   });
+
+  it('theblog/scripts/common.js gets delivered', async () => {
+    const res = await main({
+      ref: '99014561418c495b62badecb5655e1b89d00052f',
+      path: '/scripts/common.js',
+      owner: 'adobe',
+      esi: false,
+      plain: true,
+      root: '',
+      repo: 'theblog',
+    });
+    assert.ok(res.body.indexOf('import {\n  getTaxonomy\n} from \'/scripts/taxonomy.js\'') > 0);
+    assert.equal(res.statusCode, 200);
+  });
+
+  it('theblog/scripts/common.js gets delivered (esi)', async () => {
+    const res = await main({
+      ref: '99014561418c495b62badecb5655e1b89d00052f',
+      path: '/scripts/common.js',
+      owner: 'adobe',
+      esi: true,
+      plain: true,
+      root: '',
+      repo: 'theblog',
+    });
+    assert.ok(res.body.indexOf('import {\n\n\ngetTaxonomy } from "<esi:include src="/scripts/taxonomy.js.url"/><esi:remove>/scripts/taxonomy.js</esi:remove>"') > 0);
+    assert.equal(res.statusCode, 200);
+  });
 });

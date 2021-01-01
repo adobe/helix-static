@@ -53,7 +53,7 @@ function rejected(path, allow, deny) {
 }
 
 function isESI({ esi }) {
-  return !!esi;
+  return !!esi && esi !== 'false';
 }
 
 /**
