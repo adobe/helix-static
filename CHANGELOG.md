@@ -1,3 +1,10 @@
+## [1.13.1](https://github.com/adobe/helix-static/compare/v1.13.0...v1.13.1) (2021-01-01)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-deploy to v1.15.1 ([fb3e611](https://github.com/adobe/helix-static/commit/fb3e611071a8c65c2b5aa570f96c92195c22bd90)), closes [#445](https://github.com/adobe/helix-static/issues/445)
+
 # [1.13.0](https://github.com/adobe/helix-static/compare/v1.12.43...v1.13.0) (2020-12-31)
 
 
