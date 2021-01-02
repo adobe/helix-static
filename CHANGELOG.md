@@ -1,3 +1,10 @@
+## [1.13.2](https://github.com/adobe/helix-static/compare/v1.13.1...v1.13.2) (2021-01-02)
+
+
+### Bug Fixes
+
+* **esi:** esi param not honoured if string ([6208352](https://github.com/adobe/helix-static/commit/620835202882d3f4035a2263b319ad87c8b1a175)), closes [#445](https://github.com/adobe/helix-static/issues/445)
+
 ## [1.13.1](https://github.com/adobe/helix-static/compare/v1.13.0...v1.13.1) (2021-01-01)
 
 
