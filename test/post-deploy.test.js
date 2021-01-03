@@ -93,5 +93,22 @@ createTargets().forEach((target) => {
           throw e;
         });
     }).timeout(10000);
+
+    it('trieloff/helix-demo/htdocs/test.json gets delivered', async () => {
+      let url;
+      await chai
+        .request(target.host())
+        .get(`${target.urlPath()}?owner=trieloff&repo=helix-demo&ref=83afa4fdee57868e2cc6c5068d742f59c066d367&path=/htdocs/test.json`)
+        .then((response) => {
+          url = response.request.url;
+          expect(response).to.have.status(200);
+          expect(response).to.be.json;
+          expect(response.body).to.deep.equal({ foo: 'bar' });
+        })
+        .catch((e) => {
+          e.message = `At ${url}\n      ${e.message}`;
+          throw e;
+        });
+    }).timeout(10000);
   });
 });
