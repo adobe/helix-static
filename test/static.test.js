@@ -119,7 +119,7 @@ describe('Static Delivery Action #integrationtest', () => {
     assert.equal(res.headers['x-static'], 'Raw/Static');
     assert.equal(res.headers['cache-control'], 's-maxage=300, stale-while-revalidate=2592000');
     assert.equal(res.headers['surrogate-key'], 'LiWDcUs5H72QTkGl');
-    assert.equal(res.headers.etag, '"VIXMjwsHOMPLZGtviFum1TGBFMz6zCQKINQseZ6Ub6k="');
+    assert.equal(res.headers.etag, '"zei2DOT55/ukAFvbmB1QwDy2e3KnWuXg41yw2R6TRng="');
   });
 
   it('deliver JSON file', async () => {
@@ -136,7 +136,7 @@ describe('Static Delivery Action #integrationtest', () => {
     assert.equal(res.headers['x-static'], 'Raw/Static');
     assert.equal(res.headers['cache-control'], 's-maxage=300, stale-while-revalidate=2592000');
     assert.equal(res.headers['surrogate-key'], 'CIUWTRUuAYPY51zR');
-    assert.equal(res.headers.etag, '"hNCISMWqyUDaDY2zDTMKXb1peyzXunKE791FEtjILtg="');
+    assert.equal(res.headers.etag, '"uc0mBep1KTsWuJKpfF5LC8GPPa/Qy9+JfIAljVdBXIA="');
   });
 
   it('deliver missing file', async () => {
@@ -306,18 +306,6 @@ describe('Static Delivery Action #unittest', () => {
 
     const afterSha = gh.addHeaders(before, 'bcdcc24e8ebc25a07a35d05afd85551a83fa5af3', 'foobar');
     assert.ok(afterSha['Cache-Control'].match(/^max-age/));
-  });
-
-  it('isBinary() #unittest', () => {
-    assert.equal(utils.isBinary('application/octet-stream'), true);
-    assert.equal(utils.isBinary('image/png'), true);
-    assert.equal(utils.isBinary('un/known'), true);
-    assert.equal(utils.isBinary('image/svg+xml'), true);
-
-    assert.equal(utils.isBinary('text/html'), false);
-    assert.equal(utils.isBinary('text/xml'), false);
-    assert.equal(utils.isBinary('application/json'), false);
-    assert.equal(utils.isBinary('application/javascript'), false);
   });
 
   it('rejected() #unittest', () => {

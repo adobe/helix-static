@@ -15,15 +15,12 @@ const log = require('@adobe/helix-log');
 const crypto = require('crypto');
 const { computeSurrogateKey } = require('@adobe/helix-shared').utils;
 const mime = require('mime-types');
-const ohash = require('object-hash');
 const { fetch, AbortController } = require('@adobe/helix-fetch').context({
   httpsProtocols:
   /* istanbul ignore next */
   process.env.HELIX_FETCH_FORCE_HTTP1 ? ['http1'] : ['http2', 'http1'],
 });
-const {
-  error, isBinary, isCSS, isJavaScript,
-} = require('./utils');
+const { error, isCSS, isJavaScript } = require('./utils');
 
 // one megabyte openwhisk limit + 20% Base64 inflation + safety padding
 const REDIRECT_LIMIT = 750000;
@@ -53,9 +50,7 @@ function addHeaders(headers, ref, content) {
       'Cache-Control': 'max-age=86400, stale-while-revalidate=2592000',
     };
   } else if (content) {
-    const hash = typeof content === 'object'
-      ? crypto.createHash('sha256').update(ohash(content))
-      : crypto.createHash('sha256').update(content);
+    const hash = crypto.createHash('sha256').update(content);
     cacheheaders = {
       ETag: `"${hash.digest('base64')}"`,
       // stale-while-revalidate: 30 days
@@ -128,8 +123,11 @@ function fetchFromGithub(params, bodyCallback) {
       throw reqErr;
     }
     if (size < REDIRECT_LIMIT) {
-      const body = await bodyCallback(await response.buffer(), { type, esi, entry });
-      log.info(`delivering file ${cleanentry} type ${type} binary: ${isBinary(type)}`);
+      let body = await response.buffer();
+      if (bodyCallback) {
+        body = await bodyCallback(body, { type, esi, entry });
+      }
+      log.info(`delivering file ${cleanentry} type ${type}`);
 
       if (body.length > HARD_LIMIT) {
         log.warn(`result size exceeds limit ${HARD_LIMIT}. sending redirect.`);
