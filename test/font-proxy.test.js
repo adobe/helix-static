@@ -121,6 +121,7 @@ describe('Adobe Fonts Proxy Test #unitttest', () => {
 
   it('Delivers rewritten Kit', async () => {
     const res = retrofitResponse(await deliverFontCSS({ params: { kitid: 'eic8tkf' } }));
+    res.body = String(res.body);
     assert.equal(res.headers['cache-control'], 'private, max-age=600, stale-while-revalidate=604800');
     assert.ok(!res.body.match(/https:\/\/use.typekit\.net/));
     assert.ok(!res.body.match(/https:\/\/p.typekit\.net/));

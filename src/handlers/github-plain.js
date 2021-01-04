@@ -10,28 +10,9 @@
  * governing permissions and limitations under the License.
  */
 const { fetchFromGithub } = require('../github-fetcher');
-const { isBinary, isJSON } = require('../utils');
-
-/**
- * Processes the body according to the content type.
- * @param {string} type - the content type
- * @param {Buffer} responsebody - the response body
- * @param {boolean} esi - esi flag
- * @param {string} entry - the base href
- * @returns {Function|any|string|any} the response body
- */
-function processBody(responsebody, { type }) {
-  if (isBinary(type)) {
-    return responsebody.toString('base64');
-  }
-  if (isJSON(type)) {
-    return JSON.parse(responsebody.toString('utf-8'));
-  }
-  return responsebody.toString('utf-8');
-}
 
 function handle(opts) {
-  return fetchFromGithub(opts, processBody);
+  return fetchFromGithub(opts, null);
 }
 
 module.exports = handle;

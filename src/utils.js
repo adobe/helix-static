@@ -15,36 +15,6 @@ const sanitizer = require('sanitizer');
 const log = require('@adobe/helix-log');
 
 /**
- * Checks if the content type is JSON.
- * @param {string} type - content type
- * @returns {boolean} {@code true} if content type is JSON.
- */
-function isJSON(type) {
-  return /json/.test(type);
-}
-
-/**
- * Checks if the content type is binary.
- * @param {string} type - content type
- * @returns {boolean} {@code true} if content type is binary.
- */
-function isBinary(type) {
-  if (/text\/.*/.test(type)) {
-    return false;
-  }
-  if (/.*\/javascript/.test(type)) {
-    return false;
-  }
-  if (/.*\/.*json/.test(type)) {
-    return false;
-  }
-  if (/.*\/.*xml/.test(type)) {
-    return /svg/.test(type); // openwshisk treats SVG as binary
-  }
-  return true;
-}
-
-/**
  * Checks if the content type is css.
  * @param {string} type - content type
  * @returns {boolean} {@code true} if content type is css.
@@ -96,5 +66,5 @@ function forbidden() {
 }
 
 module.exports = {
-  error, forbidden, isJSON, isJavaScript, isCSS, isBinary,
+  error, forbidden, isJavaScript, isCSS,
 };

@@ -12,15 +12,9 @@
 const querystring = require('querystring');
 
 function retrofitResponse(resp) {
-  let body = resp.body ? String(resp.body) : null;
-  try {
-    body = JSON.parse(body);
-  } catch {
-    // ignore
-  }
   return {
     statusCode: resp.status,
-    body,
+    body: resp.body,
     headers: [...resp.headers.keys()].reduce((result, key) => {
       // eslint-disable-next-line no-param-reassign
       result[key] = resp.headers.get(key);
