@@ -1,3 +1,10 @@
+## [1.13.3](https://github.com/adobe/helix-static/compare/v1.13.2...v1.13.3) (2021-01-04)
+
+
+### Bug Fixes
+
+* **plain:** don't encode binary response ([89f1426](https://github.com/adobe/helix-static/commit/89f1426fa7c4a85524384e8ba8fc1e160eac778e)), closes [#450](https://github.com/adobe/helix-static/issues/450)
+
 ## [1.13.2](https://github.com/adobe/helix-static/compare/v1.13.1...v1.13.2) (2021-01-02)
 
 
