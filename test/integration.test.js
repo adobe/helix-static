@@ -79,4 +79,18 @@ describe('Static Delivery Action #online #integrationtest', () => {
     assert.ok(res.body.indexOf('import {\n\n\ngetTaxonomy } from "<esi:include src="/scripts/taxonomy.js.url"/><esi:remove>/scripts/taxonomy.js</esi:remove>"') > 0);
     assert.equal(res.statusCode, 200);
   });
+
+  it('pages hero_ps_pr_two.png gets delivered ', async () => {
+    const res = await main({
+      ref: 'cf9fe34edaf229c2a9e6a296420bef76bcc3d28',
+      path: '/static/ete/hero-posters/hero_ps_pr_two.png',
+      owner: 'adobe',
+      esi: false,
+      plain: true,
+      root: '',
+      repo: 'pages',
+    });
+    assert.equal(res.statusCode, 307);
+    assert.equal(res.headers.location, 'https://raw.githubusercontent.com/adobe/pages/cf9fe34edaf229c2a9e6a296420bef76bcc3d28/static/ete/hero-posters/hero_ps_pr_two.png');
+  });
 });
