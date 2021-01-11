@@ -1,3 +1,10 @@
+## [1.13.6](https://github.com/adobe/helix-static/compare/v1.13.5...v1.13.6) (2021-01-11)
+
+
+### Bug Fixes
+
+* **deps:** update dependency postcss to v8.2.4 ([2474f37](https://github.com/adobe/helix-static/commit/2474f37e294ecf289058d11ff8b5d700035645fc))
+
 ## [1.13.5](https://github.com/adobe/helix-static/compare/v1.13.4...v1.13.5) (2021-01-10)
 
 
