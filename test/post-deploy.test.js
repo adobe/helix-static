@@ -110,5 +110,22 @@ createTargets().forEach((target) => {
           throw e;
         });
     }).timeout(10000);
+
+    it('trieloff/helix-demo/helix-redirects.yaml gets delivered', async () => {
+      let url;
+      await chai
+        .request(target.host())
+        .get(`${target.urlPath()}?owner=trieloff&repo=helix-demo&ref=528fd4692b6e4cd47ee9a11a133e7c6728b51fe5&path=/helix-redirects.yaml`)
+        .then((response) => {
+          url = response.request.url;
+          expect(response).to.have.status(200);
+          expect(response).to.have.header('content-type', 'text/yaml');
+          expect(response.text).to.equal('redirects:\n  - from: (.*).php\n    to: $1.html\n    type: temporary\n');
+        })
+        .catch((e) => {
+          e.message = `At ${url}\n      ${e.message}`;
+          throw e;
+        });
+    }).timeout(10000);
   });
 });
