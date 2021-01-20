@@ -36,6 +36,21 @@ describe('Static Delivery Action #online #integrationtest', () => {
     assert.equal(res.statusCode, 200);
   });
 
+  it('helix-demo/helix-redirects.yaml gets delivered', async () => {
+    const res = await main({
+      path: '/helix-redirects.yaml',
+      esi: false,
+      plain: true,
+      root: '',
+      owner: 'trieloff',
+      repo: 'helix-demo',
+      ref: '528fd4692b6e4cd47ee9a11a133e7c6728b51fe5',
+      branch: 'master',
+    });
+    assert.equal(res.statusCode, 200);
+    assert.equal(await res.text(), 'redirects:\n  - from: (.*).php\n    to: $1.html\n    type: temporary\n');
+  });
+
   it('theblog/sitemap.xml gets delivered', async () => {
     const res = await main({
       ref: '7966963696682b955c13ac0cefb8ed9af065f66a',

@@ -47,6 +47,7 @@ class OpenwhiskTarget {
   }
 }
 
+// eslint-disable-next-line no-unused-vars
 class OpenwhiskPreprodTarget extends OpenwhiskTarget {
   // eslint-disable-next-line class-methods-use-this
   title() {
@@ -82,7 +83,7 @@ class AWSTarget extends OpenwhiskTarget {
 
 const ALL_TARGETS = [
   OpenwhiskTarget,
-  OpenwhiskPreprodTarget,
+  // OpenwhiskPreprodTarget,
   AWSTarget,
 ];
 
