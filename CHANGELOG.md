@@ -1,3 +1,10 @@
+## [1.13.10](https://github.com/adobe/helix-static/compare/v1.13.9...v1.13.10) (2021-01-21)
+
+
+### Bug Fixes
+
+* **deploy:** ensure text/yaml gets served correctly in wsk ([bcf937a](https://github.com/adobe/helix-static/commit/bcf937aff74416f5b3806d8e02658528636aff21)), closes [#464](https://github.com/adobe/helix-static/issues/464)
+
 ## [1.13.9](https://github.com/adobe/helix-static/compare/v1.13.8...v1.13.9) (2021-01-21)
 
 
