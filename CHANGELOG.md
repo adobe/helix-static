@@ -1,3 +1,10 @@
+## [1.13.12](https://github.com/adobe/helix-static/compare/v1.13.11...v1.13.12) (2021-01-29)
+
+
+### Bug Fixes
+
+* use latest post deploy orb ([d0af5e0](https://github.com/adobe/helix-static/commit/d0af5e09445971d6538fcd54983b70e737515865))
+
 ## [1.13.11](https://github.com/adobe/helix-static/compare/v1.13.10...v1.13.11) (2021-01-25)
 
 
