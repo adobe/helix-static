@@ -74,6 +74,9 @@ jobs:
         name: Post-Deployment Integration Test
         command: npm run test-postdeploy
 
+    - store_test_results:
+        path: junit
+
     - run:
         name: Link Sequences
         command: npm run deploy-sequences
