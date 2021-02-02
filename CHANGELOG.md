@@ -1,3 +1,10 @@
+## [1.13.16](https://github.com/adobe/helix-static/compare/v1.13.15...v1.13.16) (2021-02-02)
+
+
+### Bug Fixes
+
+* **ci:** enable AWS monitor ([dbb7d6a](https://github.com/adobe/helix-static/commit/dbb7d6a66f32921b5f36778e0fc9177141bb5f9a))
+
 ## [1.13.15](https://github.com/adobe/helix-static/compare/v1.13.14...v1.13.15) (2021-02-01)
 
 
