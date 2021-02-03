@@ -20,7 +20,7 @@ const log = require('@adobe/helix-log');
  * @param {string} css the css to sanitize
  * @returns {object} css, urls
  */
-async function getSanitizedCssAndUrls(cssToSanitize) {
+async function getSanitizedCssAndUrls(cssToSanitize, replace = './fonts.hlx/') {
   const foundurls = [];
 
   function findAndReplaceFontURLs(tree) {
@@ -31,7 +31,7 @@ async function getSanitizedCssAndUrls(cssToSanitize) {
         format: rule.replace(/.*format\(["']([^"']*)["']\).*/, '$1'),
       })).filter((rule) => rule.format === 'woff2')
         .map((rule) => rule.url)
-        .map((body) => body.replace(/https:\/\/use\.typekit\.net\//g, './fonts.hlx/'));
+        .map((body) => body.replace(/https:\/\/use\.typekit\.net\//g, replace));
       foundurls.push(...urls);
 
       // Add swap before replacing the src
@@ -42,7 +42,7 @@ async function getSanitizedCssAndUrls(cssToSanitize) {
       decl.replaceWith(postcss.decl(
         {
           prop: 'src',
-          value: decl.value.replace(/https:\/\/use\.typekit\.net\//g, './fonts.hlx/'),
+          value: decl.value.replace(/https:\/\/use\.typekit\.net\//g, replace),
         },
       ));
     });
@@ -63,7 +63,7 @@ async function getSanitizedCssAndUrls(cssToSanitize) {
   return { css, foundurls };
 }
 
-async function deliverFontCSS({ params: { kitid } }) {
+async function deliverFontCSS({ params: { kitid } }, replace = './fonts.hlx/') {
   const fetchContext = fetchAPI.context({
     httpsProtocols:
     /* istanbul ignore next */
@@ -81,7 +81,7 @@ async function deliverFontCSS({ params: { kitid } }) {
       });
     }
 
-    const { css, foundurls } = await getSanitizedCssAndUrls(body);
+    const { css, foundurls } = await getSanitizedCssAndUrls(body, replace);
     return new Response(css, {
       status: 200,
       headers: {
@@ -101,6 +101,14 @@ async function deliverFontCSS({ params: { kitid } }) {
   }
 }
 
+/**
+ * Backwards compatibility
+ */
+async function absolute(params) {
+  return deliverFontCSS(params, '/hlx_fonts/');
+}
+
 deliverFontCSS.getSanitizedCssAndUrls = getSanitizedCssAndUrls;
+deliverFontCSS.absolute = absolute;
 
 module.exports = deliverFontCSS;
