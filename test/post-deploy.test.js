@@ -69,7 +69,7 @@ createTargets().forEach((target) => {
         .then((response) => {
           url = response.request.url;
           expect(response).to.have.status(200);
-          expect(response.body.toString()).to.be.a('string').that.includes('/hlx_fonts/');
+          expect(response.text).to.be.a('string').that.includes('/hlx_fonts/');
         })
         .catch((e) => {
           e.message = `At ${url}\n      ${e.message}`;
@@ -86,8 +86,8 @@ createTargets().forEach((target) => {
         .then((response) => {
           url = response.request.url;
           expect(response).to.have.status(200);
-          console.log(response.body);
-          expect(response.body.toString()).to.be.a('string').that.includes('/fonts.hlx/');
+
+          expect(response.text).to.be.a('string').that.includes('/fonts.hlx/');
         })
         .catch((e) => {
           e.message = `At ${url}\n      ${e.message}`;
