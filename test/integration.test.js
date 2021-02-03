@@ -18,6 +18,45 @@ const { retrofit } = require('./utils.js');
 const main = retrofit(universalMain);
 
 /* eslint-env mocha */
+
+describe('Font Proxy Integration Tests #online #integrationtest', () => {
+  it('adobe/theblog fonts get delivered with absolute URL', async () => {
+    const res = await main({
+      ref: '7966963696682b955c13ac0cefb8ed9af065f66a',
+      package: '8c8a56985d9b2624d338e98af8ba8cf03124dc11',
+      path: '/hlx_fonts/pnv6nym.css',
+      params: '',
+      owner: 'adobe',
+      branch: 'staging',
+      esi: false,
+      plain: true,
+      root: '',
+      repo: 'theblog',
+    });
+
+    assert.equal(res.statusCode, 200);
+    assert.ok(res.body.toString().match(/hlx_fonts/));
+  });
+
+  it('adobe/theblog fonts get delivered with relative URL', async () => {
+    const res = await main({
+      ref: '7966963696682b955c13ac0cefb8ed9af065f66a',
+      package: '8c8a56985d9b2624d338e98af8ba8cf03124dc11',
+      path: '/en/publish/fonts.hlx/pnv6nym.css',
+      params: '',
+      owner: 'adobe',
+      branch: 'staging',
+      esi: false,
+      plain: true,
+      root: '',
+      repo: 'theblog',
+    });
+
+    assert.equal(res.statusCode, 200);
+    assert.ok(res.body.toString().match(/fonts\.hlx/));
+  });
+});
+
 describe('Static Delivery Action #online #integrationtest', () => {
   it('ferrumjsorg/index.html gets delivered', async () => {
     const res = await main({
@@ -107,5 +146,5 @@ describe('Static Delivery Action #online #integrationtest', () => {
     });
     assert.equal(res.statusCode, 307);
     assert.equal(res.headers.location, 'https://raw.githubusercontent.com/adobe/pages/cf9fe34edaf229c2a9e6a296420bef76bcc3d28/static/ete/hero-posters/hero_ps_pr_two.png');
-  });
+  }).timeout(10000);
 });
