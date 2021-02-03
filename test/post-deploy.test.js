@@ -86,6 +86,7 @@ createTargets().forEach((target) => {
         .then((response) => {
           url = response.request.url;
           expect(response).to.have.status(200);
+          console.log(response.body);
           expect(response.body.toString()).to.be.a('string').that.includes('/fonts.hlx/');
         })
         .catch((e) => {
