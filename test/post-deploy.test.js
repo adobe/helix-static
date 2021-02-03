@@ -60,6 +60,40 @@ createTargets().forEach((target) => {
         });
     }).timeout(10000);
 
+    it('theblog/hlx_fonts/pnv6nym.css gets delivered', async () => {
+      let url;
+
+      await chai
+        .request(target.host())
+        .get(`${target.urlPath()}?owner=adobe&repo=theblog&ref=7966963696682b955c13ac0cefb8ed9af065f66a&path=/hlx_fonts/pnv6nym.css&branch=staging&params=`)
+        .then((response) => {
+          url = response.request.url;
+          expect(response).to.have.status(200);
+          expect(response.body.toString()).to.be.a('string').that.includes('/hlx_fonts/');
+        })
+        .catch((e) => {
+          e.message = `At ${url}\n      ${e.message}`;
+          throw e;
+        });
+    }).timeout(10000);
+
+    it('theblog/fonts.hlx/pnv6nym.css gets delivered', async () => {
+      let url;
+
+      await chai
+        .request(target.host())
+        .get(`${target.urlPath()}?owner=adobe&repo=theblog&ref=7966963696682b955c13ac0cefb8ed9af065f66a&path=/en/publish/fonts.hlx/pnv6nym.css&branch=staging&params=`)
+        .then((response) => {
+          url = response.request.url;
+          expect(response).to.have.status(200);
+          expect(response.body.toString()).to.be.a('string').that.includes('/fonts.hlx/');
+        })
+        .catch((e) => {
+          e.message = `At ${url}\n      ${e.message}`;
+          throw e;
+        });
+    }).timeout(10000);
+
     it('pages/icons.svg gets delivered', async () => {
       let url;
       await chai
