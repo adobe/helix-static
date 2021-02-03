@@ -101,7 +101,7 @@ describe('Adobe Fonts CSS Parser', () => {
 
     const res = await getSanitizedCssAndUrls(css);
     assert.ok(Array.isArray(res.foundurls));
-    assert.equal(res.foundurls[0], '/hlx_fonts/af/d91a29/00000000000000003b9af759/27/l?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=i4&v=3');
+    assert.equal(res.foundurls[0], './fonts.hlx/af/d91a29/00000000000000003b9af759/27/l?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=i4&v=3');
   });
 });
 
@@ -126,9 +126,9 @@ describe('Adobe Fonts Proxy Test #unitttest', () => {
     assert.ok(!res.body.match(/https:\/\/use.typekit\.net/));
     assert.ok(!res.body.match(/https:\/\/p.typekit\.net/));
     assert.ok(res.body.indexOf('font-display:swap' > -1));
-    assert.ok(res.body.match(/\/hlx_fonts\//));
+    assert.ok(res.body.match(/\/fonts\.hlx\//));
     assert.equal(res.statusCode, 200);
-    assert.equal(res.headers.link, '</hlx_fonts/af/d91a29/00000000000000003b9af759/27/l?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=i4&v=3>; rel=preload; as=font; crossorigin=anonymous,</hlx_fonts/af/c5b4b1/00000000000000003b9af75a/27/l?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=n4&v=3>; rel=preload; as=font; crossorigin=anonymous,</hlx_fonts/af/c52cc9/00000000000000003b9af75d/27/l?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=i7&v=3>; rel=preload; as=font; crossorigin=anonymous,</hlx_fonts/af/d6053e/00000000000000003b9af75e/27/l?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=n7&v=3>; rel=preload; as=font; crossorigin=anonymous,</hlx_fonts/af/68fa2f/00000000000000003b9af764/27/l?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=n4&v=3>; rel=preload; as=font; crossorigin=anonymous,</hlx_fonts/af/bd7e57/00000000000000003b9af765/27/l?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=i4&v=3>; rel=preload; as=font; crossorigin=anonymous,</hlx_fonts/af/056440/00000000000000003b9af768/27/l?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=i7&v=3>; rel=preload; as=font; crossorigin=anonymous,</hlx_fonts/af/9d03dd/00000000000000003b9af769/27/l?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=n7&v=3>; rel=preload; as=font; crossorigin=anonymous');
+    assert.equal(res.headers.link, '<./fonts.hlx/af/d91a29/00000000000000003b9af759/27/l?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=i4&v=3>; rel=preload; as=font; crossorigin=anonymous,<./fonts.hlx/af/c5b4b1/00000000000000003b9af75a/27/l?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=n4&v=3>; rel=preload; as=font; crossorigin=anonymous,<./fonts.hlx/af/c52cc9/00000000000000003b9af75d/27/l?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=i7&v=3>; rel=preload; as=font; crossorigin=anonymous,<./fonts.hlx/af/d6053e/00000000000000003b9af75e/27/l?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=n7&v=3>; rel=preload; as=font; crossorigin=anonymous,<./fonts.hlx/af/68fa2f/00000000000000003b9af764/27/l?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=n4&v=3>; rel=preload; as=font; crossorigin=anonymous,<./fonts.hlx/af/bd7e57/00000000000000003b9af765/27/l?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=i4&v=3>; rel=preload; as=font; crossorigin=anonymous,<./fonts.hlx/af/056440/00000000000000003b9af768/27/l?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=i7&v=3>; rel=preload; as=font; crossorigin=anonymous,<./fonts.hlx/af/9d03dd/00000000000000003b9af769/27/l?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=n7&v=3>; rel=preload; as=font; crossorigin=anonymous');
   });
 
   it('Delivers 404 for missing kit', async () => {

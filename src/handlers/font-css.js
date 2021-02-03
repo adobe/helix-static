@@ -31,7 +31,7 @@ async function getSanitizedCssAndUrls(cssToSanitize) {
         format: rule.replace(/.*format\(["']([^"']*)["']\).*/, '$1'),
       })).filter((rule) => rule.format === 'woff2')
         .map((rule) => rule.url)
-        .map((body) => body.replace(/https:\/\/use\.typekit\.net\//g, '/hlx_fonts/'));
+        .map((body) => body.replace(/https:\/\/use\.typekit\.net\//g, './fonts.hlx/'));
       foundurls.push(...urls);
 
       // Add swap before replacing the src
@@ -42,7 +42,7 @@ async function getSanitizedCssAndUrls(cssToSanitize) {
       decl.replaceWith(postcss.decl(
         {
           prop: 'src',
-          value: decl.value.replace(/https:\/\/use\.typekit\.net\//g, '/hlx_fonts/'),
+          value: decl.value.replace(/https:\/\/use\.typekit\.net\//g, './fonts.hlx/'),
         },
       ));
     });
