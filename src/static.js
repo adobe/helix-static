@@ -104,7 +104,8 @@ async function deliverStatic(req, context) {
   params.githubToken = params.GITHUB_TOKEN || req.headers.get('x-github-token');
 
   return router
-    .register('/hlx_fonts/:kitid([a-z0-9]{7}).css', fontCSS)
+    .register('/hlx_fonts/:kitid([a-z0-9]{7}).css', fontCSS.absolute)
+    .register(':path(.*)/fonts.hlx/:kitid([a-z0-9]{7}).css', fontCSS)
     .register(':path(.*).:ext(css)', githubCSS, isESI)
     .register(':path(.*).:ext(m?js)', githubJS, isESI)
     .register(':path(.*).:ext(.*)', githubPlain)
