@@ -27,6 +27,7 @@ createTargets().forEach((target) => {
         this.skip();
       }
     });
+
     it('ferrumjsorg/index.html gets delivered', async () => {
       let url;
 
@@ -42,7 +43,23 @@ createTargets().forEach((target) => {
           e.message = `At ${url}\n      ${e.message}`;
           throw e;
         });
-    }).timeout(10000);
+    }).timeout(15000);
+
+    it('request with empty owner params gets 204', async () => {
+      let url;
+
+      await chai
+        .request(target.host())
+        .get(`${target.urlPath()}?owner=&repo=ferrumjsorg&ref=master&path=/index.html`)
+        .then((response) => {
+          url = response.request.url;
+          expect(response).to.have.status(204);
+        })
+        .catch((e) => {
+          e.message = `At ${url}\n      ${e.message}`;
+          throw e;
+        });
+    }).timeout(15000);
 
     it('theblog/sitemap.xml gets delivered', async () => {
       let url;
@@ -58,7 +75,7 @@ createTargets().forEach((target) => {
           e.message = `At ${url}\n      ${e.message}`;
           throw e;
         });
-    }).timeout(10000);
+    }).timeout(15000);
 
     it('pages/icons.svg gets delivered', async () => {
       let url;
@@ -92,7 +109,7 @@ createTargets().forEach((target) => {
           e.message = `At ${url}\n      ${e.message}`;
           throw e;
         });
-    }).timeout(10000);
+    }).timeout(15000);
 
     it('trieloff/helix-demo/htdocs/test.json gets delivered', async () => {
       let url;
@@ -109,7 +126,7 @@ createTargets().forEach((target) => {
           e.message = `At ${url}\n      ${e.message}`;
           throw e;
         });
-    }).timeout(10000);
+    }).timeout(15000);
 
     it('trieloff/helix-demo/helix-redirects.yaml gets delivered', async () => {
       let url;
@@ -126,6 +143,6 @@ createTargets().forEach((target) => {
           e.message = `At ${url}\n      ${e.message}`;
           throw e;
         });
-    }).timeout(10000);
+    }).timeout(15000);
   });
 });
