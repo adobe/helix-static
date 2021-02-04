@@ -1,3 +1,10 @@
+## [1.13.18](https://github.com/adobe/helix-static/compare/v1.13.17...v1.13.18) (2021-02-04)
+
+
+### Bug Fixes
+
+* **static:** missing owner or repo should return 204 ([#486](https://github.com/adobe/helix-static/issues/486)) ([6b2ea25](https://github.com/adobe/helix-static/commit/6b2ea25e68a5a8bcdbf68423896864890e558f18))
+
 ## [1.13.17](https://github.com/adobe/helix-static/compare/v1.13.16...v1.13.17) (2021-02-02)
 
 
