@@ -82,7 +82,7 @@ async function deliverStatic(req, context) {
     esi = false,
   } = params;
 
-  if (!owner && !repo && !path) {
+  if (!owner || !repo) {
     return new Response('', {
       status: 204,
       headers: {

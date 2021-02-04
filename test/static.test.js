@@ -42,6 +42,39 @@ describe('Static Delivery Action #integrationtest', () => {
     },
   });
 
+  it('empty owner gives 204', async () => {
+    const res = await main({
+      ref: 'master',
+      path: '/404.html',
+      owner: '',
+      branch: 'master',
+      repo: 'theblog',
+    });
+    assert.equal(res.statusCode, 204);
+  });
+
+  it('empty repo  gives 204', async () => {
+    const res = await main({
+      ref: 'master',
+      path: '/404.html',
+      owner: 'adobe',
+      branch: 'master',
+      repo: '',
+    });
+    assert.equal(res.statusCode, 204);
+  });
+
+  it('empty path gives 404', async () => {
+    const res = await main({
+      ref: 'master',
+      path: '',
+      owner: 'adobe',
+      branch: 'master',
+      repo: 'theblog',
+    });
+    assert.equal(res.statusCode, 404);
+  });
+
   it('theblog/sitemap.xml gets delivered', async () => {
     const res = await main({
       ref: '7966963696682b955c13ac0cefb8ed9af065f66a',
@@ -163,18 +196,6 @@ describe('Static Delivery Action #integrationtest', () => {
 
     assert.equal(res.statusCode, 404);
     assert.equal(res.body, 'not-here.png');
-  });
-
-  it('deliver invalid file', async () => {
-    const res = await main({
-      owner: 'trieloff',
-      repo: 'helix-demo',
-      ref: 'master',
-      path: '',
-      plain: true,
-    });
-
-    assert.equal(res.statusCode, 404);
   });
 
   it('deliver big JPEG file', async () => {
