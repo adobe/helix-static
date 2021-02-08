@@ -13,7 +13,8 @@ const { fetchFromGithub } = require('../github-fetcher');
 
 function handle(opts) {
   const iconopts = opts;
-  iconopts.path = `/icons/${opts.icon}.svg`;
+  iconopts.params.path = `/icons/${opts.params.icon}`;
+  iconopts.params.ext = 'svg';
   return fetchFromGithub(iconopts, null);
 }
 
