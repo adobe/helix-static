@@ -108,4 +108,32 @@ describe('Static Delivery Action #online #integrationtest', () => {
     assert.equal(res.statusCode, 307);
     assert.equal(res.headers.location, 'https://raw.githubusercontent.com/adobe/pages/cf9fe34edaf229c2a9e6a296420bef76bcc3d28/static/ete/hero-posters/hero_ps_pr_two.png');
   });
+
+  it('pages/icons.svg gets delivered', async () => {
+    const res = await main({
+      ref: '8664b440e94b217ed5da98dad1fd133e19cb3db2',
+      path: '/scripts/_icons_.svg',
+      owner: 'adobe',
+      esi: true,
+      plain: true,
+      root: '',
+      repo: 'pages',
+    });
+    assert.ok(res.body.indexOf('<?xml version="1.0" encoding="utf-8"?>') === 0);
+    assert.equal(res.statusCode, 200);
+  });
+
+  it('pages/icons/adobe.svg gets delivered', async () => {
+    const res = await main({
+      ref: '8664b440e94b217ed5da98dad1fd133e19cb3db2',
+      path: '/scripts/_icons_adobe.svg',
+      owner: 'adobe',
+      esi: true,
+      plain: true,
+      root: '',
+      repo: 'pages',
+    });
+    assert.ok(res.body.indexOf('<svg id="Layer_1" data-name="Layer 1"') === 0);
+    assert.equal(res.statusCode, 200);
+  });
 });
