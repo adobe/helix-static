@@ -94,6 +94,23 @@ createTargets().forEach((target) => {
         });
     }).timeout(10000);
 
+    it('pages/icons.svg gets delivered as _icons_.svg', async () => {
+      let url;
+      await chai
+        .request(target.host())
+        .get(`${target.urlPath()}?owner=adobe&repo=pages&ref=d7acb4e41cf9546a40c7d6cd5e7162f8bcd540fd&path=/test/_icons_.svg`)
+        .then((response) => {
+          url = response.request.url;
+          expect(response).to.have.status(200);
+          expect(response).to.have.header('content-type', 'image/svg+xml');
+          expect(response.body.toString()).to.be.a('string').that.includes('<?xml version="1.0" encoding="utf-8"?>');
+        })
+        .catch((e) => {
+          e.message = `At ${url}\n      ${e.message}`;
+          throw e;
+        });
+    }).timeout(10000);
+
     it('helix-pages/htdocs/favicon.ico gets delivered', async () => {
       let url;
       await chai
