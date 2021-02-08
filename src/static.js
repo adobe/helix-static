@@ -16,6 +16,8 @@ const { Router } = require('./router');
 const { forbidden } = require('./utils');
 const fontCSS = require('./handlers/font-css');
 const githubPlain = require('./handlers/github-plain');
+const githubIcons = require('./handlers/github-icons');
+const githubSpritesheet = require('./handlers/github-spritesheet');
 const githubCSS = require('./handlers/github-css');
 const githubJS = require('./handlers/github-js');
 const pkgJson = require('../package.json');
@@ -107,6 +109,8 @@ async function deliverStatic(req, context) {
     .register('/hlx_fonts/:kitid([a-z0-9]{7}).css', fontCSS)
     .register(':path(.*).:ext(css)', githubCSS, isESI)
     .register(':path(.*).:ext(m?js)', githubJS, isESI)
+    .register(':prefix(.*)/_icons_.svg', githubSpritesheet)
+    .register(':prefix(.*)/_icons_:icon([a-zA-Z_-]+[a-zA-Z0-9]).svg', githubIcons)
     .register(':path(.*).:ext(.*)', githubPlain)
     .handle(file, params);
 }
