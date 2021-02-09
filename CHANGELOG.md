@@ -1,3 +1,15 @@
+# [1.14.0](https://github.com/adobe/helix-static/compare/v1.13.19...v1.14.0) (2021-02-09)
+
+
+### Bug Fixes
+
+* **icons:** use correct parameters for icon paths ([a983a57](https://github.com/adobe/helix-static/commit/a983a57b5b3a34cee06d2d17efa7a3875fb69574))
+
+
+### Features
+
+* **icons:** add support for `_icons_*.svg` URLs ([b5b955e](https://github.com/adobe/helix-static/commit/b5b955ef17b4d6a04b2d14609cd29631df434e2e))
+
 ## [1.13.19](https://github.com/adobe/helix-static/compare/v1.13.18...v1.13.19) (2021-02-07)
 
 
