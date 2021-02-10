@@ -11,11 +11,10 @@
  */
 const querystring = require('querystring');
 
-function retrofitResponse(resp) {
+async function retrofitResponse(resp) {
   return {
     statusCode: resp.status,
-    body: resp.body,
-    text: resp.text.bind(resp),
+    body: await resp.buffer(),
     headers: [...resp.headers.keys()].reduce((result, key) => {
       // eslint-disable-next-line no-param-reassign
       result[key] = resp.headers.get(key);

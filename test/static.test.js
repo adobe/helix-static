@@ -30,7 +30,7 @@ const main = retrofit(index.main);
 /* eslint-env mocha */
 describe('Static Delivery Action #integrationtest', () => {
   setupPolly({
-    recordFailedRequests: true,
+    recordFailedRequests: false,
     recordIfMissing: false,
     logging: false,
     adapters: [NodeHttpAdapter],
@@ -283,17 +283,7 @@ describe('CSS and JS Rewriting', () => {
       '{');
   });
 });
-/*
 
- "headers": {
-      "connection": "keep-alive",
-      "accept": "application/json,text/*;q=0.9,**;q=0.8",
-      "user-agent": "Project Helix Static",
-      "accept-encoding": "br;q=1, gzip;q=0.8, deflate;q=0.5",
-      "host": "raw.githubusercontent.com"
-    },
-
-*/
 describe('Static Delivery Action #unittest', () => {
   setupPolly({
     recordFailedRequests: false,
@@ -313,11 +303,12 @@ describe('Static Delivery Action #unittest', () => {
     },
   });
 
-  it('error() #unittest', () => {
+  it('error() #unittest', async () => {
     const error = utils.error('Test');
     assert.equal(error.status, '500');
-    assert.ok(String(error.body).match('Test'));
-    assert.ok(!String(error.body).match('404'));
+    const body = await error.buffer();
+    assert.ok(String(body).match('Test'));
+    assert.ok(!String(body).match('404'));
   });
 
   it('addHeaders() #unittest', () => {
@@ -411,7 +402,7 @@ describe('Static Delivery Action #unittest', () => {
     const res = await main({ __ow_method: 'get' });
     assert.equal(res.statusCode, 204);
     assert.deepEqual(res.headers, {
-      'content-type': 'text/plain;charset=UTF-8',
+      'content-type': 'text/plain; charset=utf-8',
       'x-version': pkgJson.version,
     });
   });

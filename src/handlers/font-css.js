@@ -10,10 +10,17 @@
  * governing permissions and limitations under the License.
  */
 // eslint-disable-next-line import/no-extraneous-dependencies
-const { Response } = require('node-fetch');
 const fetchAPI = require('@adobe/helix-fetch');
 const postcss = require('postcss');
 const log = require('@adobe/helix-log');
+
+const { context, ALPN_HTTP1_1 } = fetchAPI;
+const { fetch, Response } = process.env.HELIX_FETCH_FORCE_HTTP1
+  ? context({
+    alpnProtocols: [ALPN_HTTP1_1],
+    userAgent: 'helix-fetch', // static user agent for test recordings
+  })
+  : /* istanbul ignore next */ fetchAPI;
 
 /**
  * Gets the santized CSS and URLs to add to the response header
@@ -64,12 +71,6 @@ async function getSanitizedCssAndUrls(cssToSanitize) {
 }
 
 async function deliverFontCSS({ params: { kitid } }) {
-  const fetchContext = fetchAPI.context({
-    httpsProtocols:
-    /* istanbul ignore next */
-      process.env.HELIX_FETCH_FORCE_HTTP1 ? ['http1'] : ['http2', 'http1'],
-  });
-  const { fetch } = fetchContext;
   try {
     const response = await fetch(`https://use.typekit.net/${kitid}.css`);
     const body = await response.text();
@@ -96,8 +97,6 @@ async function deliverFontCSS({ params: { kitid } }) {
     return new Response('', {
       status: 502,
     });
-  } finally {
-    await fetchContext.disconnectAll();
   }
 }
 

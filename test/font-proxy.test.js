@@ -16,6 +16,7 @@ const path = require('path');
 const NodeHttpAdapter = require('@pollyjs/adapter-node-http');
 const FSPersister = require('@pollyjs/persister-fs');
 const { setupMocha: setupPolly } = require('@pollyjs/core');
+const nock = require('nock');
 const deliverFontCSS = require('../src/handlers/font-css');
 const { getSanitizedCssAndUrls } = require('../src/handlers/font-css');
 const { retrofitResponse } = require('./utils.js');
@@ -108,7 +109,7 @@ describe('Adobe Fonts CSS Parser', () => {
 describe('Adobe Fonts Proxy Test #unitttest', () => {
   setupPolly({
     recordFailedRequests: true,
-    recordIfMissing: false,
+    recordIfMissing: true,
     logging: false,
     adapters: [NodeHttpAdapter],
     persister: FSPersister,
@@ -120,28 +121,40 @@ describe('Adobe Fonts Proxy Test #unitttest', () => {
   });
 
   it('Delivers rewritten Kit', async () => {
-    const res = retrofitResponse(await deliverFontCSS({ params: { kitid: 'eic8tkf' } }));
-    res.body = String(res.body);
+    const res = await retrofitResponse(await deliverFontCSS({ params: { kitid: 'eic8tkf' } }));
+    const body = String(res.body);
     assert.equal(res.headers['cache-control'], 'private, max-age=600, stale-while-revalidate=604800');
-    assert.ok(!res.body.match(/https:\/\/use.typekit\.net/));
-    assert.ok(!res.body.match(/https:\/\/p.typekit\.net/));
-    assert.ok(res.body.indexOf('font-display:swap' > -1));
-    assert.ok(res.body.match(/\/hlx_fonts\//));
+    assert.ok(!body.match(/https:\/\/use.typekit\.net/));
+    assert.ok(!body.match(/https:\/\/p.typekit\.net/));
+    assert.ok(body.indexOf('font-display:swap' > -1));
+    assert.ok(body.match(/\/hlx_fonts\//));
     assert.equal(res.statusCode, 200);
     assert.equal(res.headers.link, '</hlx_fonts/af/d91a29/00000000000000003b9af759/27/l?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=i4&v=3>; rel=preload; as=font; crossorigin=anonymous,</hlx_fonts/af/c5b4b1/00000000000000003b9af75a/27/l?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=n4&v=3>; rel=preload; as=font; crossorigin=anonymous,</hlx_fonts/af/c52cc9/00000000000000003b9af75d/27/l?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=i7&v=3>; rel=preload; as=font; crossorigin=anonymous,</hlx_fonts/af/d6053e/00000000000000003b9af75e/27/l?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=n7&v=3>; rel=preload; as=font; crossorigin=anonymous,</hlx_fonts/af/68fa2f/00000000000000003b9af764/27/l?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=n4&v=3>; rel=preload; as=font; crossorigin=anonymous,</hlx_fonts/af/bd7e57/00000000000000003b9af765/27/l?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=i4&v=3>; rel=preload; as=font; crossorigin=anonymous,</hlx_fonts/af/056440/00000000000000003b9af768/27/l?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=i7&v=3>; rel=preload; as=font; crossorigin=anonymous,</hlx_fonts/af/9d03dd/00000000000000003b9af769/27/l?primer=34645566c6d4d8e7116ebd63bd1259d4c9689c1a505c3639ef9e73069e3e4176&fvd=n7&v=3>; rel=preload; as=font; crossorigin=anonymous');
   });
 
   it('Delivers 404 for missing kit', async () => {
-    const res = retrofitResponse(await deliverFontCSS({ params: { kitid: 'foobar' } }));
+    const res = await retrofitResponse(await deliverFontCSS({ params: { kitid: 'foobar' } }));
     assert.equal(res.statusCode, 404);
     assert.equal(res.body, 'not found');
   });
+});
 
-  it('Delivers 500 for connection error', async function test() {
-    this.polly.server.any().intercept(() => {
-      throw new Error('socket closed');
-    });
-    const res = retrofitResponse(await deliverFontCSS({ params: { kitid: 'foobar' } }));
-    assert.equal(res.statusCode, 502);
+describe('network error tests', () => {
+  it('Delivers 502 for connection error', async () => {
+    // nock is also used by PollyJS under the hood.
+    // In order to avoid unwanted side effects we have to reset nock.
+    nock.cleanAll();
+    nock.restore();
+    nock.activate();
+
+    // simulate network problem
+    nock.disableNetConnect();
+    try {
+      const res = await retrofitResponse(await deliverFontCSS({ params: { kitid: 'foobar' } }));
+      assert.equal(res.statusCode, 502);
+    } finally {
+      nock.cleanAll();
+      nock.enableNetConnect();
+    }
   });
 });

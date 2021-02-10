@@ -10,17 +10,20 @@
  * governing permissions and limitations under the License.
  */
 
-const { Response } = require('node-fetch');
 const log = require('@adobe/helix-log');
 const crypto = require('crypto');
 const { computeSurrogateKey } = require('@adobe/helix-shared').utils;
 const mime = require('mime-types');
-const { fetch, AbortController } = require('@adobe/helix-fetch').context({
-  httpsProtocols:
-  /* istanbul ignore next */
-  process.env.HELIX_FETCH_FORCE_HTTP1 ? ['http1'] : ['http2', 'http1'],
-});
+const fetchAPI = require('@adobe/helix-fetch');
 const { error, isCSS, isJavaScript } = require('./utils');
+
+const { context, ALPN_HTTP1_1 } = fetchAPI;
+const { fetch, Response, AbortController } = process.env.HELIX_FETCH_FORCE_HTTP1
+  ? context({
+    alpnProtocols: [ALPN_HTTP1_1],
+    userAgent: 'helix-fetch', // static user agent for test recordings
+  })
+  : /* istanbul ignore next */ fetchAPI;
 
 // one megabyte openwhisk limit + 20% Base64 inflation + safety padding
 const REDIRECT_LIMIT = 750000;

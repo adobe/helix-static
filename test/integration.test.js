@@ -48,7 +48,7 @@ describe('Static Delivery Action #online #integrationtest', () => {
       branch: 'master',
     });
     assert.equal(res.statusCode, 200);
-    assert.equal(await res.text(), 'redirects:\n  - from: (.*).php\n    to: $1.html\n    type: temporary\n');
+    assert.equal(String(res.body), 'redirects:\n  - from: (.*).php\n    to: $1.html\n    type: temporary\n');
   });
 
   it('theblog/sitemap.xml gets delivered', async () => {
