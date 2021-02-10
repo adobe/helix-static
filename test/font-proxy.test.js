@@ -108,8 +108,8 @@ describe('Adobe Fonts CSS Parser', () => {
 
 describe('Adobe Fonts Proxy Test #unitttest', () => {
   setupPolly({
-    recordFailedRequests: true,
-    recordIfMissing: true,
+    recordFailedRequests: false,
+    recordIfMissing: false,
     logging: false,
     adapters: [NodeHttpAdapter],
     persister: FSPersister,
