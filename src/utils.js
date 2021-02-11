@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-const { Response } = require('node-fetch');
+const { Response } = require('@adobe/helix-fetch');
 const sanitizer = require('sanitizer');
 const log = require('@adobe/helix-log');
 
