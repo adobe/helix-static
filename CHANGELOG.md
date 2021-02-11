@@ -1,3 +1,10 @@
+## [1.14.2](https://github.com/adobe/helix-static/compare/v1.14.1...v1.14.2) (2021-02-11)
+
+
+### Bug Fixes
+
+* **deps:** migrate to helix-fetch v2 ([#496](https://github.com/adobe/helix-static/issues/496)) ([e90f823](https://github.com/adobe/helix-static/commit/e90f82326e04f7983c647e84c627533024c87344))
+
 ## [1.14.1](https://github.com/adobe/helix-static/compare/v1.14.0...v1.14.1) (2021-02-10)
 
 
