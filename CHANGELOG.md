@@ -1,3 +1,10 @@
+## [1.14.7](https://github.com/adobe/helix-static/compare/v1.14.6...v1.14.7) (2021-02-17)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-status to v9.0.4 ([#505](https://github.com/adobe/helix-static/issues/505)) ([126d68f](https://github.com/adobe/helix-static/commit/126d68f7999f9fa64470e7177bec5733430eb1c2))
+
 ## [1.14.6](https://github.com/adobe/helix-static/compare/v1.14.5...v1.14.6) (2021-02-17)
 
 
