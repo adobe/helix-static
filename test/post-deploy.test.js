@@ -92,7 +92,7 @@ createTargets().forEach((target) => {
           e.message = `At ${url}\n      ${e.message}`;
           throw e;
         });
-    }).timeout(10000);
+    }).timeout(15000);
 
     it('pages/icons.svg gets delivered as _icons_.svg', async () => {
       let url;
@@ -109,7 +109,7 @@ createTargets().forEach((target) => {
           e.message = `At ${url}\n      ${e.message}`;
           throw e;
         });
-    }).timeout(10000);
+    }).timeout(15000);
 
     it('helix-pages/htdocs/favicon.ico gets delivered', async () => {
       let url;
