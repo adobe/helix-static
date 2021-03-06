@@ -199,7 +199,11 @@ function fetchFromGithub(params, bodyCallback) {
       log.warn(`connect to backend timed out: ${message}`);
       return error(message, 504); // gateway timeout
     }
-    log.error('unknown error while fetching content', message);
+    if (code === 'ECONNRESET' && syscall === 'read') {
+      log.warn(`connection reset: ${message}`);
+      return error(message, 504); // gateway timeout
+    }
+    log.error('unknown error while fetching content', message, rqerror);
     return error(
       (response && response.body && response.body.toString()) || message,
       statusCode,
