@@ -61,7 +61,8 @@ createTargets().forEach((target) => {
         });
     }).timeout(15000);
 
-    it('theblog/sitemap.xml gets delivered', async () => {
+    it('theblog/sitemap.xml gets delivered', async function test() {
+      this.retries(3);
       let url;
 
       await chai
@@ -93,7 +94,7 @@ createTargets().forEach((target) => {
           e.message = `At ${url}\n      ${e.message}`;
           throw e;
         });
-    }).timeout(120000);
+    }).timeout(20000);
 
     it('pages/icons.svg gets delivered as _icons_.svg', async () => {
       let url;
