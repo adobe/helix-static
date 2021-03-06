@@ -75,7 +75,7 @@ createTargets().forEach((target) => {
           e.message = `At ${url}\n      ${e.message}`;
           throw e;
         });
-    }).timeout(15000);
+    }).timeout(35000);
 
     it(`pages/icons.svg gets delivered from ${target.host()}${target.urlPath()}?owner=adobe&repo=pages&ref=d7acb4e41cf9546a40c7d6cd5e7162f8bcd540fd&path=/icons.svg`, async () => {
       let url;
@@ -92,7 +92,7 @@ createTargets().forEach((target) => {
           e.message = `At ${url}\n      ${e.message}`;
           throw e;
         });
-    }).timeout(25000);
+    }).timeout(35000);
 
     it('pages/icons.svg gets delivered as _icons_.svg', async () => {
       let url;
