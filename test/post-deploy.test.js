@@ -92,7 +92,7 @@ createTargets().forEach((target) => {
           e.message = `At ${url}\n      ${e.message}`;
           throw e;
         });
-    }).timeout(60000);
+    }).timeout(120000);
 
     it('pages/icons.svg gets delivered as _icons_.svg', async () => {
       let url;
