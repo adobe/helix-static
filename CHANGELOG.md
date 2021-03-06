@@ -1,3 +1,10 @@
+## [1.14.14](https://github.com/adobe/helix-static/compare/v1.14.13...v1.14.14) (2021-03-06)
+
+
+### Bug Fixes
+
+* **github:** report connection reset as 503 ([d807ded](https://github.com/adobe/helix-static/commit/d807ded58dde4c3b3ab7eb50737d9efef06a66ae))
+
 ## [1.14.13](https://github.com/adobe/helix-static/compare/v1.14.12...v1.14.13) (2021-03-01)
 
 

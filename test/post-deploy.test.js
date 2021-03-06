@@ -77,7 +77,7 @@ createTargets().forEach((target) => {
         });
     }).timeout(15000);
 
-    it('pages/icons.svg gets delivered', async () => {
+    it(`pages/icons.svg gets delivered from ${target.host()}${target.urlPath()}?owner=adobe&repo=pages&ref=d7acb4e41cf9546a40c7d6cd5e7162f8bcd540fd&path=/icons.svg`, async () => {
       let url;
       await chai
         .request(target.host())
