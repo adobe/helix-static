@@ -37,7 +37,7 @@
   },
   "homepage": "https://github.com/adobe/helix-static#readme",
   "dependencies": {
-    "@adobe/helix-fetch": "2.1.6",
+    "@adobe/helix-fetch": "2.1.7",
     "@adobe/helix-log": "5.0.0",
     "@adobe/helix-shared": "7.19.11",
     "@adobe/helix-status": "9.0.5",
