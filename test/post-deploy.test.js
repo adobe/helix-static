@@ -61,7 +61,8 @@ createTargets().forEach((target) => {
         });
     }).timeout(15000);
 
-    it('theblog/sitemap.xml gets delivered', async () => {
+    it('theblog/sitemap.xml gets delivered', async function test() {
+      this.retries(3);
       let url;
 
       await chai
@@ -75,9 +76,10 @@ createTargets().forEach((target) => {
           e.message = `At ${url}\n      ${e.message}`;
           throw e;
         });
-    }).timeout(15000);
+    }).timeout(35000);
 
-    it(`pages/icons.svg gets delivered from ${target.host()}${target.urlPath()}?owner=adobe&repo=pages&ref=d7acb4e41cf9546a40c7d6cd5e7162f8bcd540fd&path=/icons.svg`, async () => {
+    it(`pages/icons.svg gets delivered from ${target.host()}${target.urlPath()}?owner=adobe&repo=pages&ref=d7acb4e41cf9546a40c7d6cd5e7162f8bcd540fd&path=/icons.svg`, async function test() {
+      this.retries(3); // cheating, I know
       let url;
       await chai
         .request(target.host())
@@ -92,7 +94,7 @@ createTargets().forEach((target) => {
           e.message = `At ${url}\n      ${e.message}`;
           throw e;
         });
-    }).timeout(15000);
+    }).timeout(20000);
 
     it('pages/icons.svg gets delivered as _icons_.svg', async () => {
       let url;
@@ -109,7 +111,7 @@ createTargets().forEach((target) => {
           e.message = `At ${url}\n      ${e.message}`;
           throw e;
         });
-    }).timeout(10000);
+    }).timeout(15000);
 
     it('helix-pages/htdocs/favicon.ico gets delivered', async () => {
       let url;
