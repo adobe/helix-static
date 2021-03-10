@@ -40,7 +40,7 @@
     "@adobe/helix-fetch": "2.1.7",
     "@adobe/helix-log": "5.0.0",
     "@adobe/helix-shared": "7.21.2",
-    "@adobe/helix-status": "9.0.9",
+    "@adobe/helix-status": "9.1.0",
     "@adobe/openwhisk-action-logger": "2.4.1",
     "@adobe/openwhisk-action-utils": "4.4.1",
     "@babel/core": "7.13.8",
@@ -55,7 +55,7 @@
   },
   "devDependencies": {
     "@adobe/eslint-config-helix": "1.1.4",
-    "@adobe/helix-deploy": "3.9.1",
+    "@adobe/helix-deploy": "3.10.0",
     "@pollyjs/adapter-node-http": "5.1.0",
     "@pollyjs/core": "5.1.0",
     "@pollyjs/persister-fs": "5.0.0",
