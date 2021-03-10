@@ -96,6 +96,7 @@ async function deliverFontCSS({ params: { kitid } }) {
     log.error(`Error while retrieving font: ${e.message}`);
     return new Response('', {
       status: 502,
+      'x-error': e.message,
     });
   }
 }

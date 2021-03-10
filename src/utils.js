@@ -47,6 +47,7 @@ function error(message, code = 500) {
       'Content-Type': 'text/html',
       'X-Static': 'Raw/Static',
       'Cache-Control': 'max-age=300',
+      'X-Error': message,
     },
   });
 }
