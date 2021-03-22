@@ -1,3 +1,10 @@
+## [1.14.28](https://github.com/adobe/helix-static/compare/v1.14.27...v1.14.28) (2021-03-22)
+
+
+### Bug Fixes
+
+* **deps:** update dependency postcss-url to v10.1.3 ([#534](https://github.com/adobe/helix-static/issues/534)) ([e5ef6b5](https://github.com/adobe/helix-static/commit/e5ef6b5e35d8a5c9f4ad7b9127ad7f0d2e4faae1))
+
 ## [1.14.27](https://github.com/adobe/helix-static/compare/v1.14.26...v1.14.27) (2021-03-21)
 
 
