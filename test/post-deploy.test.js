@@ -155,7 +155,7 @@ createTargets().forEach((target) => {
         .then((response) => {
           url = response.request.url;
           expect(response).to.have.status(200);
-          expect(response).to.have.header('content-type', 'text/yaml');
+          expect(response).to.have.header('content-type', /^text\/yaml/);
           expect(response.text).to.equal('redirects:\n  - from: (.*).php\n    to: $1.html\n    type: temporary\n');
         })
         .catch((e) => {
