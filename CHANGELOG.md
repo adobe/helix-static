@@ -1,3 +1,94 @@
+## [1.14.33](https://github.com/adobe/helix-static/compare/v1.14.32...v1.14.33) (2021-03-28)
+
+
+### Bug Fixes
+
+* **deps:** update external fixes ([#547](https://github.com/adobe/helix-static/issues/547)) ([86b4b04](https://github.com/adobe/helix-static/commit/86b4b04b47899c6c65c00798ec11cfc6c45ea49a))
+
+## [1.14.32](https://github.com/adobe/helix-static/compare/v1.14.31...v1.14.32) (2021-03-27)
+
+
+### Bug Fixes
+
+* **deps:** update adobe fixes ([#545](https://github.com/adobe/helix-static/issues/545)) ([fb489eb](https://github.com/adobe/helix-static/commit/fb489ebadd6dbb5a0d4f136304fb9920fa17ee3c))
+
+## [1.14.31](https://github.com/adobe/helix-static/compare/v1.14.30...v1.14.31) (2021-03-26)
+
+
+### Bug Fixes
+
+* **deps:** update adobe fixes ([#542](https://github.com/adobe/helix-static/issues/542)) ([eac7ad2](https://github.com/adobe/helix-static/commit/eac7ad25566a0b1492a81b4f38c0a17b33c7726a))
+
+## [1.14.30](https://github.com/adobe/helix-static/compare/v1.14.29...v1.14.30) (2021-03-23)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-status to v9.1.1 ([#539](https://github.com/adobe/helix-static/issues/539)) ([42d7566](https://github.com/adobe/helix-static/commit/42d7566c8de95c0e525728cba4e1563b6dd56138))
+
+## [1.14.29](https://github.com/adobe/helix-static/compare/v1.14.28...v1.14.29) (2021-03-23)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-shared to v7.21.6 ([#538](https://github.com/adobe/helix-static/issues/538)) ([761e91a](https://github.com/adobe/helix-static/commit/761e91a3be19e1ffa43c3d43bd705f895749eab0))
+
+## [1.14.28](https://github.com/adobe/helix-static/compare/v1.14.27...v1.14.28) (2021-03-22)
+
+
+### Bug Fixes
+
+* **deps:** update dependency postcss-url to v10.1.3 ([#534](https://github.com/adobe/helix-static/issues/534)) ([e5ef6b5](https://github.com/adobe/helix-static/commit/e5ef6b5e35d8a5c9f4ad7b9127ad7f0d2e4faae1))
+
+## [1.14.27](https://github.com/adobe/helix-static/compare/v1.14.26...v1.14.27) (2021-03-21)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-shared to v7.21.5 ([e7d1080](https://github.com/adobe/helix-static/commit/e7d1080754251c0fe6a98b4be3f1cc3e22fbca23))
+
+## [1.14.26](https://github.com/adobe/helix-static/compare/v1.14.25...v1.14.26) (2021-03-15)
+
+
+### Bug Fixes
+
+* **deps:** update external fixes ([#530](https://github.com/adobe/helix-static/issues/530)) ([8883c4b](https://github.com/adobe/helix-static/commit/8883c4bb560ce60274095c24a1e908a8bfab811e))
+
+## [1.14.25](https://github.com/adobe/helix-static/compare/v1.14.24...v1.14.25) (2021-03-15)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-shared to v7.21.4 ([#532](https://github.com/adobe/helix-static/issues/532)) ([94785f1](https://github.com/adobe/helix-static/commit/94785f1cb54c1e1b8cdbbf8d00f6d201365ed2ee))
+
+## [1.14.24](https://github.com/adobe/helix-static/compare/v1.14.23...v1.14.24) (2021-03-15)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-shared to v7.21.3 ([#531](https://github.com/adobe/helix-static/issues/531)) ([2696bbf](https://github.com/adobe/helix-static/commit/2696bbf2381c41d3276caf26b3b2b7504be5b983))
+
+## [1.14.23](https://github.com/adobe/helix-static/compare/v1.14.22...v1.14.23) (2021-03-12)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-deploy to v3.14.0 ([#529](https://github.com/adobe/helix-static/issues/529)) ([a7d0c69](https://github.com/adobe/helix-static/commit/a7d0c6930e69a502823009a7dfca24c816e4494f))
+
+## [1.14.22](https://github.com/adobe/helix-static/compare/v1.14.21...v1.14.22) (2021-03-12)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-deploy to v3.12.0 ([#528](https://github.com/adobe/helix-static/issues/528)) ([8dd2339](https://github.com/adobe/helix-static/commit/8dd2339b840b2c693c922a830077fa0e0a5717a7))
+
+## [1.14.21](https://github.com/adobe/helix-static/compare/v1.14.20...v1.14.21) (2021-03-11)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-deploy to v3.11.0 ([#526](https://github.com/adobe/helix-static/issues/526)) ([b2a3f82](https://github.com/adobe/helix-static/commit/b2a3f8208db2c87de444b4f39430329c6756e095))
+
 ## [1.14.20](https://github.com/adobe/helix-static/compare/v1.14.19...v1.14.20) (2021-03-09)
 
 
