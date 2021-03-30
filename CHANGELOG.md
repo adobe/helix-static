@@ -1,3 +1,15 @@
+# [1.15.0](https://github.com/adobe/helix-static/compare/v1.14.33...v1.15.0) (2021-03-30)
+
+
+### Bug Fixes
+
+* **errors:** make sure x-error header does not include line breaks ([3ca6264](https://github.com/adobe/helix-static/commit/3ca626447d465aa130383640fa1faa76334b5ac2))
+
+
+### Features
+
+* **errors:** report errors with x-error header ([0d4fd0e](https://github.com/adobe/helix-static/commit/0d4fd0e9d5a9d7fdb95b414dfcd745a5f3b13207))
+
 ## [1.14.33](https://github.com/adobe/helix-static/compare/v1.14.32...v1.14.33) (2021-03-28)
 
 
