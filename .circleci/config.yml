@@ -98,6 +98,7 @@ jobs:
         command: git checkout -- package-lock.json
 
     - helix-post-deploy/config-wsk
+    - helix-gcloud-setup/load-config
 
     - run:
         name: Branch Deployment
