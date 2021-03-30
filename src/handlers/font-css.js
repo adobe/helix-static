@@ -13,6 +13,7 @@
 const fetchAPI = require('@adobe/helix-fetch');
 const postcss = require('postcss');
 const log = require('@adobe/helix-log');
+const { stripErrorMessage } = require('../utils');
 
 const { context, ALPN_HTTP1_1 } = fetchAPI;
 const { fetch, Response } = process.env.HELIX_FETCH_FORCE_HTTP1
@@ -96,7 +97,7 @@ async function deliverFontCSS({ params: { kitid } }) {
     log.error(`Error while retrieving font: ${e.message}`);
     return new Response('', {
       status: 502,
-      'x-error': e.message,
+      'x-error': stripErrorMessage(e.message),
     });
   }
 }

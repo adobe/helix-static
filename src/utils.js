@@ -32,6 +32,10 @@ function isJavaScript(type) {
   return /(text|application)\/(x-)?(javascript|ecmascript)/.test(type);
 }
 
+function stripErrorMessage(message) {
+  return (message || '').replace(/\n/g, ' ');
+}
+
 /**
  * Generates an error response
  * @param {string} message - error message
@@ -47,7 +51,7 @@ function error(message, code = 500) {
       'Content-Type': 'text/html',
       'X-Static': 'Raw/Static',
       'Cache-Control': 'max-age=300',
-      'X-Error': message,
+      'X-Error': stripErrorMessage(message),
     },
   });
 }
@@ -67,5 +71,5 @@ function forbidden() {
 }
 
 module.exports = {
-  error, forbidden, isJavaScript, isCSS,
+  error, forbidden, isJavaScript, isCSS, stripErrorMessage,
 };
