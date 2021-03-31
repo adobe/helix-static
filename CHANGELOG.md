@@ -1,3 +1,10 @@
+# [1.16.0](https://github.com/adobe/helix-static/compare/v1.15.0...v1.16.0) (2021-03-31)
+
+
+### Features
+
+* **deploy:** deploy to google ([495d184](https://github.com/adobe/helix-static/commit/495d184104801e91edea05a5014f3eb5082c3e6f))
+
 # [1.15.0](https://github.com/adobe/helix-static/compare/v1.14.33...v1.15.0) (2021-03-30)
 
 
