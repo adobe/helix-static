@@ -1,3 +1,10 @@
+# [1.17.0](https://github.com/adobe/helix-static/compare/v1.16.0...v1.17.0) (2021-03-31)
+
+
+### Features
+
+* trigger redeploy ([370f6f5](https://github.com/adobe/helix-static/commit/370f6f5701cb2163dfd4f361ca9bf05b8cacb593))
+
 # [1.16.0](https://github.com/adobe/helix-static/compare/v1.15.0...v1.16.0) (2021-03-31)
 
 
