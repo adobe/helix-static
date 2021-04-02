@@ -1,3 +1,10 @@
+## [1.17.1](https://github.com/adobe/helix-static/compare/v1.17.0...v1.17.1) (2021-04-02)
+
+
+### Bug Fixes
+
+* **deps:** bump helix-log to fix 500s errors ([7ee9190](https://github.com/adobe/helix-static/commit/7ee91905b99f43b245eac88b3624d382d6d5fcfb))
+
 # [1.17.0](https://github.com/adobe/helix-static/compare/v1.16.0...v1.17.0) (2021-03-31)
 
 
