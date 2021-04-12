@@ -1,3 +1,10 @@
+# [1.18.0](https://github.com/adobe/helix-static/compare/v1.17.6...v1.18.0) (2021-04-12)
+
+
+### Features
+
+* **github:** add support for github pages ([#565](https://github.com/adobe/helix-static/issues/565)) ([1001118](https://github.com/adobe/helix-static/commit/100111878b4dba2e572a871ad830be38716a50b7))
+
 ## [1.17.6](https://github.com/adobe/helix-static/compare/v1.17.5...v1.17.6) (2021-04-12)
 
 
