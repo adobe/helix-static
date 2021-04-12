@@ -377,6 +377,18 @@ describe('Static Delivery Action #unittest', () => {
     assert.ok(res.body.indexOf('7B227') === 0, true);
   });
 
+  it('main() returns static file via github pages', async () => {
+    const res = await main({
+      owner: 'tripodsan',
+      repo: 'private-pages-test',
+      ref: 'gh-pages',
+      path: 'myscripts.js',
+      plain: true,
+    });
+    assert.equal(res.headers['content-type'], 'application/javascript');
+    assert.equal(res.body.toString('utf-8'), '// my scripts\n');
+  });
+
   it('main() normalizes URLs', async () => {
     const res = await main({
       owner: 'adobe',

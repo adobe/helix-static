@@ -88,8 +88,13 @@ function fetchFromGithub(params, bodyCallback) {
 
   const { path, ext } = params.params;
   const cleanentry = (`${root}/${path}.${ext}`).replace(/^\//, '').replace(/[/]+/g, '/');
-  const cleanpath = `${owner}/${repo}/${ref}/${cleanentry}`.replace(/[/]+/g, '/');
-  const url = `https://raw.githubusercontent.com/${cleanpath}`;
+  let url;
+  if (ref === 'gh-pages') {
+    url = `https://${owner}.github.io/${repo}/${cleanentry}`;
+  } else {
+    const cleanpath = `${owner}/${repo}/${ref}/${cleanentry}`.replace(/[/]+/g, '/');
+    url = `https://raw.githubusercontent.com/${cleanpath}`;
+  }
   log.info(`deliverPlain: url=${url}`);
   const rawopts = {
     headers: {
