@@ -1,3 +1,10 @@
+## [1.18.3](https://github.com/adobe/helix-static/compare/v1.18.2...v1.18.3) (2021-04-13)
+
+
+### Bug Fixes
+
+* use helix-universal ([759cd5a](https://github.com/adobe/helix-static/commit/759cd5a7c0ee35fdbefe681fd6467e8fca3ffdb4))
+
 ## [1.18.2](https://github.com/adobe/helix-static/compare/v1.18.1...v1.18.2) (2021-04-13)
 
 
