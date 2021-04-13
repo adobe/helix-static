@@ -1,3 +1,10 @@
+## [1.18.2](https://github.com/adobe/helix-static/compare/v1.18.1...v1.18.2) (2021-04-13)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-shared to v7.24.0 ([#570](https://github.com/adobe/helix-static/issues/570)) ([c002656](https://github.com/adobe/helix-static/commit/c00265664053ef9a87453b616db72fc86ab72730))
+
 ## [1.18.1](https://github.com/adobe/helix-static/compare/v1.18.0...v1.18.1) (2021-04-12)
 
 
