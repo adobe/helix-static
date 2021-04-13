@@ -10,8 +10,8 @@
  * governing permissions and limitations under the License.
  */
 const { wrap: status } = require('@adobe/helix-status');
-const { wrap } = require('@adobe/openwhisk-action-utils');
-const { logger } = require('@adobe/openwhisk-action-logger');
+const { wrap } = require('@adobe/helix-shared');
+const { logger } = require('@adobe/helix-universal-logger');
 const { deliverStatic } = require('./static');
 
 /**
