@@ -1,3 +1,10 @@
+## [1.18.8](https://github.com/adobe/helix-static/compare/v1.18.7...v1.18.8) (2021-04-20)
+
+
+### Bug Fixes
+
+* **rel:** trigger release ([bd0e310](https://github.com/adobe/helix-static/commit/bd0e310af957cca4389cdcfcc41367ea54ed28b1))
+
 ## [1.18.7](https://github.com/adobe/helix-static/compare/v1.18.6...v1.18.7) (2021-04-19)
 
 
