@@ -12,7 +12,7 @@
 
 const log = require('@adobe/helix-log');
 const crypto = require('crypto');
-const { computeSurrogateKey } = require('@adobe/helix-shared').utils;
+const { computeSurrogateKey } = require('@adobe/helix-shared-utils');
 const mime = require('mime-types');
 const fetchAPI = require('@adobe/helix-fetch');
 const { error, isCSS, isJavaScript } = require('./utils');
