@@ -343,10 +343,11 @@ describe('Static Delivery Action #unittest', () => {
     assert.equal(rejected('foo/html.jst', '^.*\\.htl$|^.*\\.js$'), true);
     assert.equal(rejected('src/html.htl', '^.*\\.htl$|^.*\\.js$'), true);
 
-    assert.equal(rejected('.well-known/keybase.txt'), false);
-    assert.equal(rejected('.well-known/dnt-policy.txt'), false);
-    assert.equal(rejected('.well-known/assetlinks.json'), false);
-    assert.equal(rejected('.well-known/apple-developer-merchantid-domain-association'), false);
+    assert.equal(rejected('/.well-known/keybase.txt'), false);
+    assert.equal(rejected('/.well-known/dnt-policy.txt'), false);
+    assert.equal(rejected('/.well-known/assetlinks.json'), false);
+    assert.equal(rejected('/.well-known/apple-developer-merchantid-domain-association'), false);
+    assert.equal(rejected('/.well-known/acme-challenge/FsK70DqKHIYUJff2hKbU-LaqGO_0pdAEM74FoGaXlL4'), false);
 
     assert.equal(rejected('foo/html.htl', '^.*\\.htl$|^.*\\.js$', 'foo'), true);
     assert.equal(rejected('boo/html.htl', '^.*\\.htl$|^.*\\.js$', 'foo'), false);
