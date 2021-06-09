@@ -1,3 +1,10 @@
+## [1.18.17](https://github.com/adobe/helix-static/compare/v1.18.16...v1.18.17) (2021-06-09)
+
+
+### Bug Fixes
+
+* **static:** do not reject well-known URLs anymore ([bdc6e11](https://github.com/adobe/helix-static/commit/bdc6e114cd83ff293a1fad96bb9613e146c5885a))
+
 ## [1.18.16](https://github.com/adobe/helix-static/compare/v1.18.15...v1.18.16) (2021-05-31)
 
 
