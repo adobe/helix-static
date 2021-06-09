@@ -36,7 +36,7 @@ function rejected(path, allow, deny) {
   if (denylist) {
     return denylist.test(path) || rejected(path);
   }
-  if (/^\.well-known\/.*$/.test(path)) {
+  if (/^\/?\.well-known\/.*$/.test(path)) {
     return false;
   }
   if (/^(.*\/?)package\.json$/.test(path)) {
