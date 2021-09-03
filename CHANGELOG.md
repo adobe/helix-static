@@ -1,3 +1,10 @@
+## [1.18.29](https://github.com/adobe/helix-static/compare/v1.18.28...v1.18.29) (2021-09-03)
+
+
+### Bug Fixes
+
+* **deps:** update adobe fixes ([#645](https://github.com/adobe/helix-static/issues/645)) ([f11dc32](https://github.com/adobe/helix-static/commit/f11dc3264906a94f84655ef11033a0a1caaff919))
+
 ## [1.18.28](https://github.com/adobe/helix-static/compare/v1.18.27...v1.18.28) (2021-09-03)
 
 
