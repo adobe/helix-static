@@ -1,3 +1,10 @@
+## [1.18.34](https://github.com/adobe/helix-static/compare/v1.18.33...v1.18.34) (2021-09-20)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-universal to v1.6.12 ([#654](https://github.com/adobe/helix-static/issues/654)) ([4dad396](https://github.com/adobe/helix-static/commit/4dad396a19b0907b9fa36bd2911ef6dce931cdd2))
+
 ## [1.18.33](https://github.com/adobe/helix-static/compare/v1.18.32...v1.18.33) (2021-09-17)
 
 
