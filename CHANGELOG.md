@@ -1,3 +1,10 @@
+## [1.18.35](https://github.com/adobe/helix-static/compare/v1.18.34...v1.18.35) (2021-09-21)
+
+
+### Bug Fixes
+
+* use node 14 ([62b7fc5](https://github.com/adobe/helix-static/commit/62b7fc53a37aa8b7e1112e8d788c90fa357e101f))
+
 ## [1.18.34](https://github.com/adobe/helix-static/compare/v1.18.33...v1.18.34) (2021-09-20)
 
 
