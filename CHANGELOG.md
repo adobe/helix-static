@@ -1,3 +1,10 @@
+## [1.18.36](https://github.com/adobe/helix-static/compare/v1.18.35...v1.18.36) (2021-09-27)
+
+
+### Bug Fixes
+
+* **deps:** use secrets-manager ([ec58ccf](https://github.com/adobe/helix-static/commit/ec58ccf2f1fa733cb202ca1e66e4d128d43b3948))
+
 ## [1.18.35](https://github.com/adobe/helix-static/compare/v1.18.34...v1.18.35) (2021-09-21)
 
 
