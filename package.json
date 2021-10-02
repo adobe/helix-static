@@ -45,7 +45,7 @@
     "@adobe/helix-universal": "1.7.0",
     "@adobe/helix-universal-logger": "1.0.9",
     "@babel/core": "7.15.5",
-    "mime-types": "2.1.32",
+    "mime-types": "2.1.33",
     "object-hash": "2.2.0",
     "path-to-regexp": "6.2.0",
     "postcss": "8.3.8",
