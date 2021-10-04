@@ -1,3 +1,10 @@
+## [1.18.37](https://github.com/adobe/helix-static/compare/v1.18.36...v1.18.37) (2021-10-04)
+
+
+### Bug Fixes
+
+* **deps:** update dependency mime-types to v2.1.33 ([#665](https://github.com/adobe/helix-static/issues/665)) ([53672fe](https://github.com/adobe/helix-static/commit/53672fe7e283278a7b3a0aa650e058f7d26d48cc))
+
 ## [1.18.36](https://github.com/adobe/helix-static/compare/v1.18.35...v1.18.36) (2021-09-27)
 
 
