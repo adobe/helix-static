@@ -1,3 +1,10 @@
+## [1.18.39](https://github.com/adobe/helix-static/compare/v1.18.38...v1.18.39) (2021-10-18)
+
+
+### Bug Fixes
+
+* **deps:** update dependency eslint to v8 ([#671](https://github.com/adobe/helix-static/issues/671)) ([aa4daff](https://github.com/adobe/helix-static/commit/aa4daff8896e28a75b35633709c077434794c5b2))
+
 ## [1.18.38](https://github.com/adobe/helix-static/compare/v1.18.37...v1.18.38) (2021-10-18)
 
 
