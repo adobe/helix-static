@@ -11,7 +11,6 @@
  */
 const { Response } = require('@adobe/helix-universal');
 const uri = require('uri-js');
-const log = require('@adobe/helix-log');
 const { Router } = require('./router');
 const { forbidden } = require('./utils');
 const fontCSS = require('./handlers/font-css');
@@ -66,6 +65,7 @@ function isESI({ esi }) {
  */
 // eslint-disable-next-line no-unused-vars
 async function deliverStatic(req, context) {
+  const { log } = context;
   const { searchParams } = new URL(req.url);
   const params = Array.from(searchParams.entries()).reduce((p, [key, value]) => {
     // eslint-disable-next-line no-param-reassign
@@ -112,7 +112,7 @@ async function deliverStatic(req, context) {
     .register(':prefix(.*)/_icons_.svg', githubSpritesheet)
     .register(':prefix(.*)/_icons_:icon([a-zA-Z_-]+[a-zA-Z0-9]).svg', githubIcons)
     .register(':path(.*).:ext(.*)', githubPlain)
-    .handle(file, params);
+    .handle(file, params, context);
 }
 
 module.exports = {

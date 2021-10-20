@@ -11,11 +11,11 @@
  */
 const { fetchFromGithub } = require('../github-fetcher');
 
-function handle(opts) {
+function handle(opts, context) {
   const iconopts = opts;
   iconopts.params.path = `/icons/${opts.params.icon}`;
   iconopts.params.ext = 'svg';
-  return fetchFromGithub(iconopts, null);
+  return fetchFromGithub(iconopts, null, context);
 }
 
 module.exports = handle;

@@ -233,53 +233,54 @@ describe('Static Delivery Action #integrationtest', () => {
 
 describe('CSS and JS Rewriting', () => {
   it('Rewrite CSS', async () => {
-    assert.equal(await css('{', true), '{');
-    assert.equal(await css('', true), '');
+    const context = { log: console };
+    assert.equal(await css('{', true, context), '{');
+    assert.equal(await css('', true, context), '');
     assert.equal(await css(`.element {
   background: url('images/../sprite.png?foo=bar');
-}`, true), `.element {
+}`, true, context), `.element {
   background: url('images/../sprite.png?foo=bar');
 }`);
     assert.equal(await css(`.element {
   background: url('https://example.com/sprite.png?foo=bar');
-}`, true), `.element {
+}`, true, context), `.element {
   background: url('https://example.com/sprite.png?foo=bar');
 }`);
     assert.equal(await css(`.element {
   background: url('images/../sprite.png');
-}`, true), `.element {
+}`, true, context), `.element {
   background: url('<esi:include src="sprite.png.url"/><esi:remove>sprite.png</esi:remove>');
 }`);
     assert.equal(await css(`.element {
   background: url("images/../sprite.png");
-}`, true), `.element {
+}`, true, context), `.element {
   background: url("<esi:include src="sprite.png.url"/><esi:remove>sprite.png</esi:remove>");
 }`);
     assert.equal(await css(
-      '@import "fineprint.css" print;', true,
+      '@import "fineprint.css" print;', true, context,
     ),
     '@import "<esi:include src="fineprint.css.url"/><esi:remove>fineprint.css</esi:remove>" print;');
     assert.equal(await css(
-      '@import \'fineprint.css\' print;', true,
+      '@import \'fineprint.css\' print;', true, context,
     ),
     '@import \'<esi:include src="fineprint.css.url"/><esi:remove>fineprint.css</esi:remove>\' print;');
     assert.equal(await css(
-      '@import url(\'fineprint.css\') print;', true,
+      '@import url(\'fineprint.css\') print;', true, context,
     ),
     '@import url(\'<esi:include src="fineprint.css.url"/><esi:remove>fineprint.css</esi:remove>\') print;');
     assert.equal(await css(
-      '@import url("fineprint.css") print;', true,
+      '@import url("fineprint.css") print;', true, context,
     ),
     '@import url("<esi:include src="fineprint.css.url"/><esi:remove>fineprint.css</esi:remove>") print;');
   });
 
   it('Rewrite JS', async () => {
-    assert.equal(await js('import { transform } from "@babel/core";code();', true),
+    assert.equal(await js('import { transform } from "@babel/core";code();', true, { log: console }),
       'import { transform } from "<esi:include src="@babel/core.url"/><esi:remove>@babel/core</esi:remove>";code();');
   });
 
   it('Do not Rewrite broken JS', async () => {
-    assert.equal(await js('{', true),
+    assert.equal(await js('{', true, { log: console }),
       '{');
   });
 });
@@ -304,7 +305,7 @@ describe('Static Delivery Action #unittest', () => {
   });
 
   it('error() #unittest', async () => {
-    const error = utils.error('Test');
+    const error = utils.error(console, 'Test');
     assert.equal(error.status, '500');
     const body = await error.buffer();
     assert.ok(String(body).match('Test'));

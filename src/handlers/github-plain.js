@@ -11,8 +11,8 @@
  */
 const { fetchFromGithub } = require('../github-fetcher');
 
-function handle(opts) {
-  return fetchFromGithub(opts, null);
+function handle(opts, context) {
+  return fetchFromGithub(opts, null, context);
 }
 
 module.exports = handle;
