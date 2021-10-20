@@ -1,3 +1,10 @@
+## [1.18.40](https://github.com/adobe/helix-static/compare/v1.18.39...v1.18.40) (2021-10-20)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-log to v6 ([#675](https://github.com/adobe/helix-static/issues/675)) ([caff440](https://github.com/adobe/helix-static/commit/caff4400a1335ae8a8a89152b60daa0e5ec7ed62))
+
 ## [1.18.39](https://github.com/adobe/helix-static/compare/v1.18.38...v1.18.39) (2021-10-18)
 
 
