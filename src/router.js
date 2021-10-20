@@ -22,11 +22,12 @@ class Router {
     return this;
   }
 
-  async handle(path, options) {
+  async handle(path, options, context) {
+    const { log } = context;
     const pair = this._routes
       .find(([route, _, condition]) => route(path) && condition(options));
     if (!pair) {
-      return error('Unknown path', 400);
+      return error(log, 'Unknown path', 400);
     }
     const [route, handler] = pair;
 
@@ -37,7 +38,7 @@ class Router {
       // route().params
       ...options,
       ...route(path),
-    });
+    }, context);
   }
 }
 

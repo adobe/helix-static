@@ -12,7 +12,6 @@
 
 const { Response } = require('@adobe/helix-universal');
 const sanitizer = require('sanitizer');
-const log = require('@adobe/helix-log');
 
 /**
  * Checks if the content type is css.
@@ -38,11 +37,12 @@ function stripErrorMessage(message) {
 
 /**
  * Generates an error response
+ * @param {Logger} log - logger
  * @param {string} message - error message
  * @param {number} code - error code.
  * @returns {Response} The response
  */
-function error(message, code = 500) {
+function error(log, message, code = 500) {
   const status = code === 400 ? 404 : code;
   log.info('delivering error', message, code);
   return new Response(sanitizer.escape(message), {

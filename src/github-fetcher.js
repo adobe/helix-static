@@ -10,19 +10,15 @@
  * governing permissions and limitations under the License.
  */
 
-const log = require('@adobe/helix-log');
 const crypto = require('crypto');
 const { computeSurrogateKey } = require('@adobe/helix-shared-utils');
 const mime = require('mime-types');
 const fetchAPI = require('@adobe/helix-fetch');
 const { error, isCSS, isJavaScript } = require('./utils');
 
-const { context, ALPN_HTTP1_1 } = fetchAPI;
-const { fetch, Response, AbortController } = process.env.HELIX_FETCH_FORCE_HTTP1
-  ? context({
-    alpnProtocols: [ALPN_HTTP1_1],
-    userAgent: 'helix-fetch', // static user agent for test recordings
-  })
+const { Response, AbortController } = fetchAPI;
+const { fetch } = process.env.HELIX_FETCH_FORCE_HTTP1
+  ? /* istanbul ignore next */ fetchAPI.h1({ userAgent: 'helix-fetch' })
   : /* istanbul ignore next */ fetchAPI;
 
 // one megabyte openwhisk limit + 20% Base64 inflation + safety padding
@@ -80,8 +76,11 @@ function addHeaders(headers, ref, content) {
  * @param {boolean} params.esi
  * @param {string} params.branch
  * @param {string} params.githubToken
+ * @param {function} bodyCallback
+ * @param {UniversalContext} context
  */
-function fetchFromGithub(params, bodyCallback) {
+function fetchFromGithub(params, bodyCallback, context) {
+  const { log } = context;
   const {
     owner, repo, ref = 'master', entry, root = '', esi = false, branch, githubToken,
   } = params;
@@ -133,7 +132,7 @@ function fetchFromGithub(params, bodyCallback) {
     if (size < REDIRECT_LIMIT) {
       let body = await response.buffer();
       if (bodyCallback) {
-        body = await bodyCallback(body, { type, esi, entry });
+        body = await bodyCallback(body, { type, esi, entry }, context);
       }
       log.info(`delivering file ${cleanentry} type ${type}`);
 
@@ -193,23 +192,24 @@ function fetchFromGithub(params, bodyCallback) {
     }
     const { statusCode, message, response } = rqerror;
     if (statusCode === 404) {
-      return error(entry, statusCode);
+      return error(log, entry, statusCode);
     }
     if (statusCode === 500) {
       log.warn(`error 500 from backend: ${message}`);
-      return error(message, 502); // bad gateway
+      return error(log, message, 502); // bad gateway
     }
     const { code, syscall } = rqerror;
     if (code === 'ETIMEDOUT' && syscall === 'connect') {
       log.warn(`connect to backend timed out: ${message}`);
-      return error(message, 504); // gateway timeout
+      return error(log, message, 504); // gateway timeout
     }
     if (code === 'ECONNRESET') {
       log.warn(`connection reset by host: ${message}`);
-      return error(message, 504); // gateway unavailable
+      return error(log, message, 504); // gateway unavailable
     }
     log.error(`unknown error ${code} while fetching content during syscall ${syscall}: `, message);
     return error(
+      log,
       (response && response.body && response.body.toString()) || message,
       statusCode,
     );

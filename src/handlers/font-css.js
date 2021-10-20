@@ -12,15 +12,11 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 const fetchAPI = require('@adobe/helix-fetch');
 const postcss = require('postcss');
-const log = require('@adobe/helix-log');
 const { stripErrorMessage } = require('../utils');
 
-const { context, ALPN_HTTP1_1 } = fetchAPI;
-const { fetch, Response } = process.env.HELIX_FETCH_FORCE_HTTP1
-  ? context({
-    alpnProtocols: [ALPN_HTTP1_1],
-    userAgent: 'helix-fetch', // static user agent for test recordings
-  })
+const { Response } = fetchAPI;
+const { fetch } = process.env.HELIX_FETCH_FORCE_HTTP1
+  ? /* istanbul ignore next */ fetchAPI.h1({ userAgent: 'helix-fetch' })
   : /* istanbul ignore next */ fetchAPI;
 
 /**
@@ -71,7 +67,8 @@ async function getSanitizedCssAndUrls(cssToSanitize) {
   return { css, foundurls };
 }
 
-async function deliverFontCSS({ params: { kitid } }) {
+async function deliverFontCSS({ params: { kitid } }, context) {
+  const { log } = context;
   try {
     const response = await fetch(`https://use.typekit.net/${kitid}.css`);
     const body = await response.text();

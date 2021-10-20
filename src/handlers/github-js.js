@@ -12,7 +12,6 @@
 const ohash = require('object-hash');
 const uri = require('uri-js');
 const babel = require('@babel/core');
-const log = require('@adobe/helix-log');
 const { fetchFromGithub } = require('../github-fetcher');
 
 /**
@@ -23,7 +22,8 @@ const { fetchFromGithub } = require('../github-fetcher');
  * @param {string} base - the base href
  * @returns {Function | any}
  */
-function rewriteJavaScript(javascript, base = '') {
+function rewriteJavaScript(javascript, base = '', context) {
+  const { log } = context;
   const importmap = {};
 
   function rewriteJSImports(bab) {
@@ -72,12 +72,12 @@ function rewriteJavaScript(javascript, base = '') {
  * @param {string} entry - the base href
  * @returns {Function|any|string|any} the response body
  */
-function processBody(responsebody, { entry }) {
-  return rewriteJavaScript(responsebody.toString('utf-8'), entry);
+function processBody(responsebody, { entry }, context) {
+  return rewriteJavaScript(responsebody.toString('utf-8'), entry, context);
 }
 
-function handle(opts) {
-  return fetchFromGithub(opts, processBody);
+function handle(opts, context) {
+  return fetchFromGithub(opts, processBody, context);
 }
 
 module.exports = handle;

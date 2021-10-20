@@ -121,7 +121,7 @@ describe('Adobe Fonts Proxy Test #unitttest', () => {
   });
 
   it('Delivers rewritten Kit', async () => {
-    const res = await retrofitResponse(await deliverFontCSS({ params: { kitid: 'eic8tkf' } }));
+    const res = await retrofitResponse(await deliverFontCSS({ params: { kitid: 'eic8tkf' } }, { log: console }));
     const body = String(res.body);
     assert.equal(res.headers['cache-control'], 'private, max-age=600, stale-while-revalidate=604800');
     assert.ok(!body.match(/https:\/\/use.typekit\.net/));
@@ -133,7 +133,7 @@ describe('Adobe Fonts Proxy Test #unitttest', () => {
   });
 
   it('Delivers 404 for missing kit', async () => {
-    const res = await retrofitResponse(await deliverFontCSS({ params: { kitid: 'foobar' } }));
+    const res = await retrofitResponse(await deliverFontCSS({ params: { kitid: 'foobar' } }, { log: console }));
     assert.equal(res.statusCode, 404);
     assert.equal(res.body, 'not found');
   });
@@ -150,7 +150,7 @@ describe('network error tests', () => {
     // simulate network problem
     nock.disableNetConnect();
     try {
-      const res = await retrofitResponse(await deliverFontCSS({ params: { kitid: 'foobar' } }));
+      const res = await retrofitResponse(await deliverFontCSS({ params: { kitid: 'foobar' } }, { log: console }));
       assert.equal(res.statusCode, 502);
     } finally {
       nock.cleanAll();
