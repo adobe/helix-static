@@ -25,6 +25,7 @@ const { fetchFromGithub } = require('../github-fetcher');
  * @param {string} base - the base href
  * @returns {Function | any}
  */
+// eslint-disable-next-line default-param-last
 function rewriteCSS(css, base = '', context) {
   const { log } = context;
   function rewriteImports(tree) {

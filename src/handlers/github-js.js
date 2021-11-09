@@ -22,6 +22,7 @@ const { fetchFromGithub } = require('../github-fetcher');
  * @param {string} base - the base href
  * @returns {Function | any}
  */
+// eslint-disable-next-line default-param-last
 function rewriteJavaScript(javascript, base = '', context) {
   const { log } = context;
   const importmap = {};
@@ -53,8 +54,10 @@ function rewriteJavaScript(javascript, base = '', context) {
 
   try {
     log.info('rewriting javascript...');
-    const transformed = babel.transformSync(javascript,
-      { plugins: [rewriteJSImports], retainLines: true });
+    const transformed = babel.transformSync(
+      javascript,
+      { plugins: [rewriteJSImports], retainLines: true },
+    );
 
     return Object.keys(importmap)
       .reduce((src, key) => src.replace(key, importmap[key]), transformed.code);
