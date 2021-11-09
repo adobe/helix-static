@@ -256,32 +256,36 @@ describe('CSS and JS Rewriting', () => {
 }`, true, context), `.element {
   background: url("<esi:include src="sprite.png.url"/><esi:remove>sprite.png</esi:remove>");
 }`);
-    assert.equal(await css(
-      '@import "fineprint.css" print;', true, context,
-    ),
-    '@import "<esi:include src="fineprint.css.url"/><esi:remove>fineprint.css</esi:remove>" print;');
-    assert.equal(await css(
-      '@import \'fineprint.css\' print;', true, context,
-    ),
-    '@import \'<esi:include src="fineprint.css.url"/><esi:remove>fineprint.css</esi:remove>\' print;');
-    assert.equal(await css(
-      '@import url(\'fineprint.css\') print;', true, context,
-    ),
-    '@import url(\'<esi:include src="fineprint.css.url"/><esi:remove>fineprint.css</esi:remove>\') print;');
-    assert.equal(await css(
-      '@import url("fineprint.css") print;', true, context,
-    ),
-    '@import url("<esi:include src="fineprint.css.url"/><esi:remove>fineprint.css</esi:remove>") print;');
+    assert.equal(
+      await css('@import "fineprint.css" print;', true, context),
+      '@import "<esi:include src="fineprint.css.url"/><esi:remove>fineprint.css</esi:remove>" print;',
+    );
+    assert.equal(
+      await css('@import \'fineprint.css\' print;', true, context),
+      '@import \'<esi:include src="fineprint.css.url"/><esi:remove>fineprint.css</esi:remove>\' print;',
+    );
+    assert.equal(
+      await css('@import url(\'fineprint.css\') print;', true, context),
+      '@import url(\'<esi:include src="fineprint.css.url"/><esi:remove>fineprint.css</esi:remove>\') print;',
+    );
+    assert.equal(
+      await css('@import url("fineprint.css") print;', true, context),
+      '@import url("<esi:include src="fineprint.css.url"/><esi:remove>fineprint.css</esi:remove>") print;',
+    );
   });
 
   it('Rewrite JS', async () => {
-    assert.equal(await js('import { transform } from "@babel/core";code();', true, { log: console }),
-      'import { transform } from "<esi:include src="@babel/core.url"/><esi:remove>@babel/core</esi:remove>";code();');
+    assert.equal(
+      await js('import { transform } from "@babel/core";code();', true, { log: console }),
+      'import { transform } from "<esi:include src="@babel/core.url"/><esi:remove>@babel/core</esi:remove>";code();',
+    );
   });
 
   it('Do not Rewrite broken JS', async () => {
-    assert.equal(await js('{', true, { log: console }),
-      '{');
+    assert.equal(
+      await js('{', true, { log: console }),
+      '{',
+    );
   });
 });
 
