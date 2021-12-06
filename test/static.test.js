@@ -364,11 +364,11 @@ describe('Static Delivery Action #unittest', () => {
   it('main() returns static file from GitHub', async () => {
     const res = await main({
       owner: 'adobe',
-      repo: 'helix-cli',
-      path: '/demos/simple/htdocs/style.css',
+      repo: 'helix-static',
+      path: '/README.md',
       plain: true,
     });
-    assert.ok(res.body.indexOf('Arial') > 0, true);
+    assert.ok(res.body.indexOf('Helix Static') > 0, true);
   });
 
   it('main() returns well-known static file from GitHub', async () => {
@@ -398,22 +398,22 @@ describe('Static Delivery Action #unittest', () => {
   it('main() normalizes URLs', async () => {
     const res = await main({
       owner: 'adobe',
-      repo: 'helix-cli',
-      path: './demos/simple/htdocs/style.css',
+      repo: 'helix-static',
+      path: './README.md',
       plain: true,
     });
 
-    assert.ok(res.body.indexOf('Arial') > 0, true);
+    assert.ok(res.body.indexOf('Helix Static') > 0, true);
   });
 
   it('main() normalizes URLs anywhere', async () => {
     const res = await main({
       owner: 'adobe',
-      repo: 'helix-cli',
-      path: './demos/simple/test/../htdocs/style.css',
+      repo: 'helix-static',
+      path: './src/../README.md',
       plain: true,
     });
-    assert.ok(res.body.indexOf('Arial') > 0, true);
+    assert.ok(res.body.indexOf('Helix Static') > 0, true);
   });
 
   it('main() reports version for get request to /', async () => {
