@@ -139,7 +139,7 @@ describe('Adobe Fonts Proxy Test #unitttest', () => {
   });
 });
 
-describe('network error tests', () => {
+describe.skip('network error tests', () => {
   it('Delivers 502 for connection error', async () => {
     // nock is also used by PollyJS under the hood.
     // In order to avoid unwanted side effects we have to reset nock.
