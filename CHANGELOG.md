@@ -1,3 +1,10 @@
+## [1.18.47](https://github.com/adobe/helix-static/compare/v1.18.46...v1.18.47) (2022-01-24)
+
+
+### Bug Fixes
+
+* **deps:** update external fixes ([#712](https://github.com/adobe/helix-static/issues/712)) ([523e5e3](https://github.com/adobe/helix-static/commit/523e5e32d3e87db6d2113444e0f29593692d04c6))
+
 ## [1.18.46](https://github.com/adobe/helix-static/compare/v1.18.45...v1.18.46) (2022-01-10)
 
 
