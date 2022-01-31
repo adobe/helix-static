@@ -19,6 +19,7 @@
     "deploy-ci": "hedy -v --deploy --test=/_status_check/healthcheck.json --pkgVersion=ci$CIRCLE_BUILD_NUM -l ci"
   },
   "wsk": {
+    "target": "aws",
     "namespace": "helix",
     "name": "helix-services/static@${version}",
     "memory": 512

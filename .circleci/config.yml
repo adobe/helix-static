@@ -60,7 +60,6 @@ jobs:
         name: revert changes to package-lock.json
         command: git checkout -- package-lock.json
 
-    - helix-post-deploy/config-wsk
     - helix-post-deploy/config-env
     - helix-gcloud-setup/load-config
 
