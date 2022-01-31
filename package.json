@@ -19,6 +19,7 @@
     "deploy-ci": "hedy -v --deploy --test=/_status_check/healthcheck.json --pkgVersion=ci$CIRCLE_BUILD_NUM -l ci"
   },
   "wsk": {
+    "target": "aws",
     "namespace": "helix",
     "name": "helix-services/static@${version}",
     "memory": 512
@@ -38,7 +39,7 @@
   "homepage": "https://github.com/adobe/helix-static#readme",
   "dependencies": {
     "@adobe/helix-fetch": "3.0.0",
-    "@adobe/helix-shared-utils": "1.0.4",
+    "@adobe/helix-shared-utils": "2.0.0",
     "@adobe/helix-shared-wrap": "1.0.0",
     "@adobe/helix-status": "9.2.4",
     "@adobe/helix-universal-logger": "2.0.0",

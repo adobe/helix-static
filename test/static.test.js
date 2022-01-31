@@ -226,7 +226,7 @@ describe('Static Delivery Action #integrationtest', () => {
     assert.equal(res.statusCode, 307);
     assert.equal(res.headers.location, 'https://raw.githubusercontent.com/adobedocs/adobeio-codelabs-debugging/404c0901bf4e4795514645c75aa914ec58e6f105/lessons/assets/front-banner.png');
     assert.equal(res.headers['x-content-type'], 'image/png');
-    assert.equal(res.headers['surrogate-key'], 'd/lHMxH5Pol2lPcI');
+    assert.equal(res.headers['surrogate-key'], 'd_lHMxH5Pol2lPcI');
     assert.equal(res.headers['x-static'], 'Raw/Static');
   }).timeout(25000);
 });
