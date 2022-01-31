@@ -1,3 +1,10 @@
+## [1.18.49](https://github.com/adobe/helix-static/compare/v1.18.48...v1.18.49) (2022-01-31)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-shared-utils to v2 ([#717](https://github.com/adobe/helix-static/issues/717)) ([21cc986](https://github.com/adobe/helix-static/commit/21cc9867b443b761e92a2c56f590011830d4f439))
+
 ## [1.18.48](https://github.com/adobe/helix-static/compare/v1.18.47...v1.18.48) (2022-01-31)
 
 
