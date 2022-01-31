@@ -68,27 +68,8 @@ class AWSTarget extends OpenwhiskTarget {
   }
 }
 
-class GoogleTarget extends OpenwhiskTarget {
-  title() {
-    return 'Google';
-  }
-
-  host() {
-    return `https://${process.env.HLX_GOOGLE_REGION}-${process.env.HLX_GOOGLE_PROJECT_ID}.cloudfunctions.net`;
-  }
-
-  urlPath() {
-    return `/${this.package}--${this.name}_${this.version.replace(/\./g, '_')}`;
-  }
-
-  enabled() {
-    return process.env.HLX_GOOGLE_PROJECT_ID;
-  }
-}
-
 const ALL_TARGETS = [
   AWSTarget,
-  GoogleTarget,
 ];
 
 function createTargets(opts) {
