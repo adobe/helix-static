@@ -1,3 +1,10 @@
+## [1.18.56](https://github.com/adobe/helix-static/compare/v1.18.55...v1.18.56) (2022-02-21)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-fetch to v3.0.5 ([a126259](https://github.com/adobe/helix-static/commit/a1262596e20a797ba5c03e60e0cd41773f9f3e1e))
+
 ## [1.18.55](https://github.com/adobe/helix-static/compare/v1.18.54...v1.18.55) (2022-02-14)
 
 
