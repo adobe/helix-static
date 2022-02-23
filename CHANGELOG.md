@@ -1,3 +1,11 @@
+## [1.18.58](https://github.com/adobe/helix-static/compare/v1.18.57...v1.18.58) (2022-02-23)
+
+
+### Bug Fixes
+
+* **deps:** update dependency object-hash to v3 ([#744](https://github.com/adobe/helix-static/issues/744)) ([95cb6d7](https://github.com/adobe/helix-static/commit/95cb6d7034a8490ce9755325627261950d634f27))
+* **deps:** update external fixes ([#741](https://github.com/adobe/helix-static/issues/741)) ([3d0d3d7](https://github.com/adobe/helix-static/commit/3d0d3d7aefe8d8971ff6a59e2a0d8eb594154834))
+
 ## [1.18.57](https://github.com/adobe/helix-static/compare/v1.18.56...v1.18.57) (2022-02-21)
 
 
